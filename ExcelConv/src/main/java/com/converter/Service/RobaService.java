@@ -39,4 +39,21 @@ public class RobaService {
 	        return Math.toIntExact(robarep.count());
 	 }
 	
+	 
+	 public List<Roba> findAllCombo(){
+		 return (List<Roba>) robarep.findAll();
+	 }
+	 
+	 public Roba findOne(Integer id){
+		 return robarep.findOne(id);
+	 }
+	 
+	 public Roba save(Roba r){
+		return robarep.saveAndFlush(r);
+	 }
+	 
+	 public void delete(Roba r){
+		robarep.delete(r);
+	 }
+		
 }

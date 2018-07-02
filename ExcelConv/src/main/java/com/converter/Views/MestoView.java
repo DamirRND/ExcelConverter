@@ -1,19 +1,15 @@
 package com.converter.Views;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.hibernate.mapping.Filterable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
-import com.converter.EditForme.RobaEdit;
-import com.converter.Model.Roba;
-import com.converter.Service.RobaService;
+import com.converter.Model.Mesto;
+import com.converter.Model.Region;
+import com.converter.Service.MestoService;
+import com.converter.Service.RegionService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -22,62 +18,36 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.renderers.NumberRenderer;
 import com.vaadin.ui.themes.ValoTheme;
-
 
 @SuppressWarnings("serial")
 @SpringComponent
 @UIScope
 @Theme("mytheme")
-public class RobaView extends CssLayout implements View{
-
-	public static final String VIEW_NAME = "robaView";
+public class MestoView extends CssLayout implements View{
 	
-
-	private final RobaService robaSer;
-	private final RobaEdit robaEdit;
+	public static final String VIEW_NAME = "mestoView";
 	
-	public Grid<Roba> grid = new Grid<>(Roba.class);
+	private final MestoService mser;
+	public Grid<Mesto> grid = new Grid<>(Mesto.class);
     public TextField filter;
     public Button newProduct;
     
-	@Autowired
-    public RobaView(RobaService robaSer, RobaEdit robaEdit) {
-		super();
-		this.robaSer = robaSer;
-		this.robaEdit = robaEdit;
-		
+    @Autowired
+    public MestoView(MestoService mser) {
+    	super();
+    	this.mser = mser;
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
-        grid.addColumn(Roba -> Roba.getRobagrupa().getNaziv()).setCaption("Grupa robe").setId("grupa").setHidable(true);
-        grid.setDataProvider(
-				(sortOrders, offset, limit)->{
-					Map<String, Boolean> sortOrder = sortOrders.stream()
-                            .collect(Collectors.toMap(
-                                    sort -> sort.getSorted(),
-                                    sort -> sort.getDirection() == SortDirection.ASCENDING));
-
-                    return robaSer.findAll(offset, limit, sortOrder).stream();
-				},
-				()-> robaSer.count()
-        );
-        grid.setColumns("id","sifra", "naziv", "jm", "grupa", "cena");
-        grid.getColumn("id").setHidden(true);
-        grid.setSelectionMode(SelectionMode.SINGLE);
-		
-		grid.addItemClickListener(event->{
-			UI.getCurrent().addWindow(robaEdit.getWindow());
-			System.out.println(event.getItem().getId());
-			robaEdit.edit(event.getItem());
-		});
-		
+        grid.addColumn(Mesto -> Mesto.getRegion().getNaziv()).setCaption("Naziv regiona").setId("regionNaziv").setHidable(true);
+        grid.addColumn(Mesto -> Mesto.getEntitet()).setCaption("Naziv entiteta").setId("entiteNaziv").setHidable(true);
+        grid.setItems(mser.findAll());
+        grid.setColumns("pttbroj", "naziv", "regionNaziv", "entiteNaziv");
+       
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);
@@ -97,7 +67,7 @@ public class RobaView extends CssLayout implements View{
         
         filter.addValueChangeListener(event -> {});
 
-        newProduct = new Button("Novi proizvod");
+        newProduct = new Button("Novo mesto");
         newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
         newProduct.setIcon(VaadinIcons.PLUS_CIRCLE);
 
@@ -111,7 +81,8 @@ public class RobaView extends CssLayout implements View{
         return topLayout;
     }
     
-    public RobaView getForm() {
+    public MestoView getForm() {
     	return this;
     }
+
 }

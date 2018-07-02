@@ -27,17 +27,17 @@ public class KorGrupa implements Serializable{
 	private String opis;
 	
 	@Column(name="nivo")
-	private int novi;
+	private int nivo;
 
 	
 	public KorGrupa() {}
 	
-	public KorGrupa(int id, int sifra, String opis, int novi) {
+	public KorGrupa(int id, int sifra, String opis, int nivo) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
 		this.opis = opis;
-		this.novi = novi;
+		this.nivo = nivo;
 	}
 
 	public int getId() {
@@ -64,12 +64,12 @@ public class KorGrupa implements Serializable{
 		this.opis = opis;
 	}
 
-	public int getNovi() {
-		return novi;
+	public int getNivo() {
+		return nivo;
 	}
 
-	public void setNovi(int novi) {
-		this.novi = novi;
+	public void setNivo(int nivo) {
+		this.nivo = nivo;
 	}
 	
 	

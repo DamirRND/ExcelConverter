@@ -27,12 +27,14 @@ public class RobaGrupeView extends CssLayout implements View{
 
 	public static final String VIEW_NAME = "robaGrupeView";
 	
+
 	private final RobaGrupaService rgser;
+	
 	public Grid<RobaGrupa> grid = new Grid<>(RobaGrupa.class);
     public TextField filter;
     public Button newProduct;
     
-    @Autowired
+	@Autowired
     public RobaGrupeView(RobaGrupaService rgser) {
     	super();
     	this.rgser = rgser;

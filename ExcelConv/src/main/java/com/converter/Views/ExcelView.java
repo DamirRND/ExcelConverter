@@ -1,8 +1,12 @@
 package com.converter.Views;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.converter.Model.Komitent;
 import com.converter.Model.NalogStavka;
 import com.converter.Model.Roba;
+import com.converter.Service.KomitentService;
+import com.converter.Service.RobaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
@@ -26,6 +30,11 @@ import com.vaadin.ui.themes.ValoTheme;
 public class ExcelView extends VerticalLayout{
 
 	public static final String VIEW_NAME = "excelView";
+	
+
+	private final KomitentService kser;
+	private final RobaService rser;
+	
 	
 	public HorizontalLayout rootPrviDio = new HorizontalLayout();
 	public HorizontalLayout lijevo = new HorizontalLayout();
@@ -66,12 +75,24 @@ public class ExcelView extends VerticalLayout{
 
 	public Panel panelDrugi = new Panel();
 	
-	public ExcelView() {
+	@Autowired
+	public ExcelView(KomitentService kser, RobaService rser) {
+		this.kser=kser;
+		this.rser = rser;
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		komitent.setPlaceholder("Komitent");
+		komitent.setItems(kser.findAllByTip("KK"));
+		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
+		
 		roba.setPlaceholder("Roba");
+		roba.setItems(rser.findAllCombo());
+		roba.setItemCaptionGenerator(Roba :: getNaziv);
+		
 		veleprodaja.setPlaceholder("Veleprodaja");
+		veleprodaja.setItems(kser.findAllByTip("VP"));
+		veleprodaja.setItemCaptionGenerator(Komitent :: getNaziv);
+		
 		panelPrvi.setStyleName(ValoTheme.PANEL_BORDERLESS);
 		panelDrugi.setStyleName(ValoTheme.PANEL_BORDERLESS);
 		hlLijevo.addComponents(datum, veleprodaja, otvoriNalog);

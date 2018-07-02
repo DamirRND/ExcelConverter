@@ -1,5 +1,7 @@
 package com.converter.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,9 @@ public class RadnikService {
 		return radnikrep.findOneByKorimeAndKorlozinka(korime, korlozinka);
 	}
 	
+	
+	public List<Radnik> findAll(){
+		return (List<Radnik>) radnikrep.findAll();
+	}
 	
 }
