@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,9 @@ public class UstanovaService {
 		this.urep = urep;
 	}
 	
+	List<Ustanova> listaJedan;
 	
+	@Cacheable("ustanove")
 	public List<Ustanova> findAll(int offset, int limit, Map<String, Boolean> sortOrders) {
         int page = offset / limit;
         List<Sort.Order> orders = sortOrders.entrySet().stream()
@@ -32,10 +35,33 @@ public class UstanovaService {
 
         PageRequest pageRequest = new PageRequest(page, limit, orders.isEmpty() ? null : new Sort(orders));
         List<Ustanova> items = urep.findAll(pageRequest).getContent();
+        setListaJedan(urep.findAll());
         return items.subList(offset%limit, items.size());
     }
 	
 	 public Integer count() {
 	        return Math.toIntExact(urep.count());
 	 }
+	 
+	 public Ustanova findOne(Integer id){
+		 return urep.findOne(id);
+	 }
+	 
+	 public Ustanova save(Ustanova r){
+		return urep.saveAndFlush(r);
+	 }
+	 
+	 public void delete(Ustanova r){
+		 urep.delete(r);
+	 }
+
+	public List<Ustanova> getListaJedan() {
+		return listaJedan;
+	}
+
+	public void setListaJedan(List<Ustanova> listaJedan) {
+		this.listaJedan = listaJedan;
+	}
+	 
+	 
 }

@@ -20,20 +20,18 @@ public class KontrolaPristupaMetode implements KontrolaPristupa{
 	}
 	
 	@Override
-    public boolean signIn(String username, String password) {
+    public void signIn(String username, String password) {
 		Radnik radnik = radnikser.findOne(username, password);
 		
 		if(radnik!=null) {
 			KorisnikMetode.set(radnik);
-			return true;
 		}else {
-			return false;
 		}
     }
 
     @Override
     public boolean isUserSignedIn() {
-        return !KorisnikMetode.get().isEmpty();
+    	return KorisnikMetode.get() != null ;
     }
 
     @Override
@@ -57,5 +55,10 @@ public class KontrolaPristupaMetode implements KontrolaPristupa{
     @Override
     public Radnik getRadnik() {
     	return KorisnikMetode.get();
+    }
+    
+    @Override
+    public void sessionDestroy() {
+    	KorisnikMetode.izbrisiSesiju();
     }
 }

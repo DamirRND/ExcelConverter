@@ -45,6 +45,11 @@ public class KorisnikMetode {
         }
         return request;
     }
+    
+    public static void izbrisiSesiju() {
+            getCurrentRequest().getWrappedSession().removeAttribute(
+                    CURRENT_USER_SESSION_ATTRIBUTE_KEY);
+    }
 
 
 }

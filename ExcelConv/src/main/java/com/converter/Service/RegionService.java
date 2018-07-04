@@ -3,10 +3,11 @@ package com.converter.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.converter.Model.Entitet;
 import com.converter.Model.Region;
-import com.converter.Model.Ustanova;
 import com.converter.Repository.RegionRepository;
 
 @Service
@@ -20,9 +21,37 @@ public class RegionService {
 	public RegionService(RegionRepository rrep) {
 		this.rrep = rrep;
 	}
+	public List<Region> listaJedan;
 	
+	@Cacheable("region")
 	public List<Region> findAll(){
+		setListaJedan(rrep.findAll());
 		return (List<Region>) rrep.findAll();
 	}
+
+	 public Region findOne(Integer id){
+		 return rrep.findOne(id);
+	 }
+	 
+	 public Region save(Region r){
+		return rrep.saveAndFlush(r);
+	 }
+	 
+	 public void delete(Region r){
+		 rrep.delete(r);
+	 }
+	
+	 
+
+	public List<Region> getListaJedan() {
+		return listaJedan;
+	}
+
+
+	public void setListaJedan(List<Region> listaJedan) {
+		this.listaJedan = listaJedan;
+	}
+	
+	
 	
 }

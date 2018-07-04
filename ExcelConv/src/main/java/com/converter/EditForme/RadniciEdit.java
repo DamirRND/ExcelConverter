@@ -2,13 +2,11 @@ package com.converter.EditForme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.Model.Roba;
-import com.converter.Model.RobaGrupa;
-import com.converter.Service.RobaService;
+import com.converter.Model.KorGrupa;
+import com.converter.Model.Radnik;
+import com.converter.Service.RadnikService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
-import com.vaadin.data.converter.StringToDoubleConverter;
-import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
@@ -22,6 +20,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -31,25 +30,25 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 @Theme("mytheme")
 @SuppressWarnings("serial")
-public class RobaEdit extends Window{
+public class RadniciEdit extends Window{
 
-	public TextField sifra;
-	public TextField naziv;
-	public TextField cena;
-	public  ComboBox<RobaGrupa> grupa;
-	public TextField jm;
 	
-	public Binder<Roba> binder = new Binder<>(Roba.class);
+	public TextField korime;
+	public PasswordField korlozinka;
+	public TextField naziv;
+	public  ComboBox<KorGrupa> grupa;
+	
+	public Binder<Radnik> binder = new Binder<>(Radnik.class);
 	
 	public Button ok;
 	public Button delete;
 	
-	public Roba roba;
+	public Radnik radnik;
 	
-	private Grid<Roba> robaGrid;
+	private Grid<Radnik> radnikGrid;
 	
 	@Autowired
-	public RobaEdit() {
+	public RadniciEdit() {
 		addStyleName("profile-window");
 	    Responsive.makeResponsive(this);
 	        
@@ -80,7 +79,7 @@ public class RobaEdit extends Window{
 	
 	private Component buildProfileTab() {
         HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Roba");
+        root.setCaption("Radnik");
         root.setIcon(VaadinIcons.BULLETS);
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
@@ -92,23 +91,20 @@ public class RobaEdit extends Window{
         root.addComponent(details);
         root.setExpandRatio(details, 1);
 
-        sifra = new TextField("Šifra");
-        details.addComponent(sifra);
+        korime = new TextField("Korisničko ime");
+        details.addComponent(korime);
         
-        naziv = new TextField("Naziv");
-        details.addComponent(naziv);
-        
-    	cena = new TextField("Cena");
-    	details.addComponent(cena);
+        korlozinka = new PasswordField("Šifra");
+        details.addComponent(korlozinka);
     	 
     	grupa = new ComboBox<>();
     	grupa.setPlaceholder("Grupa");
-    	grupa.setItemCaptionGenerator(RobaGrupa :: getNaziv);
+    	grupa.setItemCaptionGenerator(KorGrupa :: getOpis);
     	details.addComponent(grupa);
-    	 
-    	jm = new TextField("JM");
-    	details.addComponent(jm);
-    	 
+    	
+        naziv = new TextField("Ime i prezime");
+        details.addComponent(naziv);
+       
         return root;
     }
 
@@ -133,47 +129,45 @@ public class RobaEdit extends Window{
         return footer;
     }
     
-    public final void edit(Roba r, RobaService rser){
+    public final void edit(Radnik r, RadnikService rser){
 		final boolean persisted = r != null;
 		if (persisted) {
-			roba = rser.findOne(r.getId());
+			radnik = rser.findOne(r.getId());
 		}
 		else {
-			roba = new Roba();
+			radnik = new Radnik();
 		}
-		binder.setBean(roba);
+		binder.setBean(radnik);
     }
     
     public void initBind(){
-    	 binder.forField(sifra)
+    	 binder.forField(korime)
     	 	.withNullRepresentation("")
-    		.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-     		.bind(Roba :: getSifra, Roba :: setSifra);
+     		.bind(Radnik :: getKorime, Radnik :: setKorime);
+    	 binder.forField(korlozinka)
+    	 	.withNullRepresentation("")
+    	 	.bind(Radnik :: getKorlozinka, Radnik :: setKorlozinka);
+    	 binder.forField(grupa)
+ 	 		.bind(Radnik :: getKorgrupa, Radnik :: setKorgrupa);
     	 binder.forField(naziv)
     	 	.withNullRepresentation("")
-    	 	.bind(Roba :: getNaziv, Roba :: setNaziv);
-    	 binder.forField(cena)
-    	 	.withNullRepresentation("")
-    	 	.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
-    	 	.bind(Roba :: getCena, Roba :: setCena);
-    	 binder.forField(grupa)
-    	 	.bind(Roba :: getRobagrupa, Roba :: setRobagrupa);
-    	 binder.forField(jm)
-    	 	.withNullRepresentation("")
-    	 	.bind(Roba :: getJm, Roba :: setJm);
+    	 	.bind(Radnik :: getNaziv, Radnik :: setNaziv);
+    
     }
     
     
-    
-    public Grid<Roba> getRobaGrid() {
-		return robaGrid;
+
+
+	public Grid<Radnik> getRadnikGrid() {
+		return radnikGrid;
 	}
 
-	public void setRobaGrid(Grid<Roba> robaGrid) {
-		this.robaGrid = robaGrid;
+	public void setRadnikGrid(Grid<Radnik> radnikGrid) {
+		this.radnikGrid = radnikGrid;
 	}
 
-	public RobaEdit getWindow(){
+	public RadniciEdit getWindow(){
     	return this;
     }
+	
 }

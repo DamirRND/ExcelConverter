@@ -3,7 +3,7 @@ package com.converter.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.ActuatorMetricWriter;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.converter.Model.OrganizacionaJedinica;
@@ -21,8 +21,35 @@ public class OrganizacionaJedinicaService {
 		this.orgrep = orgrep;
 	}
 	
+	public List<OrganizacionaJedinica> listaJedan;
 	
+	@Cacheable("orgjed")
 	public List<OrganizacionaJedinica> findAll(){
+		setListaJedan(orgrep.findAll());
 		return (List<OrganizacionaJedinica>) orgrep.findAll();
 	}
+	
+	 public OrganizacionaJedinica findOne(Integer id){
+		 return orgrep.findOne(id);
+	 }
+	 
+	 public OrganizacionaJedinica save(OrganizacionaJedinica r){
+		return orgrep.saveAndFlush(r);
+	 }
+	 
+	 public void delete(OrganizacionaJedinica r){
+		 orgrep.delete(r);
+	 }
+	
+	 
+
+	public List<OrganizacionaJedinica> getListaJedan() {
+		return listaJedan;
+	}
+
+	public void setListaJedan(List<OrganizacionaJedinica> listaJedan) {
+		this.listaJedan = listaJedan;
+	}
+	
+	
 }

@@ -11,7 +11,7 @@ import com.vaadin.spring.annotation.UIScope;
 @SpringComponent
 public interface KontrolaPristupa extends Serializable{
 
-	public boolean signIn(String username, String password);
+	public void signIn(String username, String password);
 
     public boolean isUserSignedIn();
 
@@ -20,4 +20,6 @@ public interface KontrolaPristupa extends Serializable{
     public String getImeKorisnika();
     
     public Radnik getRadnik();
+    
+    public void sessionDestroy();
 }

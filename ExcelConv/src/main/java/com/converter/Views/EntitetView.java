@@ -1,16 +1,10 @@
 package com.converter.Views;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.Entitet;
-import com.converter.Model.Ustanova;
-import com.converter.Service.EntitetService;
-import com.converter.Service.UstanovaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,28 +16,24 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class EntitetView extends CssLayout implements View{
 
 	public static final String VIEW_NAME = "entitetView";
 	
-	private final EntitetService eres;
+	
 	public Grid<Entitet> grid = new Grid<>(Entitet.class);
     public TextField filter;
     public Button newProduct;
     
-    @Autowired
-    public EntitetView(EntitetService eres) {
-    	super();
-    	this.eres =eres;
+    public EntitetView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
-        grid.setItems(eres.findAll());
+       
         grid.setColumns("sifra", "naziv");
        
         VerticalLayout barAndGridLayout = new VerticalLayout();

@@ -25,15 +25,18 @@ public class LoginController extends LoginScreenView{
 		this.kpristupa = kpristupa;
 		
 		login.addClickListener(login->{
-			
 			kpristupa.signIn(username.getValue().toString(), password.getValue().toString());
 			if(kpristupa.isUserSignedIn()) {
 				VaadinSession.getCurrent().setAttribute("Ime", kpristupa.getRadnik().getNaziv());
 				UI.getCurrent().getNavigator().navigateTo(MainScreenView.VIEW_NAME);
 			}else {
 				Notification.show("Korisnik ne postoji.");
+				login.getButton().setEnabled(true);
 			}
+			
 		});
+		
+		
 		
 		forgotPassword.addClickListener(zablozinku->{
 			Notification.show("Nije jos pripremljena forma za promjenu lozinke.");

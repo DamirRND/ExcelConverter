@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.Komitent;
-import com.converter.Model.KorGrupa;
 import com.converter.Service.KomitentService;
-import com.converter.Service.KorGrupaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;

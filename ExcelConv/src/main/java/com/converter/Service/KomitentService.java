@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.converter.Model.Komitent;
-import com.converter.Model.Roba;
 import com.converter.Repository.KomitentRepository;
 
 @Service

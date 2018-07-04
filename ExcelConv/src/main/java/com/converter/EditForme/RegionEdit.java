@@ -2,8 +2,11 @@ package com.converter.EditForme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.converter.Model.Entitet;
+import com.converter.Model.Region;
 import com.converter.Model.Roba;
 import com.converter.Model.RobaGrupa;
+import com.converter.Service.RegionService;
 import com.converter.Service.RobaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
@@ -12,6 +15,7 @@ import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -31,25 +35,23 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 @Theme("mytheme")
 @SuppressWarnings("serial")
-public class RobaEdit extends Window{
+public class RegionEdit extends Window{
 
 	public TextField sifra;
 	public TextField naziv;
-	public TextField cena;
-	public  ComboBox<RobaGrupa> grupa;
-	public TextField jm;
+	public  ComboBox<Entitet> entitet;
 	
-	public Binder<Roba> binder = new Binder<>(Roba.class);
+	public Binder<Region> binder = new Binder<>(Region.class);
 	
 	public Button ok;
 	public Button delete;
 	
-	public Roba roba;
+	public Region region;
 	
-	private Grid<Roba> robaGrid;
+	private Grid<Region> regGrid;
 	
 	@Autowired
-	public RobaEdit() {
+	public RegionEdit() {
 		addStyleName("profile-window");
 	    Responsive.makeResponsive(this);
 	        
@@ -80,7 +82,7 @@ public class RobaEdit extends Window{
 	
 	private Component buildProfileTab() {
         HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Roba");
+        root.setCaption("Region");
         root.setIcon(VaadinIcons.BULLETS);
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
@@ -97,18 +99,12 @@ public class RobaEdit extends Window{
         
         naziv = new TextField("Naziv");
         details.addComponent(naziv);
-        
-    	cena = new TextField("Cena");
-    	details.addComponent(cena);
     	 
-    	grupa = new ComboBox<>();
-    	grupa.setPlaceholder("Grupa");
-    	grupa.setItemCaptionGenerator(RobaGrupa :: getNaziv);
-    	details.addComponent(grupa);
-    	 
-    	jm = new TextField("JM");
-    	details.addComponent(jm);
-    	 
+    	entitet = new ComboBox<>();
+    	entitet.setPlaceholder("Entitet");
+    	entitet.setItemCaptionGenerator(Entitet :: getNaziv);
+    	details.addComponent(entitet);
+
         return root;
     }
 
@@ -133,47 +129,41 @@ public class RobaEdit extends Window{
         return footer;
     }
     
-    public final void edit(Roba r, RobaService rser){
+    public final void edit(Region r, RegionService rser){
 		final boolean persisted = r != null;
 		if (persisted) {
-			roba = rser.findOne(r.getId());
+			region = rser.findOne(r.getId());
 		}
 		else {
-			roba = new Roba();
+			region = new Region();
 		}
-		binder.setBean(roba);
+		binder.setBean(region);
     }
     
     public void initBind(){
     	 binder.forField(sifra)
     	 	.withNullRepresentation("")
     		.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-     		.bind(Roba :: getSifra, Roba :: setSifra);
+     		.bind(Region :: getSifra, Region :: setSifra);
     	 binder.forField(naziv)
     	 	.withNullRepresentation("")
-    	 	.bind(Roba :: getNaziv, Roba :: setNaziv);
-    	 binder.forField(cena)
-    	 	.withNullRepresentation("")
-    	 	.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
-    	 	.bind(Roba :: getCena, Roba :: setCena);
-    	 binder.forField(grupa)
-    	 	.bind(Roba :: getRobagrupa, Roba :: setRobagrupa);
-    	 binder.forField(jm)
-    	 	.withNullRepresentation("")
-    	 	.bind(Roba :: getJm, Roba :: setJm);
+    	 	.bind(Region :: getNaziv, Region :: setNaziv);
+    	 binder.forField(entitet)
+    	 	.bind(Region :: getEntitet, Region :: setEntitet);
+    
     }
     
     
-    
-    public Grid<Roba> getRobaGrid() {
-		return robaGrid;
+	public Grid<Region> getRegGrid() {
+		return regGrid;
 	}
 
-	public void setRobaGrid(Grid<Roba> robaGrid) {
-		this.robaGrid = robaGrid;
+	public void setRegGrid(Grid<Region> regGrid) {
+		this.regGrid = regGrid;
 	}
 
-	public RobaEdit getWindow(){
+	public RegionEdit getWindow(){
     	return this;
     }
+	
 }

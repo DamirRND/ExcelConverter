@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.Mesto;
-import com.converter.Model.Region;
 import com.converter.Service.MestoService;
-import com.converter.Service.RegionService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;

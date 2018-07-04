@@ -20,7 +20,7 @@ public class NalogStavka implements Serializable{
 	private int id;
 	
 	@ManyToOne
-	private Komitent kupac_id;
+	private Komitent kupac;
 	
 	@ManyToOne
 	private Roba roba;
@@ -51,11 +51,11 @@ public class NalogStavka implements Serializable{
 
 	public NalogStavka() {}
 	
-	public NalogStavka(int id, Komitent kupac_id, Roba roba, Double cena, Double kolicina, Double iznos, Nalog nalog,
+	public NalogStavka(int id, Komitent kupac, Roba roba, Double cena, Double kolicina, Double iznos, Nalog nalog,
 			int robasifraext, String robanazivext, int kupacsifraext, String kupacnazivext) {
 		super();
 		this.id = id;
-		this.kupac_id = kupac_id;
+		this.kupac = kupac;
 		this.roba = roba;
 		this.cena = cena;
 		this.kolicina = kolicina;
@@ -76,11 +76,11 @@ public class NalogStavka implements Serializable{
 	}
 
 	public Komitent getKupac_id() {
-		return kupac_id;
+		return kupac;
 	}
 
-	public void setKupac_id(Komitent kupac_id) {
-		this.kupac_id = kupac_id;
+	public void setKupac_id(Komitent kupac) {
+		this.kupac = kupac;
 	}
 
 	public Roba getRoba() {

@@ -2,12 +2,11 @@ package com.converter.EditForme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.Model.Roba;
-import com.converter.Model.RobaGrupa;
-import com.converter.Service.RobaService;
+import com.converter.Model.Mesto;
+import com.converter.Model.OrganizacionaJedinica;
+import com.converter.Service.OrganizacionaJedinicaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
-import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
@@ -31,25 +30,25 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 @Theme("mytheme")
 @SuppressWarnings("serial")
-public class RobaEdit extends Window{
-
+public class OrganizacionaJedinicaEdit extends Window{
+	
 	public TextField sifra;
 	public TextField naziv;
-	public TextField cena;
-	public  ComboBox<RobaGrupa> grupa;
-	public TextField jm;
-	
-	public Binder<Roba> binder = new Binder<>(Roba.class);
+	public TextField pib;
+	public TextField adresa;
+	public  ComboBox<Mesto> mesto;
+
+	public Binder<OrganizacionaJedinica> binder = new Binder<>(OrganizacionaJedinica.class);
 	
 	public Button ok;
 	public Button delete;
 	
-	public Roba roba;
+	public OrganizacionaJedinica orgjed;
 	
-	private Grid<Roba> robaGrid;
+	private Grid<OrganizacionaJedinica> orgGrid;
 	
 	@Autowired
-	public RobaEdit() {
+	public OrganizacionaJedinicaEdit() {
 		addStyleName("profile-window");
 	    Responsive.makeResponsive(this);
 	        
@@ -80,7 +79,7 @@ public class RobaEdit extends Window{
 	
 	private Component buildProfileTab() {
         HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Roba");
+        root.setCaption("Organizaciona jedinica");
         root.setIcon(VaadinIcons.BULLETS);
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
@@ -98,16 +97,16 @@ public class RobaEdit extends Window{
         naziv = new TextField("Naziv");
         details.addComponent(naziv);
         
-    	cena = new TextField("Cena");
-    	details.addComponent(cena);
+    	pib = new TextField("PIB");
+    	details.addComponent(pib);
     	 
-    	grupa = new ComboBox<>();
-    	grupa.setPlaceholder("Grupa");
-    	grupa.setItemCaptionGenerator(RobaGrupa :: getNaziv);
-    	details.addComponent(grupa);
+    	mesto = new ComboBox<>();
+    	mesto.setPlaceholder("Mesto");
+    	mesto.setItemCaptionGenerator(Mesto :: getNaziv);
+    	details.addComponent(mesto);
     	 
-    	jm = new TextField("JM");
-    	details.addComponent(jm);
+    	adresa = new TextField("Adresa");
+    	details.addComponent(adresa);
     	 
         return root;
     }
@@ -133,47 +132,49 @@ public class RobaEdit extends Window{
         return footer;
     }
     
-    public final void edit(Roba r, RobaService rser){
+    public final void edit(OrganizacionaJedinica r, OrganizacionaJedinicaService orgser){
 		final boolean persisted = r != null;
 		if (persisted) {
-			roba = rser.findOne(r.getId());
+			orgjed = orgser.findOne(r.getId());
 		}
 		else {
-			roba = new Roba();
+			orgjed = new OrganizacionaJedinica();
 		}
-		binder.setBean(roba);
+		binder.setBean(orgjed);
     }
     
     public void initBind(){
     	 binder.forField(sifra)
     	 	.withNullRepresentation("")
     		.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-     		.bind(Roba :: getSifra, Roba :: setSifra);
+     		.bind(OrganizacionaJedinica :: getSifra, OrganizacionaJedinica :: setSifra);
     	 binder.forField(naziv)
     	 	.withNullRepresentation("")
-    	 	.bind(Roba :: getNaziv, Roba :: setNaziv);
-    	 binder.forField(cena)
+    	 	.bind(OrganizacionaJedinica :: getNaziv, OrganizacionaJedinica :: setNaziv);
+    	 binder.forField(pib)
     	 	.withNullRepresentation("")
-    	 	.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
-    	 	.bind(Roba :: getCena, Roba :: setCena);
-    	 binder.forField(grupa)
-    	 	.bind(Roba :: getRobagrupa, Roba :: setRobagrupa);
-    	 binder.forField(jm)
+    	 	.bind(OrganizacionaJedinica :: getPib, OrganizacionaJedinica :: setPib);
+    	 binder.forField(mesto)
+    	 	.bind(OrganizacionaJedinica :: getMesto, OrganizacionaJedinica :: setMesto);
+    	 binder.forField(adresa)
     	 	.withNullRepresentation("")
-    	 	.bind(Roba :: getJm, Roba :: setJm);
+    	 	.bind(OrganizacionaJedinica :: getAdresa, OrganizacionaJedinica :: setAdresa);
     }
     
     
     
-    public Grid<Roba> getRobaGrid() {
-		return robaGrid;
+
+
+	public Grid<OrganizacionaJedinica> getOrgGrid() {
+		return orgGrid;
 	}
 
-	public void setRobaGrid(Grid<Roba> robaGrid) {
-		this.robaGrid = robaGrid;
+	public void setOrgGrid(Grid<OrganizacionaJedinica> orgGrid) {
+		this.orgGrid = orgGrid;
 	}
 
-	public RobaEdit getWindow(){
+	public OrganizacionaJedinicaEdit getWindow(){
     	return this;
     }
+
 }

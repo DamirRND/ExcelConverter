@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.RobaGrupa;
-import com.converter.Service.RobaGrupaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -20,7 +18,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class RobaGrupeView extends CssLayout implements View{
@@ -28,22 +25,22 @@ public class RobaGrupeView extends CssLayout implements View{
 	public static final String VIEW_NAME = "robaGrupeView";
 	
 
-	private final RobaGrupaService rgser;
+
 	
 	public Grid<RobaGrupa> grid = new Grid<>(RobaGrupa.class);
     public TextField filter;
     public Button newProduct;
     
 	@Autowired
-    public RobaGrupeView(RobaGrupaService rgser) {
+    public RobaGrupeView() {
     	super();
-    	this.rgser = rgser;
+    	
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
-        grid.setItems(rgser.findAll());
+       
         grid.setColumns("sifra", "naziv");
        
         VerticalLayout barAndGridLayout = new VerticalLayout();

@@ -4,13 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.OrganizacionaJedinica;
-import com.converter.Model.Region;
-import com.converter.Service.OrganizacionaJedinicaService;
-import com.converter.Service.RegionService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,30 +18,24 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class OrganizacionaJedinicaView extends CssLayout implements View{
 
 	public static final String VIEW_NAME = "orgjedView";
 	
-	private final OrganizacionaJedinicaService orgser;
 	public Grid<OrganizacionaJedinica> grid = new Grid<>(OrganizacionaJedinica.class);
     public TextField filter;
     public Button newProduct;
     
     @Autowired
-    public OrganizacionaJedinicaView(OrganizacionaJedinicaService orgser) {
-    	super();
-    	this.orgser =orgser;
+    public OrganizacionaJedinicaView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
         grid.addColumn(OrganizacionaJedinica -> OrganizacionaJedinica.getMesto().getNaziv()).setCaption("Naziv mesta").setId("mestoNaziv").setHidable(true);
-        grid.setItems(orgser.findAll());
-
         grid.setColumns("sifra", "naziv", "pib", "adresa", "mestoNaziv");
        
         VerticalLayout barAndGridLayout = new VerticalLayout();

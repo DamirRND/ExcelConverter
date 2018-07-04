@@ -1,12 +1,14 @@
 package com.converter.Views;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.converter.Autentikacija.KontrolaPristupa;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -40,10 +42,12 @@ public class SideMenu extends HorizontalLayout {
 	private HorizontalLayout logoWrapper;
 
 	private Label menuCaption;
+	
+	@Autowired
+	private KontrolaPristupa kpristupa;
 
 	public SideMenu() {
 		super();
-
 		addStyleName(ValoTheme.UI_WITH_MENU);
 		Responsive.makeResponsive(this);
 		setSizeFull();
@@ -115,7 +119,7 @@ public class SideMenu extends HorizontalLayout {
         userItem.addItem("Izlogujte se", new Command() {
             @Override
             public void menuSelected(final MenuItem selectedItem) {
-                VaadinSession.getCurrent().close();
+            	kpristupa.sessionDestroy();
                 Page.getCurrent().reload();
                 //UI.getCurrent().getNavigator().navigateTo(LoginView.VIEW_NAME);
             }

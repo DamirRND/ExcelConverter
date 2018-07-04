@@ -10,6 +10,7 @@ import com.converter.Service.RobaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
+import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
@@ -18,7 +19,6 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -81,17 +81,27 @@ public class ExcelView extends VerticalLayout{
 		this.rser = rser;
 		Responsive.makeResponsive(this);
 		setSizeFull();
+		datum.setResolution(DateResolution.MONTH);
+		
+		otvoriNalog.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		importFajl.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		automObrada.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		updateZapis.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		
 		komitent.setPlaceholder("Komitent");
 		komitent.setItems(kser.findAllByTip("KK"));
 		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
+		komitent.setStyleName("filter-tekstpolje");
 		
 		roba.setPlaceholder("Roba");
 		roba.setItems(rser.findAllCombo());
 		roba.setItemCaptionGenerator(Roba :: getNaziv);
+		roba.setStyleName("filter-tekstpolje");
 		
 		veleprodaja.setPlaceholder("Veleprodaja");
 		veleprodaja.setItems(kser.findAllByTip("VP"));
 		veleprodaja.setItemCaptionGenerator(Komitent :: getNaziv);
+		veleprodaja.setStyleName("filter-tekstpolje");
 		
 		panelPrvi.setStyleName(ValoTheme.PANEL_BORDERLESS);
 		panelDrugi.setStyleName(ValoTheme.PANEL_BORDERLESS);
@@ -99,6 +109,15 @@ public class ExcelView extends VerticalLayout{
 		hlDesno.addComponents(importFajl, automObrada);
 		lijevo.addComponents(hlLijevo, hlDesno);
 		lijevo.addStyleName(ValoTheme.LAYOUT_CARD);
+		
+		robasifraext.setStyleName("filter-tekstpolje");
+		robanazivext.setStyleName("filter-tekstpolje");
+		kupacsifraext.setStyleName("filter-tekstpolje");
+		
+		kupacnazivext.setStyleName("filter-tekstpolje");
+		cena.setStyleName("filter-tekstpolje");
+		kolicina.setStyleName("filter-tekstpolje");
+		iznos.setStyleName("filter-tekstpolje");
 		
 		desnoPrvi.addComponents(robasifraext, robanazivext, kupacsifraext);
 		desnoDrugi.addComponents(kupacnazivext, cena, kolicina);

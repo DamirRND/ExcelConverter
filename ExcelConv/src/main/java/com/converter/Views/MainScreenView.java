@@ -2,7 +2,20 @@ package com.converter.Views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.EditForme.RobaEdit;
+import com.converter.Controller.EntitetController;
+import com.converter.Controller.EntitetEditController;
+import com.converter.Controller.OrgJedController;
+import com.converter.Controller.OrgJedEditController;
+import com.converter.Controller.RadnikController;
+import com.converter.Controller.RadnikEditController;
+import com.converter.Controller.RegionController;
+import com.converter.Controller.RegionEditController;
+import com.converter.Controller.RobaController;
+import com.converter.Controller.RobaEditController;
+import com.converter.Controller.RobaGrupeController;
+import com.converter.Controller.RobaGrupeEditController;
+import com.converter.Controller.UstanoveController;
+import com.converter.Controller.UstanoveEditController;
 import com.converter.Service.EntitetService;
 import com.converter.Service.KomitentService;
 import com.converter.Service.KorGrupaService;
@@ -29,26 +42,31 @@ public class MainScreenView extends SideMenu implements View{
 	
 	public static final String VIEW_NAME = "mainScreenView";
 	
-	private RobaView robaview;
+	private RobaController robaview;
 	private RobaService rser;
-	private RobaEdit redit;
+	private RobaEditController redit;
 	
-	private RobaGrupeView rgview;
+	private RobaGrupeController rgview;
 	private RobaGrupaService rgser;
+	private RobaGrupeEditController rgeditcont;
 	
 	private ExcelView excelView;
 	
-	private UstanovaView uview;
+	private UstanoveController uview;
 	private UstanovaService user;
+	private UstanoveEditController uedit;
 	
-	private RegionView rview;
+	private RegionController rview;
 	private RegionService regser;
+	private RegionEditController rgedit;
 	
-	private OrganizacionaJedinicaView orgview;
+	private OrgJedController orgview;
 	private OrganizacionaJedinicaService orgser;
+	private OrgJedEditController orgedit;
 	
-	private RadnikView raview;
+	private RadnikController raview;
 	private RadnikService raser;
+	private RadnikEditController redc;
 	
 	private KorGrupaView kgview;
 	private KorGrupaService kgser;
@@ -56,8 +74,9 @@ public class MainScreenView extends SideMenu implements View{
 	private KomitentView kview;
 	private KomitentService kser;
 	
-	private EntitetView eview;
+	private EntitetController eview;
 	private EntitetService eserv;
+	private EntitetEditController eedit;
 	
 	
 	@Autowired
@@ -70,7 +89,14 @@ public class MainScreenView extends SideMenu implements View{
 			RadnikService raser,
 			KorGrupaService kgser,
 			KomitentService kser,
-			EntitetService eserv, RobaEdit redit) {
+			EntitetService eserv, 
+			RobaEditController redit,
+			RobaGrupeEditController rgeditcont,
+			UstanoveEditController uedit,
+			EntitetEditController eedit,
+			OrgJedEditController orgedit,
+			RegionEditController rgedit,
+			RadnikEditController redc) {
 		this.rser = rser;
 		this.rgser = rgser;
 		this.user = user;
@@ -81,6 +107,10 @@ public class MainScreenView extends SideMenu implements View{
 		this.kser = kser;
 		this.eserv = eserv;
 		this.redit = redit;
+		this.uedit = uedit;
+		this.orgedit = orgedit;
+		this.rgedit = rgedit;
+		this.redc = redc;
 		
 		Responsive.makeResponsive(this);
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
@@ -88,50 +118,58 @@ public class MainScreenView extends SideMenu implements View{
         
         addMenuItem("Roba", VaadinIcons.BULLETS, new MenuClickHandler(){
 			public void click(){
-				robaview = new RobaView(rser, redit);
+				robaview = new RobaController(rser, redit);
 				setContent(robaview.getForm());
 			}
 		});
         
         addMenuItem("Roba grupe", VaadinIcons.FILE_TREE, new MenuClickHandler(){
 			public void click(){
-				rgview = new RobaGrupeView(rgser);
+				rgview = new RobaGrupeController(rgser, rgeditcont);
 				setContent(rgview.getForm());
 			}
 		});
         
         addMenuItem("Ustanove", VaadinIcons.BUILDING, new MenuClickHandler(){
 			public void click(){
-				uview = new UstanovaView(user);
+				uview = new UstanoveController(user, uedit);
 				setContent(uview.getForm());
 			}
 		});
         
         addMenuItem("Entiteti", VaadinIcons.GLOBE, new MenuClickHandler(){
 			public void click(){
-				eview = new EntitetView(eserv);
+				eview = new EntitetController(eserv, eedit);
 				setContent(eview.getForm());
 			}
 		});
         
         addMenuItem("Organizaciona jedinica", VaadinIcons.BUILDING_O, new MenuClickHandler(){
 			public void click(){
-				orgview = new OrganizacionaJedinicaView(orgser);
+				orgview = new OrgJedController(orgser, orgedit);
 				setContent(orgview.getForm());
 			}
 		});
         
         addMenuItem("Region", VaadinIcons.AREA_SELECT, new MenuClickHandler(){
 			public void click(){
-				rview = new RegionView(regser);
+				rview = new RegionController(regser, rgedit);
 				setContent(rview.getForm());
 			}
 		});
+        
 
         addMenuItem("Radnici", VaadinIcons.USERS, new MenuClickHandler(){
 			public void click(){
-				raview = new RadnikView(raser);
+				raview = new RadnikController(raser, redc);
 				setContent(raview.getForm());
+			}
+		});
+        
+        addMenuItem("Uloge radnika", VaadinIcons.USER, new MenuClickHandler(){
+			public void click(){
+				kgview = new KorGrupaView(kgser);
+				setContent(kgview.getForm());
 			}
 		});
         
@@ -142,12 +180,8 @@ public class MainScreenView extends SideMenu implements View{
 			}
 		});
         
-        addMenuItem("Uloge radnika", VaadinIcons.USER, new MenuClickHandler(){
-			public void click(){
-				kgview = new KorGrupaView(kgser);
-				setContent(kgview.getForm());
-			}
-		});
+      
+        
         
         addMenuItem("Excel", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 			public void click(){

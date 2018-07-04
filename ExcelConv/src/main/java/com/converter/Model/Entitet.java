@@ -20,7 +20,7 @@ public class Entitet implements Serializable{
 	private int id;
 	
 	@Column(name="sifra")
-	private String sifra;
+	private int sifra;
 	
 	@Column(name="naziv")
 	private String naziv;
@@ -28,7 +28,7 @@ public class Entitet implements Serializable{
 	
 	public Entitet() {}
 	
-	public Entitet(int id, String sifra, String naziv) {
+	public Entitet(int id, int sifra, String naziv) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -43,11 +43,11 @@ public class Entitet implements Serializable{
 		this.id = id;
 	}
 
-	public String getSifra() {
+	public int getSifra() {
 		return sifra;
 	}
 
-	public void setSifra(String sifra) {
+	public void setSifra(int sifra) {
 		this.sifra = sifra;
 	}
 

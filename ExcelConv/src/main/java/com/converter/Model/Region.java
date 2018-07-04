@@ -21,7 +21,7 @@ public class Region implements Serializable{
 	
 	
 	@Column(name="sifra")
-	private String sifra;
+	private int sifra;
 	
 	@Column(name="naziv")
 	private String naziv;
@@ -33,7 +33,7 @@ public class Region implements Serializable{
 	
 	public Region() {}
 
-	public Region(int id, String sifra, String naziv, Entitet entitet) {
+	public Region(int id, int sifra, String naziv, Entitet entitet) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -52,12 +52,12 @@ public class Region implements Serializable{
 	}
 
 
-	public String getSifra() {
+	public int getSifra() {
 		return sifra;
 	}
 
 
-	public void setSifra(String sifra) {
+	public void setSifra(int sifra) {
 		this.sifra = sifra;
 	}
 

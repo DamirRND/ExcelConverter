@@ -20,7 +20,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class RadnikView extends CssLayout implements View{
@@ -28,15 +27,12 @@ public class RadnikView extends CssLayout implements View{
 
 	public static final String VIEW_NAME = "radnikView";
 	
-	private final RadnikService rser;
 	public Grid<Radnik> grid = new Grid<>(Radnik.class);
     public TextField filter;
     public Button newProduct;
     
     @Autowired
-    public RadnikView(RadnikService rser) {
-    	super();
-    	this.rser = rser;
+    public RadnikView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
@@ -44,8 +40,8 @@ public class RadnikView extends CssLayout implements View{
         grid.setSizeFull();
         
         grid.addColumn(Radnik -> Radnik.getKorgrupa().getOpis()).setCaption("Uloga").setId("uloga").setHidable(true);
-        grid.setItems(rser.findAll());
         grid.setColumns("korime", "korlozinka", "naziv", "uloga");
+        grid.getColumn("korlozinka").setHidden(true);
        
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);

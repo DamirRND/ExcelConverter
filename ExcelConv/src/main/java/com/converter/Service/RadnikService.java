@@ -3,8 +3,10 @@ package com.converter.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.converter.Model.Entitet;
 import com.converter.Model.Radnik;
 import com.converter.Repository.RadnikRepository;
 
@@ -20,14 +22,41 @@ public class RadnikService {
 		this.radnikrep = radnikrep;
 	}
 	
+	public List<Radnik> listaJedan;
+	
 	
 	public Radnik findOne(String korime, String korlozinka) {
 		return radnikrep.findOneByKorimeAndKorlozinka(korime, korlozinka);
 	}
 	
-	
+	@Cacheable("radnici")
 	public List<Radnik> findAll(){
+		setListaJedan(radnikrep.findAll());
 		return (List<Radnik>) radnikrep.findAll();
 	}
+	
+	 public Radnik findOne(Integer id){
+		 return radnikrep.findOne(id);
+	 }
+	 
+	 public Radnik save(Radnik r){
+		return radnikrep.saveAndFlush(r);
+	 }
+	 
+	 public void delete(Radnik r){
+		 radnikrep.delete(r);
+	 }
+
+
+	public List<Radnik> getListaJedan() {
+		return listaJedan;
+	}
+
+
+	public void setListaJedan(List<Radnik> listaJedan) {
+		this.listaJedan = listaJedan;
+	}
+	
+	
 	
 }
