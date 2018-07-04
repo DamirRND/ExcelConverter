@@ -151,7 +151,7 @@ public class ExcelViewController extends ExcelView{
 			             
 			             Notification success = new Notification(
 			                       "Prikazan je nalog koji je otvoren ranije za izabrani mjesec. Molimo Vas importujte Excel fajl.");
-			               success.setDelayMsec(2000);
+			               success.setDelayMsec(6000);
 			               success.setStyleName("bar success small");
 			               success.setPosition(Position.BOTTOM_CENTER);
 			               success.show(Page.getCurrent());
@@ -164,7 +164,7 @@ public class ExcelViewController extends ExcelView{
 			             
 			             Notification success = new Notification(
 			                       "Prikazan je nalog koji je otvoren ranije za izabrani mjesec. Molimo Vas obradite stavke koje ste ranije importovali iz excel fajla.");
-			               success.setDelayMsec(2000);
+			               success.setDelayMsec(6000);
 			               success.setStyleName("bar success small");
 			               success.setPosition(Position.BOTTOM_CENTER);
 			               success.show(Page.getCurrent());
@@ -173,7 +173,7 @@ public class ExcelViewController extends ExcelView{
 				
 	    	   }catch(Exception ec){
 	      		   	Notification success = new Notification("Nije moguće otvoriti nalog.");
-	                success.setDelayMsec(5000);
+	                success.setDelayMsec(4000);
 	                success.setStyleName("bar error small");
 	                success.setPosition(Position.BOTTOM_CENTER);
 	                success.show(Page.getCurrent());
