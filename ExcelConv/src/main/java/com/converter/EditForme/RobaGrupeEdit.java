@@ -41,6 +41,7 @@ public class RobaGrupeEdit extends Window{
 	public RobaGrupa rgrupa;
 	
 	private Grid<RobaGrupa> rgGrid;
+	private TextField filter;
 	
 	@Autowired
 	public RobaGrupeEdit() {
@@ -139,7 +140,15 @@ public class RobaGrupeEdit extends Window{
     
     
     
-    public Grid<RobaGrupa> getRobaGrupeGrid() {
+    public TextField getFilter() {
+		return filter;
+	}
+
+	public void setFilter(TextField filter) {
+		this.filter = filter;
+	}
+
+	public Grid<RobaGrupa> getRobaGrupeGrid() {
 		return rgGrid;
 	}
 

@@ -36,8 +36,8 @@ public class OrganizacionaJedinicaView extends CssLayout implements View{
         
         grid.setSizeFull();
         grid.addColumn(OrganizacionaJedinica -> OrganizacionaJedinica.getMesto().getNaziv()).setCaption("Naziv mesta").setId("mestoNaziv").setHidable(true);
-        grid.setColumns("sifra", "naziv", "pib", "adresa", "mestoNaziv");
-       
+        grid.setColumns("id","sifra", "naziv", "pib", "adresa", "mestoNaziv");
+        grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

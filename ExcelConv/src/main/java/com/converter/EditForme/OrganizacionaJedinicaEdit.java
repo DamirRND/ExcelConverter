@@ -46,6 +46,7 @@ public class OrganizacionaJedinicaEdit extends Window{
 	public OrganizacionaJedinica orgjed;
 	
 	private Grid<OrganizacionaJedinica> orgGrid;
+	private TextField filter;
 	
 	@Autowired
 	public OrganizacionaJedinicaEdit() {
@@ -161,9 +162,13 @@ public class OrganizacionaJedinicaEdit extends Window{
     	 	.bind(OrganizacionaJedinica :: getAdresa, OrganizacionaJedinica :: setAdresa);
     }
     
-    
-    
+	public TextField getFilter() {
+		return filter;
+	}
 
+	public void setFilter(TextField filter) {
+		this.filter = filter;
+	}
 
 	public Grid<OrganizacionaJedinica> getOrgGrid() {
 		return orgGrid;

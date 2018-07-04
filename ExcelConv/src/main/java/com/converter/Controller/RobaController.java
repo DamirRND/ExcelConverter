@@ -32,7 +32,8 @@ public class RobaController extends RobaView{
 		this.robaSer = robaSer;
 		this.robaEdit = robaEdit;
 		
-		 grid.setDataProvider(
+		robaSer.setListaJedna(robaSer.findAllCombo());
+		grid.setDataProvider(
 			(sortOrders, offset, limit)->{
 				Map<String, Boolean> sortOrder = sortOrders.stream()
 	                    .collect(Collectors.toMap(
@@ -43,12 +44,15 @@ public class RobaController extends RobaView{
 			()-> robaSer.count()
 	    );
 		
+		robaEdit.setRobaGrid(grid);
+		robaEdit.setFilter(filter);
+		 
 		grid.addItemClickListener(event->{
 			UI.getCurrent().addWindow(robaEdit.getWindow());
 			robaEdit.edit(event.getItem(), robaSer);
 		});
 		 grid.setSelectionMode(SelectionMode.SINGLE);
-	    robaEdit.setRobaGrid(grid);
+	    
 	    
 	    newProduct.addClickListener(noviProizvod -> {
 	    	UI.getCurrent().addWindow(robaEdit.getWindow());
@@ -58,6 +62,9 @@ public class RobaController extends RobaView{
 	    filter.setValueChangeMode(ValueChangeMode.LAZY);
         filter.addValueChangeListener(event -> {
         	if(StringUtils.isEmpty(filter)){
+        		robaSer.getListaJedna().clear();
+        		robaSer.removeCache();
+        		robaSer.setListaJedna(robaSer.findAllCombo());
 				grid.getDataProvider().refreshAll();
 			}else{
 				 List<Roba> result = (List<Roba>) robaSer.getListaJedna().stream()

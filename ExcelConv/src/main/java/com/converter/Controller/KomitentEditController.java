@@ -2,10 +2,11 @@ package com.converter.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.EditForme.OrganizacionaJedinicaEdit;
+import com.converter.EditForme.KomitentiEdit;
 import com.converter.Service.EntitetService;
+import com.converter.Service.KomitentService;
 import com.converter.Service.MestoService;
-import com.converter.Service.OrganizacionaJedinicaService;
+import com.converter.Service.UstanovaService;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -16,76 +17,80 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @SpringComponent
 @UIScope
-public class OrgJedEditController extends OrganizacionaJedinicaEdit{
-
-	private OrganizacionaJedinicaService orgser;
-	private MestoService ms;
+public class KomitentEditController extends KomitentiEdit{
+	
+	private final KomitentService kms;
+	private final MestoService ms;
+	private final UstanovaService us;
 	
 	@Autowired
-	public OrgJedEditController(OrganizacionaJedinicaService orgser, MestoService ms) {
-		this.orgser = orgser;
+	public KomitentEditController(KomitentService kms, MestoService ms, UstanovaService us) {
+		this.kms = kms;
 		this.ms = ms;
+		this.us = us;
 		
 		 ok.addClickListener(event->{
 	    	   try{
-	    		   orgser.save(orgjed);
+	    		   kms.save(komitent);
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	    		   Notification success = new Notification(
-	                       "Org. jed. uspješno sačuvana");
+	                       "Komitent uspješno sačuvan");
 	               success.setDelayMsec(2000);
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
-	               orgser.getListaJedan().clear();
-	               orgser.izbrisiCache();
-	               orgser.setListaJedan(orgser.findAll());
+	               kms.getListaJedan().clear();
+	               kms.izbrisiCache();
+	               kms.setListaJedan(kms.findZaList());
 	               getFilter().clear();
-	               getOrgGrid().setItems(orgser.findAll());
+	               getKomGrid().getDataProvider().refreshAll();
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Nije moguće sačuvati org. jed.");
+	      		   	Notification success = new Notification("Nije moguće sačuvati komitenta.");
 	                 success.setDelayMsec(5000);
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
-	                 orgser.getListaJedan().clear();
-		             orgser.izbrisiCache();
-		             orgser.setListaJedan(orgser.findAll());
-		             getFilter().clear();
-	                 getOrgGrid().setItems(orgser.findAll());
+	                 kms.getListaJedan().clear();
+		               kms.izbrisiCache();
+		               kms.setListaJedan(kms.findZaList());
+		               getFilter().clear();
+	                 getKomGrid().getDataProvider().refreshAll();
 	    	   }
 	       });
 	 
 	        delete.addClickListener(event->{
 	        	 try{
-	        		 orgser.delete(orgjed);
+	        		 kms.delete(komitent);
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Org. jed. uspješno izbrisana");
+	      		   	Notification success = new Notification("Komitent uspješno izbrisan.");
 	                 success.setDelayMsec(2000);
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
-	                 orgser.getListaJedan().clear();
-		             orgser.izbrisiCache();
-		             orgser.setListaJedan(orgser.findAll());
-		             getFilter().clear();
-	                 getOrgGrid().setItems(orgser.findAll());
+	                 kms.getListaJedan().clear();
+		               kms.izbrisiCache();
+		               kms.setListaJedan(kms.findZaList());
+		               getFilter().clear();
+	                 getKomGrid().getDataProvider().refreshAll();
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Nije moguće izbrisati org. jed.");
+	      		   	Notification success = new Notification("Nije moguće izbrisati komitenta. Komitent je povezan sa stavkom iz naloga.");
 	                 success.setDelayMsec(5000);
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
-	                 orgser.getListaJedan().clear();
-		             orgser.izbrisiCache();
-		             orgser.setListaJedan(orgser.findAll());
-		             getFilter().clear();
-	                 getOrgGrid().setItems(orgser.findAll());
+	                 kms.getListaJedan().clear();
+		               kms.izbrisiCache();
+		               kms.setListaJedan(kms.findZaList());
+		               getFilter().clear();
+	                 getKomGrid().getDataProvider().refreshAll();
 	      	   }
 	        });
 	        
 	        mesto.setItems(ms.findAll());
+	        ustanova.setItems(us.findAllCombo());
 	        
 	}
+	
 }

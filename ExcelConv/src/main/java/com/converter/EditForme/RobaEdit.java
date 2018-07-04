@@ -47,6 +47,7 @@ public class RobaEdit extends Window{
 	public Roba roba;
 	
 	private Grid<Roba> robaGrid;
+	private TextField filter;
 	
 	@Autowired
 	public RobaEdit() {
@@ -171,6 +172,16 @@ public class RobaEdit extends Window{
 
 	public void setRobaGrid(Grid<Roba> robaGrid) {
 		this.robaGrid = robaGrid;
+	}
+	
+	
+
+	public TextField getFilter() {
+		return filter;
+	}
+
+	public void setFilter(TextField filter) {
+		this.filter = filter;
 	}
 
 	public RobaEdit getWindow(){

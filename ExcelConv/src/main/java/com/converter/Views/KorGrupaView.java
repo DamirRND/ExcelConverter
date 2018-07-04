@@ -1,14 +1,10 @@
 package com.converter.Views;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.KorGrupa;
-import com.converter.Service.KorGrupaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -20,30 +16,26 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class KorGrupaView extends CssLayout implements View{
 	
 	public static final String VIEW_NAME = "korGrupaView";
 
-	private final KorGrupaService korser;
+	
 	public Grid<KorGrupa> grid = new Grid<>(KorGrupa.class);
     public TextField filter;
     public Button newProduct;
     
-    @Autowired
-    public KorGrupaView(KorGrupaService korser) {
-    	super();
-    	this.korser = korser;
+    
+    public KorGrupaView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
-        grid.setItems(korser.findAll());
-        grid.setColumns("sifra", "opis", "nivo");
-       
+        grid.setColumns("id","sifra", "opis", "nivo");
+        grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

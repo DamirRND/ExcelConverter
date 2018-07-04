@@ -41,8 +41,9 @@ public class RegionView extends CssLayout implements View{
         grid.setSizeFull();
         grid.addColumn(Region -> Region.getEntitet().getNaziv()).setCaption("Naziv entiteta").setId("entitetNaziv").setHidable(true);
        
-        grid.setColumns("sifra", "naziv", "entitetNaziv");
-       
+        grid.setColumns("id","sifra", "naziv", "entitetNaziv");
+        grid.getColumn("id").setHidden(true);
+        
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

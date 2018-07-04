@@ -30,10 +30,12 @@ public class RobaGrupeController extends RobaGrupeView{
 		this.rgser = rgser;
 		this.rgedit = rgedit;
 		
+		rgser.setListaJedna(rgser.findAll());
 		grid.setItems(rgser.findAll());
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		
 		rgedit.setRobaGrupeGrid(grid);
+		rgedit.setFilter(filter);
 		grid.addItemClickListener(event->{
 			UI.getCurrent().addWindow(rgedit.getWindow());
 			rgedit.edit(event.getItem(), rgser);
@@ -47,6 +49,9 @@ public class RobaGrupeController extends RobaGrupeView{
 		filter.setValueChangeMode(ValueChangeMode.LAZY);
 	    filter.addValueChangeListener(event -> {
 	        	if(StringUtils.isEmpty(filter)){
+	        		rgser.getListaJedna().clear();
+	        		rgser.izbrisiCache();
+	        		rgser.setListaJedna(rgser.findAll());
 					grid.getDataProvider().refreshAll();
 				}else{
 					 List<RobaGrupa> result = (List<RobaGrupa>) rgser.getListaJedna().stream()

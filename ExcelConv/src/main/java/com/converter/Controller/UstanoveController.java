@@ -31,6 +31,7 @@ public class UstanoveController extends UstanovaView{
 		this.user = user;
 		this.uedit = uedit;
 		
+		user.setListaJedan(user.findAllCombo());
 		 grid.setDataProvider(
 					(sortOrders, offset, limit)->{
 						Map<String, Boolean> sortOrder = sortOrders.stream()
@@ -49,7 +50,7 @@ public class UstanoveController extends UstanovaView{
 			});
 		 
 		 uedit.setuGrid(grid);
-		    
+		 uedit.setFilter(filter);
 		    newProduct.addClickListener(noviProizvod -> {
 		    	UI.getCurrent().addWindow(uedit.getWindow());
 		    	uedit.edit(null, user);
@@ -58,6 +59,9 @@ public class UstanoveController extends UstanovaView{
 		    filter.setValueChangeMode(ValueChangeMode.LAZY);
 	        filter.addValueChangeListener(event -> {
 	        	if(StringUtils.isEmpty(filter)){
+	        		user.getListaJedan().clear();
+	        		user.izbrisiCache();
+	        		user.setListaJedan(user.findAllCombo());
 					grid.getDataProvider().refreshAll();
 				}else{
 					 List<Ustanova> result = (List<Ustanova>) user.getListaJedan().stream()

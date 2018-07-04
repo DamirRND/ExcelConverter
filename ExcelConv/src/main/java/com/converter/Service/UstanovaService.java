@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,9 +36,13 @@ public class UstanovaService {
 
         PageRequest pageRequest = new PageRequest(page, limit, orders.isEmpty() ? null : new Sort(orders));
         List<Ustanova> items = urep.findAll(pageRequest).getContent();
-        setListaJedan(urep.findAll());
         return items.subList(offset%limit, items.size());
     }
+	
+	@CacheEvict(value="ustanove", allEntries=true)
+	public void izbrisiCache(){
+		System.out.println("Ustanove kes izbrisan.");
+	}
 	
 	 public Integer count() {
 	        return Math.toIntExact(urep.count());
@@ -54,6 +59,11 @@ public class UstanovaService {
 	 public void delete(Ustanova r){
 		 urep.delete(r);
 	 }
+	 
+	 
+	public List<Ustanova> findAllCombo(){
+		return (List<Ustanova>) urep.findAll();
+	}
 
 	public List<Ustanova> getListaJedan() {
 		return listaJedan;

@@ -37,9 +37,23 @@ public class RobaEditController extends RobaEdit{
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               rser.getListaJedna().clear();
+	               rser.setListaJedna(rser.findAllCombo());
+	               getFilter().clear();
+	               rser.removeCache();
 	               getRobaGrid().getDataProvider().refreshAll();
 	    	   }catch(Exception ec){
-	    		   ec.printStackTrace();
+	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
+	      		   	Notification success = new Notification("Nije moguće sačuvati robu.");
+	                 success.setDelayMsec(5000);
+	                 success.setStyleName("bar error small");
+	                 success.setPosition(Position.BOTTOM_CENTER);
+	                 success.show(Page.getCurrent());
+	                 rser.getListaJedna().clear();
+	                 rser.setListaJedna(rser.findAllCombo());
+	                 getFilter().clear();
+	                 rser.removeCache();
+	                 getRobaGrid().getDataProvider().refreshAll();
 	    	   }
 	       });
 	 
@@ -52,6 +66,10 @@ public class RobaEditController extends RobaEdit{
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rser.getListaJedna().clear();
+	                 rser.setListaJedna(rser.findAllCombo());
+	                 getFilter().clear();
+	                 rser.removeCache();
 	                 getRobaGrid().getDataProvider().refreshAll();
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -60,6 +78,10 @@ public class RobaEditController extends RobaEdit{
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rser.getListaJedna().clear();
+	                 rser.setListaJedna(rser.findAllCombo());
+	                 getFilter().clear();
+	                 rser.removeCache();
 	                 getRobaGrid().getDataProvider().refreshAll();
 	      	   }
 	        });

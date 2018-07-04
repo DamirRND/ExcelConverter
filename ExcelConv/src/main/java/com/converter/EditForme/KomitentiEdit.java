@@ -2,18 +2,25 @@ package com.converter.EditForme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.converter.Model.Entitet;
+import com.converter.Model.Komitent;
+import com.converter.Model.KorGrupa;
+import com.converter.Model.Mesto;
 import com.converter.Model.Ustanova;
-import com.converter.Service.UstanovaService;
+import com.converter.Service.EntitetService;
+import com.converter.Service.KomitentService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
@@ -28,23 +35,28 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 @Theme("mytheme")
 @SuppressWarnings("serial")
-public class UstanoveEdit extends Window{
-	
+public class KomitentiEdit extends Window{
+
 	public TextField sifra;
 	public TextField naziv;
+	public TextField pib;
+	public TextField adresa;
+	public TextField tip;
+	public ComboBox<Mesto> mesto;
+	public ComboBox<Ustanova> ustanova;
 	
-	public Binder<Ustanova> binder = new Binder<>(Ustanova.class);
+	public Binder<Komitent> binder = new Binder<>(Komitent.class);
 	
 	public Button ok;
 	public Button delete;
 	
-	public Ustanova ustanova;
+	public Komitent komitent;
 	
-	private Grid<Ustanova> uGrid;
+	private Grid<Komitent> komGrid;
 	private TextField filter;
 	
 	@Autowired
-	public UstanoveEdit() {
+	public KomitentiEdit() {
 		addStyleName("profile-window");
 	    Responsive.makeResponsive(this);
 	        
@@ -75,7 +87,7 @@ public class UstanoveEdit extends Window{
 	
 	private Component buildProfileTab() {
         HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Ustanova");
+        root.setCaption("Komitent");
         root.setIcon(VaadinIcons.BULLETS);
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
@@ -92,7 +104,26 @@ public class UstanoveEdit extends Window{
         
         naziv = new TextField("Naziv");
         details.addComponent(naziv);
-        	 
+        
+        pib = new TextField("PIB");
+        details.addComponent(pib);
+        
+        adresa = new TextField("Adresa");
+        details.addComponent(adresa);
+        
+        tip = new TextField("Tip");
+        details.addComponent(tip);
+     
+        mesto = new ComboBox<>();
+        mesto.setPlaceholder("Mesto");
+        mesto.setItemCaptionGenerator(Mesto :: getNaziv);
+    	details.addComponent(mesto);
+    	
+    	ustanova = new ComboBox<>();
+    	ustanova.setPlaceholder("Ustanova");
+    	ustanova.setItemCaptionGenerator(Ustanova :: getNaziv);
+     	details.addComponent(mesto);
+    	
         return root;
     }
 
@@ -117,27 +148,39 @@ public class UstanoveEdit extends Window{
         return footer;
     }
     
-    public final void edit(Ustanova u, UstanovaService user){
-		final boolean persisted = u != null;
+    public final void edit(Komitent k, KomitentService kser){
+		final boolean persisted = k != null;
 		if (persisted) {
-			ustanova = user.findOne(u.getId());
+			komitent = kser.findOne(k.getId());
 		}
 		else {
-			ustanova = new Ustanova();
+			komitent = new Komitent();
 		}
-		binder.setBean(ustanova);
+		binder.setBean(komitent);
     }
-    
+
     public void initBind(){
     	 binder.forField(sifra)
     	 	.withNullRepresentation("")
     		.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-     		.bind(Ustanova :: getSifra, Ustanova :: setSifra);
+     		.bind(Komitent :: getSifra, Komitent :: setSifra);
     	 binder.forField(naziv)
     	 	.withNullRepresentation("")
-    	 	.bind(Ustanova :: getNaziv, Ustanova :: setNaziv);
+    	 	.bind(Komitent :: getNaziv, Komitent :: setNaziv);
+    	 binder.forField(pib)
+	 	 	.withNullRepresentation("")
+	 	 	.bind(Komitent :: getPib, Komitent :: setPib);
+    	 binder.forField(adresa)
+	 	 	.withNullRepresentation("")
+	 	 	.bind(Komitent :: getAdresa, Komitent :: setAdresa);
+    	 binder.forField(tip)
+	 	 	.withNullRepresentation("")
+	 	 	.bind(Komitent :: getTip, Komitent :: setTip);
+    	 binder.forField(mesto)
+	 	 	.bind(Komitent :: getMesto, Komitent :: setMesto);
+    	 binder.forField(ustanova)
+	 	 	.bind(Komitent :: getUstanova, Komitent :: setUstanova);
     }
-    
     
     
 
@@ -149,16 +192,15 @@ public class UstanoveEdit extends Window{
 		this.filter = filter;
 	}
 
-	public Grid<Ustanova> getuGrid() {
-		return uGrid;
+	public Grid<Komitent> getKomGrid() {
+		return komGrid;
 	}
 
-	public void setuGrid(Grid<Ustanova> uGrid) {
-		this.uGrid = uGrid;
+	public void setKomGrid(Grid<Komitent> komGrid) {
+		this.komGrid = komGrid;
 	}
 
-	public UstanoveEdit getWindow(){
+	public KomitentiEdit getWindow(){
     	return this;
     }
-
 }

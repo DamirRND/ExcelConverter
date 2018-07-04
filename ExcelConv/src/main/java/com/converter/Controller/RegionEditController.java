@@ -33,11 +33,15 @@ public class RegionEditController extends RegionEdit{
 	    		   rser.save(region);
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	    		   Notification success = new Notification(
-	                       "Region uspješno sačuvan");
+	                       "Region uspješno sačuvan.");
 	               success.setDelayMsec(2000);
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               rser.getListaJedan().clear();
+	               rser.izbrisiCache();
+	               rser.setListaJedan(rser.findAll());
+	               getFilter().clear();
 	               getRegGrid().setItems(rser.findAll());
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -47,6 +51,10 @@ public class RegionEditController extends RegionEdit{
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               rser.getListaJedan().clear();
+	               rser.izbrisiCache();
+	               rser.setListaJedan(rser.findAll());
+	               getFilter().clear();
 	               getRegGrid().setItems(rser.findAll());
 	    	   }
 	       });
@@ -55,19 +63,27 @@ public class RegionEditController extends RegionEdit{
 	        	 try{
 	        		 rser.delete(region);
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Region uspješno izbrisan");
+	      		   	Notification success = new Notification("Region uspješno izbrisan.");
 	                 success.setDelayMsec(2000);
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rser.getListaJedan().clear();
+		               rser.izbrisiCache();
+		               rser.setListaJedan(rser.findAll());
+		               getFilter().clear();
 	                 getRegGrid().setItems(rser.findAll());
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Nije moguće izbrisati region. Region je povezan sa stavkom iz naloga.");
+	      		   	Notification success = new Notification("Nije moguće izbrisati region.");
 	                 success.setDelayMsec(5000);
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rser.getListaJedan().clear();
+		               rser.izbrisiCache();
+		               rser.setListaJedan(rser.findAll());
+		               getFilter().clear();
 	                 getRegGrid().setItems(rser.findAll());
 	      	   }
 	        });

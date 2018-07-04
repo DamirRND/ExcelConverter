@@ -24,21 +24,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class KomitentView extends CssLayout implements View{
 	public static final String VIEW_NAME = "komitentView";
 	
-	private final KomitentService kser;
 	public Grid<Komitent> grid = new Grid<>(Komitent.class);
     public TextField filter;
     public Button newProduct;
     
     @Autowired
-    public KomitentView(KomitentService kser) {
-    	super();
-    	this.kser = kser;
+    public KomitentView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
@@ -46,18 +42,8 @@ public class KomitentView extends CssLayout implements View{
         grid.setSizeFull();
         grid.addColumn(Komitent -> Komitent.getMesto().getNaziv()).setCaption("Mesto").setId("mestoNaziv").setHidable(true);
         grid.addColumn(Komitent -> Komitent.getUstanova().getNaziv()).setCaption("Ustanova").setId("ustanovaNaziv").setHidable(true);
-        grid.setDataProvider(
-				(sortOrders, offset, limit)->{
-					Map<String, Boolean> sortOrder = sortOrders.stream()
-                            .collect(Collectors.toMap(
-                                    sort -> sort.getSorted(),
-                                    sort -> sort.getDirection() == SortDirection.ASCENDING));
-
-                    return kser.findAll(offset, limit, sortOrder).stream();
-				},
-				()-> kser.count()
-        );
-        grid.setColumns("sifra", "naziv", "pib", "adresa", "tip", "mestoNaziv", "ustanovaNaziv");
+        grid.setColumns("id", "sifra", "naziv", "pib", "adresa", "tip", "mestoNaziv", "ustanovaNaziv");
+        grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

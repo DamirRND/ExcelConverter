@@ -3,6 +3,7 @@ package com.converter.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,12 @@ public class RobaGrupaService {
 	
 	@Cacheable("robaGrupe")
 	public List<RobaGrupa> findAll(){
-		setListaJedna(rgRep.findAll());
 		return (List<RobaGrupa>) rgRep.findAll();
+	}
+	
+	@CacheEvict(value="robaGrupe", allEntries=true)
+	public void izbrisiCache() {
+		System.out.println("Kes grupa robe izbrisan.");
 	}
 	
 	 public RobaGrupa save(RobaGrupa r){

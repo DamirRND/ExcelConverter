@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,14 +36,18 @@ public class RobaService {
 
         PageRequest pageRequest = new PageRequest(page, limit, orders.isEmpty() ? null : new Sort(orders));
         List<Roba> items = robarep.findAll(pageRequest).getContent();
-        setListaJedna(robarep.findAll());
         return items.subList(offset%limit, items.size());
     }
+	
 	
 	 public Integer count() {
 	        return Math.toIntExact(robarep.count());
 	 }
 
+	 @CacheEvict(value="roba",allEntries=true)
+	 public void removeCache() {
+		 System.out.println("Kes izbrisan za robu");
+	 }
 	 
 	 public List<Roba> findAllCombo(){
 		 return (List<Roba>) robarep.findAll();

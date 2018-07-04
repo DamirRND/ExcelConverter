@@ -49,6 +49,7 @@ public class RegionEdit extends Window{
 	public Region region;
 	
 	private Grid<Region> regGrid;
+	private TextField filter;
 	
 	@Autowired
 	public RegionEdit() {
@@ -154,6 +155,15 @@ public class RegionEdit extends Window{
     }
     
     
+    
+	public TextField getFilter() {
+		return filter;
+	}
+
+	public void setFilter(TextField filter) {
+		this.filter = filter;
+	}
+
 	public Grid<Region> getRegGrid() {
 		return regGrid;
 	}

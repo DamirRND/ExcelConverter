@@ -41,8 +41,8 @@ public class RobaGrupeView extends CssLayout implements View{
         
         grid.setSizeFull();
        
-        grid.setColumns("sifra", "naziv");
-       
+        grid.setColumns("id","sifra", "naziv");
+        grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

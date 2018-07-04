@@ -3,6 +3,7 @@ package com.converter.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +26,13 @@ public class EntitetService {
 	
 	@Cacheable("entitet")
 	public List<Entitet> findAll(){
-		setListaJedan(erep.findAll());
 		return (List<Entitet>) erep.findAll();
 	}
 	
+	@CacheEvict(value="entitet", allEntries=true)
+	public void izbrisiCache() {
+		System.out.println("Kes entitet izbrisan");
+	}
 	 public Entitet findOne(Integer id){
 		 return erep.findOne(id);
 	 }

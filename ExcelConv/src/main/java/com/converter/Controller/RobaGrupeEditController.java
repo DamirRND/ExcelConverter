@@ -33,6 +33,10 @@ public class RobaGrupeEditController extends RobaGrupeEdit{
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               rgser.getListaJedna().clear();
+	               rgser.izbrisiCache();
+	               rgser.setListaJedna(rgser.findAll());
+	               getFilter().clear();
 	               getRobaGrupeGrid().setItems(rgser.findAll());
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -41,6 +45,10 @@ public class RobaGrupeEditController extends RobaGrupeEdit{
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rgser.getListaJedna().clear();
+	                 rgser.izbrisiCache();
+		             rgser.setListaJedna(rgser.findAll());
+		             getFilter().clear();
 	                 getRobaGrupeGrid().setItems(rgser.findAll());
 	    	   }
 	       });
@@ -54,6 +62,10 @@ public class RobaGrupeEditController extends RobaGrupeEdit{
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rgser.getListaJedna().clear();
+		             rgser.izbrisiCache();
+		             rgser.setListaJedna(rgser.findAll());
+		             getFilter().clear();
 	                 getRobaGrupeGrid().setItems(rgser.findAll());
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -62,6 +74,10 @@ public class RobaGrupeEditController extends RobaGrupeEdit{
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rgser.getListaJedna().clear();
+		             rgser.izbrisiCache();
+		             rgser.setListaJedna(rgser.findAll());
+		             getFilter().clear();
 	                 getRobaGrupeGrid().setItems(rgser.findAll());
 	      	   }
 	        });

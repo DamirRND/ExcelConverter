@@ -29,6 +29,7 @@ public class OrgJedController extends OrganizacionaJedinicaView{
 		this.orgser = orgser;
 		this.orgedit = orgedit;
 		
+		orgser.setListaJedan(orgser.findAll());
 		grid.setItems(orgser.findAll());
 		
 		 grid.addItemClickListener(event->{
@@ -37,6 +38,7 @@ public class OrgJedController extends OrganizacionaJedinicaView{
 		 });
 		 
 		 orgedit.setOrgGrid(grid);
+		 orgedit.setFilter(filter);
 		 newProduct.addClickListener(noviProizvod -> {
 		    	UI.getCurrent().addWindow(orgedit.getWindow());
 		    	orgedit.edit(null, orgser);
@@ -45,6 +47,9 @@ public class OrgJedController extends OrganizacionaJedinicaView{
 		 filter.setValueChangeMode(ValueChangeMode.LAZY);
 	     filter.addValueChangeListener(event -> {
 	        	if(StringUtils.isEmpty(filter)){
+	        		orgser.getListaJedan().clear();
+	        		orgser.izbrisiCache();
+	        		orgser.setListaJedan(orgser.findAll());
 					grid.getDataProvider().refreshAll();
 				}else{
 					 List<OrganizacionaJedinica> result = (List<OrganizacionaJedinica>) orgser.getListaJedan().stream()

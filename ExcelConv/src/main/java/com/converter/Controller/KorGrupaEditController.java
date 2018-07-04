@@ -2,10 +2,8 @@ package com.converter.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.EditForme.UstanoveEdit;
-import com.converter.Model.Ustanova;
-import com.converter.Service.RobaGrupaService;
-import com.converter.Service.UstanovaService;
+import com.converter.EditForme.UlogeRadnikaEdit;
+import com.converter.Service.KorGrupaService;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -16,73 +14,73 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @SpringComponent
 @UIScope
-public class UstanoveEditController extends UstanoveEdit{
-	
-	private final UstanovaService user;
+public class KorGrupaEditController extends UlogeRadnikaEdit{
+
+	@SuppressWarnings("unused")
+	private final KorGrupaService kgs;
 	
 	@Autowired
-	public UstanoveEditController(UstanovaService user) {
-		this.user = user;
+	public KorGrupaEditController(KorGrupaService kgs) {
+		this.kgs = kgs;
 		
 		 ok.addClickListener(event->{
 	    	   try{
-	    		   user.save(ustanova);
+	    		   kgs.save(korgrupa);
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	    		   Notification success = new Notification(
-	                       "Ustanova uspješno sačuvana");
+	                       "Uloga radnika uspješno sačuvana");
 	               success.setDelayMsec(2000);
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
-	               user.getListaJedan().clear();
-	               user.izbrisiCache();
-	               user.setListaJedan(user.findAllCombo());
+	               kgs.getListaJedan().clear();
+	               kgs.izbrisiCache();
+	               kgs.setListaJedan(kgs.findAll());
 	               getFilter().clear();
-	               getuGrid().getDataProvider().refreshAll();
+	               getKorGrid().setItems(kgs.findAll());
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Nije moguće sačuvati ustanovu.");
+	      		   	Notification success = new Notification("Nije moguće sačuvati ulogu radnika.");
 	                 success.setDelayMsec(5000);
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
-	                 user.getListaJedan().clear();
-		             user.izbrisiCache();
-		             user.setListaJedan(user.findAllCombo());
-		             getFilter().clear();
-	                 getuGrid().getDataProvider().refreshAll();
+	                 kgs.getListaJedan().clear();
+		               kgs.izbrisiCache();
+		               kgs.setListaJedan(kgs.findAll());
+		               getFilter().clear();
+	                 getKorGrid().setItems(kgs.findAll());
 	    	   }
 	       });
 	 
 	        delete.addClickListener(event->{
 	        	 try{
-	        		 user.delete(ustanova);
+	        		 kgs.delete(korgrupa);
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Ustanova uspješno izbrisana");
+	      		   	Notification success = new Notification("Uloga radnika uspješno izbrisana.");
 	                 success.setDelayMsec(2000);
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
-	                 user.getListaJedan().clear();
-		             user.izbrisiCache();
-		             user.setListaJedan(user.findAllCombo());
-		             getFilter().clear();
-	                 getuGrid().getDataProvider().refreshAll();
+	                 kgs.getListaJedan().clear();
+		               kgs.izbrisiCache();
+		               kgs.setListaJedan(kgs.findAll());
+		               getFilter().clear();
+	                 getKorGrid().setItems(kgs.findAll());
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Nije moguće izbrisati ustanovu.");
+	      		   	Notification success = new Notification("Nije moguće izbrisati ulogu radnika.");
 	                 success.setDelayMsec(5000);
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
-	                 user.getListaJedan().clear();
-		             user.izbrisiCache();
-		             user.setListaJedan(user.findAllCombo());
-		             getFilter().clear();
-	                 getuGrid().getDataProvider().refreshAll();
+	                 kgs.getListaJedan().clear();
+		               kgs.izbrisiCache();
+		               kgs.setListaJedan(kgs.findAll());
+		               getFilter().clear();
+	                 getKorGrid().setItems(kgs.findAll());
 	      	   }
 	        });
 	        
 	}
-
 }

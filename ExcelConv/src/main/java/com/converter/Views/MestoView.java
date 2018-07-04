@@ -1,14 +1,10 @@
 package com.converter.Views;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.Mesto;
-import com.converter.Service.MestoService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -20,22 +16,18 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class MestoView extends CssLayout implements View{
 	
 	public static final String VIEW_NAME = "mestoView";
 	
-	private final MestoService mser;
 	public Grid<Mesto> grid = new Grid<>(Mesto.class);
     public TextField filter;
     public Button newProduct;
     
-    @Autowired
-    public MestoView(MestoService mser) {
-    	super();
-    	this.mser = mser;
+
+    public MestoView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
@@ -43,9 +35,10 @@ public class MestoView extends CssLayout implements View{
         grid.setSizeFull();
         grid.addColumn(Mesto -> Mesto.getRegion().getNaziv()).setCaption("Naziv regiona").setId("regionNaziv").setHidable(true);
         grid.addColumn(Mesto -> Mesto.getEntitet()).setCaption("Naziv entiteta").setId("entiteNaziv").setHidable(true);
-        grid.setItems(mser.findAll());
-        grid.setColumns("pttbroj", "naziv", "regionNaziv", "entiteNaziv");
-       
+      
+        grid.setColumns("id","pttbroj", "naziv", "regionNaziv", "entiteNaziv");
+        grid.getColumn("id").setHidden(true);
+        
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

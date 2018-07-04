@@ -31,11 +31,15 @@ public class RadnikEditController extends RadniciEdit{
 	    		   rs.save(radnik);
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	    		   Notification success = new Notification(
-	                       "Radnik uspješno sačuvan");
+	                       "Radnik uspješno sačuvan.");
 	               success.setDelayMsec(2000);
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               rs.getListaJedan().clear();
+	               rs.izbrisiCache();
+	               rs.setListaJedan(rs.findAll());
+	               getFilter().clear();
 	               getRadnikGrid().setItems(rs.findAll());
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -45,6 +49,10 @@ public class RadnikEditController extends RadniciEdit{
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               rs.getListaJedan().clear();
+	               rs.izbrisiCache();
+	               rs.setListaJedan(rs.findAll());
+	               getFilter().clear();
 	               getRadnikGrid().setItems(rs.findAll());
 	    	   }
 	       });
@@ -53,11 +61,15 @@ public class RadnikEditController extends RadniciEdit{
 	        	 try{
 	        		 rs.delete(radnik);
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Radnik uspješno izbrisan");
+	      		   	Notification success = new Notification("Radnik uspješno izbrisan.");
 	                 success.setDelayMsec(2000);
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rs.getListaJedan().clear();
+		               rs.izbrisiCache();
+		               rs.setListaJedan(rs.findAll());
+		               getFilter().clear();
 	                 getRadnikGrid().setItems(rs.findAll());
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -66,6 +78,10 @@ public class RadnikEditController extends RadniciEdit{
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 rs.getListaJedan().clear();
+		               rs.izbrisiCache();
+		               rs.setListaJedan(rs.findAll());
+		               getFilter().clear();
 	                 getRadnikGrid().setItems(rs.findAll());
 	      	   }
 	        });

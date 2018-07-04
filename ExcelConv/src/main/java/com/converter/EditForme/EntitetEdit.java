@@ -43,6 +43,8 @@ public class EntitetEdit  extends Window{
 	public Entitet entitet;
 	
 	private Grid<Entitet> eGrid;
+	private TextField filter;
+	
 	
 	@Autowired
 	public EntitetEdit() {
@@ -140,6 +142,14 @@ public class EntitetEdit  extends Window{
     }
     
     
+
+	public TextField getFilter() {
+		return filter;
+	}
+
+	public void setFilter(TextField filter) {
+		this.filter = filter;
+	}
 
 	public Grid<Entitet> geteGrid() {
 		return eGrid;

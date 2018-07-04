@@ -30,6 +30,7 @@ public class RegionController extends RegionView{
 		this.rser = rser;
 		this.redit = redit;
 		
+		rser.setListaJedan(rser.findAll());
 		grid.setItems(rser.findAll());
 		
 		grid.addItemClickListener(event->{
@@ -38,6 +39,7 @@ public class RegionController extends RegionView{
 		 });
 		 
 		redit.setRegGrid(grid);
+		redit.setFilter(filter);
 		 newProduct.addClickListener(noviProizvod -> {
 		    	UI.getCurrent().addWindow(redit.getWindow());
 		    	redit.edit(null, rser);
@@ -46,6 +48,9 @@ public class RegionController extends RegionView{
 		 filter.setValueChangeMode(ValueChangeMode.LAZY);
 	     filter.addValueChangeListener(event -> {
 	        	if(StringUtils.isEmpty(filter)){
+	        		rser.getListaJedan().clear();
+	        		rser.izbrisiCache();
+	        		rser.setListaJedan(rser.findAll());
 					grid.getDataProvider().refreshAll();
 				}else{
 					 List<Region> result = (List<Region>) rser.getListaJedan().stream()

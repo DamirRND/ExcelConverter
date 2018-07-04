@@ -46,6 +46,7 @@ public class RadniciEdit extends Window{
 	public Radnik radnik;
 	
 	private Grid<Radnik> radnikGrid;
+	private TextField filter;
 	
 	@Autowired
 	public RadniciEdit() {
@@ -157,6 +158,14 @@ public class RadniciEdit extends Window{
     
     
 
+
+	public TextField getFilter() {
+		return filter;
+	}
+
+	public void setFilter(TextField filter) {
+		this.filter = filter;
+	}
 
 	public Grid<Radnik> getRadnikGrid() {
 		return radnikGrid;

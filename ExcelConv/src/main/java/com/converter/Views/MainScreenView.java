@@ -4,6 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Controller.EntitetController;
 import com.converter.Controller.EntitetEditController;
+import com.converter.Controller.ExcelViewController;
+import com.converter.Controller.KomitentController;
+import com.converter.Controller.KomitentEditController;
+import com.converter.Controller.KorGrupaController;
+import com.converter.Controller.KorGrupaEditController;
+import com.converter.Controller.MestoController;
+import com.converter.Controller.MestoEditController;
 import com.converter.Controller.OrgJedController;
 import com.converter.Controller.OrgJedEditController;
 import com.converter.Controller.RadnikController;
@@ -19,6 +26,7 @@ import com.converter.Controller.UstanoveEditController;
 import com.converter.Service.EntitetService;
 import com.converter.Service.KomitentService;
 import com.converter.Service.KorGrupaService;
+import com.converter.Service.MestoService;
 import com.converter.Service.OrganizacionaJedinicaService;
 import com.converter.Service.RadnikService;
 import com.converter.Service.RegionService;
@@ -50,7 +58,7 @@ public class MainScreenView extends SideMenu implements View{
 	private RobaGrupaService rgser;
 	private RobaGrupeEditController rgeditcont;
 	
-	private ExcelView excelView;
+	private ExcelViewController excelView;
 	
 	private UstanoveController uview;
 	private UstanovaService user;
@@ -68,16 +76,21 @@ public class MainScreenView extends SideMenu implements View{
 	private RadnikService raser;
 	private RadnikEditController redc;
 	
-	private KorGrupaView kgview;
+	private KorGrupaController kgview;
 	private KorGrupaService kgser;
+	private KorGrupaEditController kgedit;
 	
-	private KomitentView kview;
+	private KomitentController kview;
 	private KomitentService kser;
+	private KomitentEditController kedit;
 	
 	private EntitetController eview;
 	private EntitetService eserv;
 	private EntitetEditController eedit;
 	
+	private MestoController mview;
+	private MestoService mser;
+	private MestoEditController medit;
 	
 	@Autowired
 	public MainScreenView(
@@ -89,14 +102,18 @@ public class MainScreenView extends SideMenu implements View{
 			RadnikService raser,
 			KorGrupaService kgser,
 			KomitentService kser,
-			EntitetService eserv, 
+			EntitetService eserv,
+			MestoService mser,
 			RobaEditController redit,
 			RobaGrupeEditController rgeditcont,
 			UstanoveEditController uedit,
 			EntitetEditController eedit,
 			OrgJedEditController orgedit,
 			RegionEditController rgedit,
-			RadnikEditController redc) {
+			RadnikEditController redc,
+			KorGrupaEditController kgedit,
+			KomitentEditController kedit,
+			MestoEditController medit) {
 		this.rser = rser;
 		this.rgser = rgser;
 		this.user = user;
@@ -111,6 +128,8 @@ public class MainScreenView extends SideMenu implements View{
 		this.orgedit = orgedit;
 		this.rgedit = rgedit;
 		this.redc = redc;
+		this.kgedit = kgedit;
+		this.kedit = kedit;
 		
 		Responsive.makeResponsive(this);
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
@@ -166,26 +185,32 @@ public class MainScreenView extends SideMenu implements View{
 			}
 		});
         
+        
         addMenuItem("Uloge radnika", VaadinIcons.USER, new MenuClickHandler(){
 			public void click(){
-				kgview = new KorGrupaView(kgser);
+				kgview = new KorGrupaController(kgser, kgedit);
 				setContent(kgview.getForm());
+			}
+		});
+        
+        addMenuItem("Mesto", VaadinIcons.GLOBE, new MenuClickHandler(){
+			public void click(){
+				mview = new MestoController(mser, medit);
+				setContent(mview.getForm());
 			}
 		});
         
         addMenuItem("Komitenti", VaadinIcons.USER_CARD, new MenuClickHandler(){
 			public void click(){
-				kview = new KomitentView(kser);
+				kview = new KomitentController(kser, kedit);
 				setContent(kview.getForm());
 			}
 		});
         
-      
-        
         
         addMenuItem("Excel", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 			public void click(){
-				excelView = new ExcelView(kser, rser);
+				excelView = new ExcelViewController(kser, rser);
 				setContent(excelView.getForm());
 			}
 		});

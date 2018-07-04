@@ -29,6 +29,7 @@ public class RadnikController extends RadnikView{
 		this.rser = rser;
     	this.redc = redc;
     	
+    	rser.setListaJedan(rser.findAll());
     	grid.setItems(rser.findAll());
     	
     	grid.addItemClickListener(event->{
@@ -37,6 +38,7 @@ public class RadnikController extends RadnikView{
 		});
     	
     	redc.setRadnikGrid(grid);
+    	redc.setFilter(filter);
     	grid.setSelectionMode(SelectionMode.SINGLE);
  	    newProduct.addClickListener(noviProizvod -> {
  	    	UI.getCurrent().addWindow(redc.getWindow());
@@ -46,6 +48,9 @@ public class RadnikController extends RadnikView{
  	    filter.setValueChangeMode(ValueChangeMode.LAZY);
          filter.addValueChangeListener(event -> {
          	if(StringUtils.isEmpty(filter)){
+         		rser.getListaJedan().clear();
+         		rser.izbrisiCache();
+         		rser.setListaJedan(rser.findAll());
  				grid.getDataProvider().refreshAll();
  			}else{
  				 List<Radnik> result = (List<Radnik>) rser.getListaJedan().stream()

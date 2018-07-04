@@ -24,7 +24,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
-@SpringComponent
 @UIScope
 @Theme("mytheme")
 public class ExcelView extends VerticalLayout{
@@ -32,10 +31,8 @@ public class ExcelView extends VerticalLayout{
 	public static final String VIEW_NAME = "excelView";
 	
 
-	private final KomitentService kser;
-	private final RobaService rser;
 	
-	
+	public VerticalLayout layoutroota = new VerticalLayout();
 	public HorizontalLayout rootPrviDio = new HorizontalLayout();
 	public HorizontalLayout lijevo = new HorizontalLayout();
 	public VerticalLayout hlLijevo = new VerticalLayout();
@@ -76,9 +73,8 @@ public class ExcelView extends VerticalLayout{
 	public Panel panelDrugi = new Panel();
 	
 	@Autowired
-	public ExcelView(KomitentService kser, RobaService rser) {
-		this.kser=kser;
-		this.rser = rser;
+	public ExcelView() {
+		
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		datum.setResolution(DateResolution.MONTH);
@@ -89,17 +85,14 @@ public class ExcelView extends VerticalLayout{
 		updateZapis.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		
 		komitent.setPlaceholder("Komitent");
-		komitent.setItems(kser.findAllByTip("KK"));
 		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
 		komitent.setStyleName("filter-tekstpolje");
 		
 		roba.setPlaceholder("Roba");
-		roba.setItems(rser.findAllCombo());
 		roba.setItemCaptionGenerator(Roba :: getNaziv);
 		roba.setStyleName("filter-tekstpolje");
 		
 		veleprodaja.setPlaceholder("Veleprodaja");
-		veleprodaja.setItems(kser.findAllByTip("VP"));
 		veleprodaja.setItemCaptionGenerator(Komitent :: getNaziv);
 		veleprodaja.setStyleName("filter-tekstpolje");
 		
@@ -130,9 +123,12 @@ public class ExcelView extends VerticalLayout{
 		desno.setSizeFull();
 		rootPrviDio.addComponents(lijevo, desno);
 		rootPrviDio.setExpandRatio(desno, 1);
-		rootPrviDio.setSizeUndefined();
+		
+		layoutroota.addComponent(rootPrviDio);
+		layoutroota.setSizeUndefined();
+
 		gridStavke.setSizeFull();
-		panelPrvi.setContent(rootPrviDio);
+		panelPrvi.setContent(layoutroota);
 		panelDrugi.setContent(gridStavke);
 		panelPrvi.setSizeUndefined();
 		panelDrugi.setSizeFull();

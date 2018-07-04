@@ -30,6 +30,8 @@ public class EntitetController extends EntitetView{
 		this.eres = eres;
 		this.eedit = eedit;
 		
+		
+		 eres.setListaJedan(eres.findAll());
 		 grid.setItems(eres.findAll());
 		 
 		 grid.addItemClickListener(event->{
@@ -38,6 +40,7 @@ public class EntitetController extends EntitetView{
 		 });
 		 
 		 eedit.seteGrid(grid);
+		 eedit.setFilter(filter);
 		 newProduct.addClickListener(noviProizvod -> {
 		    	UI.getCurrent().addWindow(eedit.getWindow());
 		    	eedit.edit(null, eres);
@@ -46,6 +49,9 @@ public class EntitetController extends EntitetView{
 		 filter.setValueChangeMode(ValueChangeMode.LAZY);
 	     filter.addValueChangeListener(event -> {
 	        	if(StringUtils.isEmpty(filter)){
+	        		eres.getListaJedan().clear();
+	        		eres.izbrisiCache();
+	        		eres.setListaJedan(eres.findAll());
 					grid.getDataProvider().refreshAll();
 				}else{
 					 List<Entitet> result = (List<Entitet>) eres.getListaJedan().stream()

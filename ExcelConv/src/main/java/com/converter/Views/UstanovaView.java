@@ -34,8 +34,8 @@ public class UstanovaView extends CssLayout implements View{
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
-        grid.setColumns("sifra", "naziv");
-       
+        grid.setColumns("id","sifra", "naziv");
+        grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);

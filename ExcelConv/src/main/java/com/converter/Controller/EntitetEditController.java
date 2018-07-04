@@ -29,11 +29,15 @@ public class EntitetEditController extends EntitetEdit{
 	    		   eser.save(entitet);
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	    		   Notification success = new Notification(
-	                       "Entitet uspješno sačuvana");
+	                       "Entitet uspješno sačuvan.");
 	               success.setDelayMsec(2000);
 	               success.setStyleName("bar success small");
 	               success.setPosition(Position.BOTTOM_CENTER);
 	               success.show(Page.getCurrent());
+	               eser.getListaJedan().clear();
+	               eser.izbrisiCache();
+	               eser.setListaJedan(eser.findAll());
+	               getFilter().clear();
 	               geteGrid().setItems(eser.findAll());
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
@@ -42,6 +46,10 @@ public class EntitetEditController extends EntitetEdit{
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 eser.getListaJedan().clear();
+		             eser.izbrisiCache();
+		             eser.setListaJedan(eser.findAll());
+		             getFilter().clear();
 	                 geteGrid().setItems(eser.findAll());
 	    	   }
 	       });
@@ -50,19 +58,27 @@ public class EntitetEditController extends EntitetEdit{
 	        	 try{
 	        		 eser.delete(entitet);
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Entitet uspješno izbrisan");
+	      		   	Notification success = new Notification("Entitet uspješno izbrisan.");
 	                 success.setDelayMsec(2000);
 	                 success.setStyleName("bar success small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 eser.getListaJedan().clear();
+		             eser.izbrisiCache();
+		             eser.setListaJedan(eser.findAll());
+		             getFilter().clear();
 	                 geteGrid().setItems(eser.findAll());
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
-	      		   	Notification success = new Notification("Nije moguće izbrisati Entitet. Entitet je povezan sa stavkom iz naloga.");
+	      		   	Notification success = new Notification("Nije moguće izbrisati Entitet.");
 	                 success.setDelayMsec(5000);
 	                 success.setStyleName("bar error small");
 	                 success.setPosition(Position.BOTTOM_CENTER);
 	                 success.show(Page.getCurrent());
+	                 eser.getListaJedan().clear();
+		             eser.izbrisiCache();
+		             eser.setListaJedan(eser.findAll());
+		             getFilter().clear();
 	                 geteGrid().setItems(eser.findAll());
 	      	   }
 	        });

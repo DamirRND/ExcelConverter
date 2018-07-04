@@ -2,8 +2,10 @@ package com.converter.EditForme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.Model.Ustanova;
-import com.converter.Service.UstanovaService;
+import com.converter.Model.Entitet;
+import com.converter.Model.Mesto;
+import com.converter.Model.Region;
+import com.converter.Service.MestoService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
@@ -14,6 +16,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
@@ -28,23 +31,24 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 @Theme("mytheme")
 @SuppressWarnings("serial")
-public class UstanoveEdit extends Window{
-	
-	public TextField sifra;
+public class MestoEdit extends Window{
+	public TextField pttbroj;
 	public TextField naziv;
+	public ComboBox<Region> region;
+	public ComboBox<Entitet> entitet;
 	
-	public Binder<Ustanova> binder = new Binder<>(Ustanova.class);
+	public Binder<Mesto> binder = new Binder<>(Mesto.class);
 	
 	public Button ok;
 	public Button delete;
 	
-	public Ustanova ustanova;
+	public Mesto mesto;
 	
-	private Grid<Ustanova> uGrid;
+	private Grid<Mesto> mestoGrid;
 	private TextField filter;
 	
 	@Autowired
-	public UstanoveEdit() {
+	public MestoEdit() {
 		addStyleName("profile-window");
 	    Responsive.makeResponsive(this);
 	        
@@ -75,7 +79,7 @@ public class UstanoveEdit extends Window{
 	
 	private Component buildProfileTab() {
         HorizontalLayout root = new HorizontalLayout();
-        root.setCaption("Ustanova");
+        root.setCaption("Komitent");
         root.setIcon(VaadinIcons.BULLETS);
         root.setWidth(100.0f, Unit.PERCENTAGE);
         root.setSpacing(true);
@@ -87,12 +91,23 @@ public class UstanoveEdit extends Window{
         root.addComponent(details);
         root.setExpandRatio(details, 1);
 
-        sifra = new TextField("Šifra");
-        details.addComponent(sifra);
+    	pttbroj = new TextField("PTT broj");
+        details.addComponent(pttbroj);
         
         naziv = new TextField("Naziv");
         details.addComponent(naziv);
-        	 
+        
+      
+        region = new ComboBox<>();
+        region.setPlaceholder("Region");
+        region.setItemCaptionGenerator(Region :: getNaziv);
+    	details.addComponent(region);
+    	
+    	entitet = new ComboBox<>();
+    	entitet.setPlaceholder("Entitet");
+    	entitet.setItemCaptionGenerator(Entitet :: getNaziv);
+     	details.addComponent(entitet);
+    	
         return root;
     }
 
@@ -117,30 +132,33 @@ public class UstanoveEdit extends Window{
         return footer;
     }
     
-    public final void edit(Ustanova u, UstanovaService user){
-		final boolean persisted = u != null;
+    public final void edit(Mesto m, MestoService mser){
+		final boolean persisted = m != null;
 		if (persisted) {
-			ustanova = user.findOne(u.getId());
+			mesto = mser.findOne(m.getId());
 		}
 		else {
-			ustanova = new Ustanova();
+			mesto = new Mesto();
 		}
-		binder.setBean(ustanova);
+		binder.setBean(mesto);
     }
-    
+
     public void initBind(){
-    	 binder.forField(sifra)
+    	 binder.forField(pttbroj)
     	 	.withNullRepresentation("")
     		.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-     		.bind(Ustanova :: getSifra, Ustanova :: setSifra);
+     		.bind(Mesto :: getPttbroj, Mesto :: setPttbroj);
     	 binder.forField(naziv)
     	 	.withNullRepresentation("")
-    	 	.bind(Ustanova :: getNaziv, Ustanova :: setNaziv);
+    	 	.bind(Mesto :: getNaziv, Mesto :: setNaziv);
+    	 binder.forField(region)
+	 	 	.bind(Mesto :: getRegion, Mesto :: setRegion);
+    	 binder.forField(entitet)
+	 	 	.bind(Mesto :: getEntitet, Mesto :: setEntitet);
     }
     
     
     
-
 	public TextField getFilter() {
 		return filter;
 	}
@@ -149,16 +167,15 @@ public class UstanoveEdit extends Window{
 		this.filter = filter;
 	}
 
-	public Grid<Ustanova> getuGrid() {
-		return uGrid;
+	public Grid<Mesto> getMestoGrid() {
+		return mestoGrid;
 	}
 
-	public void setuGrid(Grid<Ustanova> uGrid) {
-		this.uGrid = uGrid;
+	public void setMestoGrid(Grid<Mesto> mestoGrid) {
+		this.mestoGrid = mestoGrid;
 	}
 
-	public UstanoveEdit getWindow(){
+	public MestoEdit getWindow(){
     	return this;
     }
-
 }
