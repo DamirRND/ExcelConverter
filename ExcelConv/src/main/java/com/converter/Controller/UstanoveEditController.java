@@ -3,8 +3,6 @@ package com.converter.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.EditForme.UstanoveEdit;
-import com.converter.Model.Ustanova;
-import com.converter.Service.RobaGrupaService;
 import com.converter.Service.UstanovaService;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
@@ -18,6 +16,7 @@ import com.vaadin.ui.UI;
 @UIScope
 public class UstanoveEditController extends UstanoveEdit{
 	
+	@SuppressWarnings("unused")
 	private final UstanovaService user;
 	
 	@Autowired

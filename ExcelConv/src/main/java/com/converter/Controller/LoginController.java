@@ -18,6 +18,7 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 public class LoginController extends LoginScreenView{
 
+	@SuppressWarnings("unused")
 	@Autowired
 	private KontrolaPristupa kpristupa;
 	

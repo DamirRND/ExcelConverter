@@ -3,7 +3,6 @@ package com.converter.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.EditForme.KomitentiEdit;
-import com.converter.Service.EntitetService;
 import com.converter.Service.KomitentService;
 import com.converter.Service.MestoService;
 import com.converter.Service.UstanovaService;
@@ -19,8 +18,11 @@ import com.vaadin.ui.UI;
 @UIScope
 public class KomitentEditController extends KomitentiEdit{
 	
+	@SuppressWarnings("unused")
 	private final KomitentService kms;
+	@SuppressWarnings("unused")
 	private final MestoService ms;
+	@SuppressWarnings("unused")
 	private final UstanovaService us;
 	
 	@Autowired

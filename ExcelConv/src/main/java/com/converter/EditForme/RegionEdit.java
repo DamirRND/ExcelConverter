@@ -4,18 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Model.Entitet;
 import com.converter.Model.Region;
-import com.converter.Model.Roba;
-import com.converter.Model.RobaGrupa;
 import com.converter.Service.RegionService;
-import com.converter.Service.RobaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
-import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;

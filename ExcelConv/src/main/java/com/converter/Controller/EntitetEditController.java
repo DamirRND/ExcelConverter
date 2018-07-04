@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.EditForme.EntitetEdit;
 import com.converter.Service.EntitetService;
-import com.converter.Service.RobaGrupaService;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -17,6 +16,7 @@ import com.vaadin.ui.UI;
 @UIScope
 public class EntitetEditController extends EntitetEdit{
 	
+	@SuppressWarnings("unused")
 	private final EntitetService eser;
 	
 	

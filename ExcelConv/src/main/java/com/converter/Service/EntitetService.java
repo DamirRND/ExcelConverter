@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.converter.Model.Entitet;
-import com.converter.Model.Roba;
 import com.converter.Repository.EntitetRepository;
 
 @Service

@@ -3,7 +3,6 @@ package com.converter.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.EditForme.OrganizacionaJedinicaEdit;
-import com.converter.Service.EntitetService;
 import com.converter.Service.MestoService;
 import com.converter.Service.OrganizacionaJedinicaService;
 import com.vaadin.server.Page;
@@ -18,7 +17,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class OrgJedEditController extends OrganizacionaJedinicaEdit{
 
+	@SuppressWarnings("unused")
 	private OrganizacionaJedinicaService orgser;
+	@SuppressWarnings("unused")
 	private MestoService ms;
 	
 	@Autowired

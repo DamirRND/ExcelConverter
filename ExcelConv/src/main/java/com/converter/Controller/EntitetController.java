@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.converter.Model.Entitet;
-import com.converter.Model.Roba;
 import com.converter.Service.EntitetService;
 import com.converter.Views.EntitetView;
 import com.vaadin.shared.ui.ValueChangeMode;
@@ -21,7 +20,9 @@ import com.vaadin.ui.UI;
 public class EntitetController extends EntitetView{
 
 	
+	@SuppressWarnings("unused")
 	private final EntitetService eres;
+	@SuppressWarnings("unused")
 	private final EntitetEditController eedit;
 	
 	@Autowired

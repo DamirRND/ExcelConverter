@@ -3,16 +3,13 @@ package com.converter.EditForme;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Model.Entitet;
-import com.converter.Model.Ustanova;
 import com.converter.Service.EntitetService;
-import com.converter.Service.UstanovaService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;

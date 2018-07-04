@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.converter.EditForme.RegionEdit;
 import com.converter.Service.EntitetService;
 import com.converter.Service.RegionService;
-import com.converter.Service.RobaGrupaService;
-import com.converter.Service.RobaService;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -19,7 +17,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class RegionEditController extends RegionEdit{
 
+	@SuppressWarnings("unused")
 	private RegionService rser;
+	@SuppressWarnings("unused")
 	private EntitetService es;
 	
 	@Autowired

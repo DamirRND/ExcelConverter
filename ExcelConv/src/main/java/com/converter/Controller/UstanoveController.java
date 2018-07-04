@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.converter.Model.Roba;
 import com.converter.Model.Ustanova;
 import com.converter.Service.UstanovaService;
 import com.converter.Views.UstanovaView;
@@ -22,7 +21,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class UstanoveController extends UstanovaView{
 
+	@SuppressWarnings("unused")
 	private final UstanovaService user;
+	@SuppressWarnings("unused")
 	private final UstanoveEditController uedit;
 	
 	@Autowired

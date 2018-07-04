@@ -11,6 +11,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
+import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
 @SpringComponent
@@ -24,6 +25,7 @@ public class ExcelViewController extends ExcelView{
 	@SuppressWarnings("unused")
 	private final RobaService rser;
 	
+	@SuppressWarnings("unused")
 	private ImportFajl imf;
 	
 	@Autowired
@@ -44,6 +46,7 @@ public class ExcelViewController extends ExcelView{
 	        Upload upload = new Upload(null, lineBreakCounter);
 	        upload.setImmediateMode(false);
 	        upload.setButtonCaption("Upload fajl");
+	        upload.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 	        
 	        layoutroota.addComponent(upload);
 	        ImportFajl uploadInfoWindow = new ImportFajl(upload, lineBreakCounter);
@@ -53,6 +56,7 @@ public class ExcelViewController extends ExcelView{
 	            	UI.getCurrent().addWindow(uploadInfoWindow);
 	            }
 	            uploadInfoWindow.setClosable(false);
+	            upload.setVisible(false);
 	        });
 	        upload.addFinishedListener(event -> uploadInfoWindow.setClosable(true));
 		});

@@ -18,8 +18,11 @@ import com.vaadin.ui.UI;
 @UIScope
 public class MestoEditController extends MestoEdit{
 	
+	@SuppressWarnings("unused")
 	private final MestoService ms;
+	@SuppressWarnings("unused")
 	private final RegionService rs;
+	@SuppressWarnings("unused")
 	private final EntitetService es;
 	
 	@Autowired

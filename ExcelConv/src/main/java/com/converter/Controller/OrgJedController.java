@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.converter.Model.Entitet;
 import com.converter.Model.OrganizacionaJedinica;
 import com.converter.Service.OrganizacionaJedinicaService;
 import com.converter.Views.OrganizacionaJedinicaView;
@@ -20,7 +19,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class OrgJedController extends OrganizacionaJedinicaView{
 
+	@SuppressWarnings("unused")
 	private OrganizacionaJedinicaService orgser;
+	@SuppressWarnings("unused")
 	private OrgJedEditController orgedit;
 	
 	@Autowired

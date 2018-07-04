@@ -22,7 +22,9 @@ import com.vaadin.ui.UI;
 public class KomitentController extends KomitentView{
 
 	
+	@SuppressWarnings("unused")
 	private final KomitentService kser;
+	@SuppressWarnings("unused")
 	private final KomitentEditController kedit;
 	
 	public KomitentController(KomitentService kser, KomitentEditController kedit) {

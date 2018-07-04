@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.converter.Model.Entitet;
 import com.converter.Model.Region;
 import com.converter.Service.RegionService;
 import com.converter.Views.RegionView;
@@ -20,7 +19,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class RegionController extends RegionView{
 
+	@SuppressWarnings("unused")
 	private final RegionService rser;
+	@SuppressWarnings("unused")
 	private final RegionEditController redit;
 	
 	

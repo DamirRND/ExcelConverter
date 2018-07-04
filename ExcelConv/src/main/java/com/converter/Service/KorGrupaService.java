@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.converter.Model.KorGrupa;
-import com.converter.Model.Radnik;
 import com.converter.Repository.KorGrupaRepository;
 
 @Service

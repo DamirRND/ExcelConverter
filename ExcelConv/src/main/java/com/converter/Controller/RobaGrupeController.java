@@ -6,22 +6,23 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.converter.Model.Roba;
 import com.converter.Model.RobaGrupa;
 import com.converter.Service.RobaGrupaService;
 import com.converter.Views.RobaGrupeView;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
 @SpringComponent
 @UIScope
 public class RobaGrupeController extends RobaGrupeView{
 
+	@SuppressWarnings("unused")
 	private final RobaGrupaService rgser;
+	@SuppressWarnings("unused")
 	private final RobaGrupeEditController rgedit;
 	
 	@Autowired

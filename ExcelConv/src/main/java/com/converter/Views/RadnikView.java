@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
 import com.converter.Model.Radnik;
-import com.converter.Service.RadnikService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

@@ -17,6 +17,7 @@ import com.vaadin.ui.UI;
 public class RobaGrupeEditController extends RobaGrupeEdit{
 
 	
+	@SuppressWarnings("unused")
 	private final RobaGrupaService rgser;
 	
 	@Autowired

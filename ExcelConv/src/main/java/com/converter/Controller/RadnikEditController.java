@@ -17,7 +17,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class RadnikEditController extends RadniciEdit{
 
+	@SuppressWarnings("unused")
 	private final RadnikService rs;
+	@SuppressWarnings("unused")
 	private final KorGrupaService kgs;
 	
 	@Autowired

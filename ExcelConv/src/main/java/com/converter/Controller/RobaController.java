@@ -23,7 +23,9 @@ import com.vaadin.ui.UI;
 public class RobaController extends RobaView{
 
 	
+	@SuppressWarnings("unused")
 	private final RobaService robaSer;
+	@SuppressWarnings("unused")
 	private final RobaEditController robaEdit;
 	
 	@Autowired

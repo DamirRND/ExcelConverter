@@ -17,7 +17,9 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 public class RobaEditController extends RobaEdit{
 
+	@SuppressWarnings("unused")
 	private final RobaService rser;
+	@SuppressWarnings("unused")
 	private final RobaGrupaService rgser;
 	
 	

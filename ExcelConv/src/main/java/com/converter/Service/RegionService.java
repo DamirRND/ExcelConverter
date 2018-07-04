@@ -7,7 +7,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import com.converter.Model.Entitet;
 import com.converter.Model.Region;
 import com.converter.Repository.RegionRepository;
 

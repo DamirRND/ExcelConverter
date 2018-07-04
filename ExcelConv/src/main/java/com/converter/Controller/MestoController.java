@@ -20,7 +20,9 @@ import com.vaadin.ui.UI;
 @UIScope
 public class MestoController extends MestoView{
 
+	@SuppressWarnings("unused")
 	private final MestoService mser;
+	@SuppressWarnings("unused")
 	private final MestoEditController medit;
 	
     @Autowired

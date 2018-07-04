@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.converter.Model.Entitet;
 import com.converter.Model.Komitent;
 import com.converter.Repository.KomitentRepository;
 

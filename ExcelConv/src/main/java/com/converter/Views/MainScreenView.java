@@ -51,45 +51,65 @@ public class MainScreenView extends SideMenu implements View{
 	public static final String VIEW_NAME = "mainScreenView";
 	
 	private RobaController robaview;
+	@SuppressWarnings("unused")
 	private RobaService rser;
+	@SuppressWarnings("unused")
 	private RobaEditController redit;
 	
 	private RobaGrupeController rgview;
+	@SuppressWarnings("unused")
 	private RobaGrupaService rgser;
+	@SuppressWarnings("unused")
 	private RobaGrupeEditController rgeditcont;
 	
 	private ExcelViewController excelView;
 	
 	private UstanoveController uview;
+	@SuppressWarnings("unused")
 	private UstanovaService user;
+	@SuppressWarnings("unused")
 	private UstanoveEditController uedit;
 	
 	private RegionController rview;
+	@SuppressWarnings("unused")
 	private RegionService regser;
+	@SuppressWarnings("unused")
 	private RegionEditController rgedit;
 	
 	private OrgJedController orgview;
+	@SuppressWarnings("unused")
 	private OrganizacionaJedinicaService orgser;
+	@SuppressWarnings("unused")
 	private OrgJedEditController orgedit;
 	
 	private RadnikController raview;
+	@SuppressWarnings("unused")
 	private RadnikService raser;
+	@SuppressWarnings("unused")
 	private RadnikEditController redc;
 	
 	private KorGrupaController kgview;
+	@SuppressWarnings("unused")
 	private KorGrupaService kgser;
+	@SuppressWarnings("unused")
 	private KorGrupaEditController kgedit;
 	
 	private KomitentController kview;
+	@SuppressWarnings("unused")
 	private KomitentService kser;
+	@SuppressWarnings("unused")
 	private KomitentEditController kedit;
 	
 	private EntitetController eview;
+	@SuppressWarnings("unused")
 	private EntitetService eserv;
+	@SuppressWarnings("unused")
 	private EntitetEditController eedit;
 	
 	private MestoController mview;
+	@SuppressWarnings("unused")
 	private MestoService mser;
+	@SuppressWarnings("unused")
 	private MestoEditController medit;
 	
 	@Autowired
