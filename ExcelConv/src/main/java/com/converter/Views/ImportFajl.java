@@ -19,7 +19,7 @@ public class ImportFajl extends Window implements Upload.StartedListener, Upload
 		Upload.FailedListener, Upload.SucceededListener, Upload.FinishedListener {
 	private final Label state = new Label();
 	private final Label result = new Label();
-	private final Label fileName = new Label();
+	public Label fileName = new Label();
 	private final Label textualProgress = new Label();
 
 	private final ProgressBar progressBar = new ProgressBar();

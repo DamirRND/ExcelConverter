@@ -1,9 +1,10 @@
 package com.converter.Model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateConverter;
 
 @SuppressWarnings("serial")
 @Entity
@@ -31,7 +34,8 @@ public class Nalog implements Serializable{
 	
 	
 	@Column(name="datum")
-	private Date datum;
+	@Convert(converter = LocalDateConverter.class)
+	private LocalDate datum;
 	
 	
 	@Column(name="izvornifajl")
@@ -52,7 +56,7 @@ public class Nalog implements Serializable{
 
 	public Nalog() {}
 	
-	public Nalog(int id, int status, int sifra, Date datum, String izvornifajl, String napomena,
+	public Nalog(int id, int status, int sifra, LocalDate datum, String izvornifajl, String napomena,
 			OrganizacionaJedinica orgjed, Komitent komitent, int mesec) {
 		super();
 		this.id = id;
@@ -90,11 +94,11 @@ public class Nalog implements Serializable{
 		this.sifra = sifra;
 	}
 
-	public Date getDatum() {
+	public LocalDate getDatum() {
 		return datum;
 	}
 
-	public void setDatum(Date datum) {
+	public void setDatum(LocalDate datum) {
 		this.datum = datum;
 	}
 

@@ -27,6 +27,7 @@ import com.converter.Service.EntitetService;
 import com.converter.Service.KomitentService;
 import com.converter.Service.KorGrupaService;
 import com.converter.Service.MestoService;
+import com.converter.Service.NalogService;
 import com.converter.Service.OrganizacionaJedinicaService;
 import com.converter.Service.RadnikService;
 import com.converter.Service.RegionService;
@@ -63,6 +64,8 @@ public class MainScreenView extends SideMenu implements View{
 	private RobaGrupeEditController rgeditcont;
 	
 	private ExcelViewController excelView;
+	@SuppressWarnings("unused")
+	private NalogService ns;
 	
 	private UstanoveController uview;
 	@SuppressWarnings("unused")
@@ -133,7 +136,8 @@ public class MainScreenView extends SideMenu implements View{
 			RadnikEditController redc,
 			KorGrupaEditController kgedit,
 			KomitentEditController kedit,
-			MestoEditController medit) {
+			MestoEditController medit,
+			NalogService ns) {
 		this.rser = rser;
 		this.rgser = rgser;
 		this.user = user;
@@ -150,6 +154,7 @@ public class MainScreenView extends SideMenu implements View{
 		this.redc = redc;
 		this.kgedit = kgedit;
 		this.kedit = kedit;
+		this.ns = ns;
 		
 		Responsive.makeResponsive(this);
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
@@ -230,7 +235,7 @@ public class MainScreenView extends SideMenu implements View{
         
         addMenuItem("Excel", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 			public void click(){
-				excelView = new ExcelViewController(kser, rser);
+				excelView = new ExcelViewController(kser, rser,ns, orgser);
 				setContent(excelView.getForm());
 			}
 		});

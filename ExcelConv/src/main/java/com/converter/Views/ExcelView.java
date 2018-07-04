@@ -3,18 +3,22 @@ package com.converter.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Model.Komitent;
+import com.converter.Model.Nalog;
 import com.converter.Model.NalogStavka;
+import com.converter.Model.OrganizacionaJedinica;
 import com.converter.Model.Roba;
+import com.converter.Service.NalogService;
 import com.vaadin.annotations.Theme;
+import com.vaadin.data.Binder;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -43,8 +47,9 @@ public class ExcelView extends VerticalLayout{
 	public HorizontalLayout desnoCetvrti = new HorizontalLayout();
 	
 	
-	public DateField datum = new DateField();
+	public InlineDateField datum = new InlineDateField();
 	public ComboBox<Komitent> veleprodaja = new ComboBox<>();
+	public ComboBox<OrganizacionaJedinica> orgjed = new ComboBox<>();
 	public Button otvoriNalog = new Button("Otvori nalog", VaadinIcons.FILE);
 	public Button importFajl = new Button("Import Excel", VaadinIcons.CREDIT_CARD);
 	public Button automObrada= new Button("Automatska obrada", VaadinIcons.HAMMER);
@@ -61,13 +66,16 @@ public class ExcelView extends VerticalLayout{
 	public ComboBox<Komitent> komitent = new ComboBox<>();
 	public ComboBox<Roba> roba = new ComboBox<>();
 	public Button updateZapis=new Button("Ažuriraj stavku", VaadinIcons.UPLOAD);
-	 
+	
+	public Binder<Nalog> nalogBinder = new Binder<>(Nalog.class);
+	public Binder<NalogStavka> nalogstBinder = new Binder<>(NalogStavka.class);
 
 	public Grid<NalogStavka> gridStavke = new Grid<>(NalogStavka.class);
 	
 	public Panel panelPrvi = new Panel();
 
 	public Panel panelDrugi = new Panel();
+	public Nalog nalogProvjera;
 	
 	@Autowired
 	public ExcelView() {
@@ -75,6 +83,7 @@ public class ExcelView extends VerticalLayout{
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		datum.setResolution(DateResolution.MONTH);
+		
 		
 		otvoriNalog.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		importFajl.addStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -84,6 +93,10 @@ public class ExcelView extends VerticalLayout{
 		komitent.setPlaceholder("Komitent");
 		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
 		komitent.setStyleName("filter-tekstpolje");
+		
+		orgjed.setPlaceholder("Org. jedinica");
+		orgjed.setItemCaptionGenerator(OrganizacionaJedinica :: getNaziv);
+		orgjed.setStyleName("filter-tekstpolje");
 		
 		roba.setPlaceholder("Roba");
 		roba.setItemCaptionGenerator(Roba :: getNaziv);
@@ -95,7 +108,7 @@ public class ExcelView extends VerticalLayout{
 		
 		panelPrvi.setStyleName(ValoTheme.PANEL_BORDERLESS);
 		panelDrugi.setStyleName(ValoTheme.PANEL_BORDERLESS);
-		hlLijevo.addComponents(datum, veleprodaja, otvoriNalog);
+		hlLijevo.addComponents(datum, veleprodaja,orgjed, otvoriNalog);
 		hlDesno.addComponents(importFajl, automObrada);
 		lijevo.addComponents(hlLijevo, hlDesno);
 		lijevo.addStyleName(ValoTheme.LAYOUT_CARD);
@@ -130,8 +143,26 @@ public class ExcelView extends VerticalLayout{
 		panelPrvi.setSizeUndefined();
 		panelDrugi.setSizeFull();
 		
+		initNalogBinder();
 		addComponents(panelPrvi, panelDrugi);
 		setExpandRatio(panelDrugi, 1);
+	}
+	
+	public final void provjera(Nalog n, NalogService ns){
+		final boolean persisted = n != null;
+		if (persisted) {
+			nalogProvjera = ns.findOne(n.getId());
+		}
+		nalogBinder.setBean(nalogProvjera);
+    }
+
+	public void initNalogBinder() {
+		nalogBinder.forField(datum)
+	 		.bind(Nalog :: getDatum, Nalog :: setDatum);
+		nalogBinder.forField(veleprodaja)
+		 	.bind(Nalog :: getKomitent, Nalog :: setKomitent);
+		nalogBinder.forField(orgjed)
+	 		.bind(Nalog :: getOrgjed, Nalog :: setOrgjed);
 	}
 	
 	public ExcelView getForm() {
