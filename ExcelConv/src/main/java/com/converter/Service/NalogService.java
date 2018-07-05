@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.converter.Model.Komitent;
 import com.converter.Model.Nalog;
 import com.converter.Repository.NalogRepository;
 
@@ -25,12 +26,12 @@ public class NalogService {
 		return (List<Nalog>) nrep.findAll();
 	}
 	
-	public Nalog findOneNalog(int status, LocalDate datum, int mesec) {
-		return nrep.findOneByStatusAndDatumAndMesec(status, datum, mesec);
+	public Nalog findOneNalog(int status, LocalDate datum, int mesec, Komitent k) {
+		return nrep.findOneByStatusAndDatumAndMesecAndKomitent(status, datum, mesec, k);
 	}
 	
-	public Nalog provjeraNaloga(LocalDate datum, int mesec, int status) {
-		return nrep.findOneByDatumAndMesecAndStatusNotEqual(datum, mesec, status);
+	public Nalog provjeraNaloga(LocalDate datum, int mesec,Komitent id, int status) {
+		return nrep.findOneByDatumAndMesecAndStatusNotEqual(datum, mesec, id,status);
 	}
 	
 	public Nalog findOne(Integer id){
@@ -43,6 +44,11 @@ public class NalogService {
 	 
 	 public void delete(Nalog r){
 		 nrep.delete(r);
+	 }
+	 
+	 
+	 public Nalog findOneByFajl(String name) {
+		 return nrep.findOneByIzvornifajl(name);
 	 }
 	
 }

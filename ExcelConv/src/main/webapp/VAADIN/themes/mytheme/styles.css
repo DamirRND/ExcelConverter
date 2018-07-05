@@ -16000,6 +16000,15 @@ div.v-layout.v-horizontal.v-widget {
 	box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
 }
 
+.mytheme .v-ui[width-range~="0-1300px"] .jebeniStil .v-widget {
+	display: block;
+}
+
+.mytheme .v-ui[width-range~="0-1300px"] .jebeniStil .v-scrollable > .v-widget {
+	vertical-align: middle;
+	overflow: visible;
+}
+
 .mytheme .v-ui[width-range~="0-800px"] .main-screen {
 	padding-top: 32px;
 }

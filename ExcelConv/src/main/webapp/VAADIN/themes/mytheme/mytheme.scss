@@ -163,6 +163,17 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
 
   // Stilovi za pregled na manjim ekranima
 
+  .v-ui[width-range~="0-1300px"]{
+    .jebeniStil{
+      .v-widget {
+        display: block;
+      }
+      .v-scrollable  > .v-widget {
+      	vertical-align: middle;
+        overflow: visible;
+      }
+    }
+  }
   .v-ui[width-range~="0-800px"] {
 
     .main-screen {

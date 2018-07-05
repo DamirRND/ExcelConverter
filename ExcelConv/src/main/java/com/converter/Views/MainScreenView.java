@@ -13,6 +13,7 @@ import com.converter.Controller.MestoController;
 import com.converter.Controller.MestoEditController;
 import com.converter.Controller.OrgJedController;
 import com.converter.Controller.OrgJedEditController;
+import com.converter.Controller.PregledNalogaController;
 import com.converter.Controller.RadnikController;
 import com.converter.Controller.RadnikEditController;
 import com.converter.Controller.RegionController;
@@ -26,8 +27,11 @@ import com.converter.Controller.UstanoveEditController;
 import com.converter.Service.EntitetService;
 import com.converter.Service.KomitentService;
 import com.converter.Service.KorGrupaService;
+import com.converter.Service.MapaKupacService;
+import com.converter.Service.MapaRobeService;
 import com.converter.Service.MestoService;
 import com.converter.Service.NalogService;
+import com.converter.Service.NalogStavkaService;
 import com.converter.Service.OrganizacionaJedinicaService;
 import com.converter.Service.RadnikService;
 import com.converter.Service.RegionService;
@@ -115,6 +119,15 @@ public class MainScreenView extends SideMenu implements View{
 	@SuppressWarnings("unused")
 	private MestoEditController medit;
 	
+	@SuppressWarnings("unused")
+	private NalogStavkaService nss;
+	@SuppressWarnings("unused")
+	private MapaRobeService ms;
+	@SuppressWarnings("unused")
+	private MapaKupacService mks;
+	
+	private PregledNalogaController pview;
+	
 	@Autowired
 	public MainScreenView(
 			RobaService rser, 
@@ -137,7 +150,10 @@ public class MainScreenView extends SideMenu implements View{
 			KorGrupaEditController kgedit,
 			KomitentEditController kedit,
 			MestoEditController medit,
-			NalogService ns) {
+			NalogService ns,
+			NalogStavkaService nss,
+			MapaRobeService ms,
+			MapaKupacService mks) {
 		this.rser = rser;
 		this.rgser = rgser;
 		this.user = user;
@@ -155,6 +171,9 @@ public class MainScreenView extends SideMenu implements View{
 		this.kgedit = kgedit;
 		this.kedit = kedit;
 		this.ns = ns;
+		this.nss= nss;
+		this.ms = ms;
+		this.mks = mks;
 		
 		Responsive.makeResponsive(this);
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
@@ -231,11 +250,17 @@ public class MainScreenView extends SideMenu implements View{
 				setContent(kview.getForm());
 			}
 		});
+        addMenuItem("Nalozi", VaadinIcons.USER_CARD, new MenuClickHandler(){
+			public void click(){
+				pview = new PregledNalogaController(kser, rser, nss);
+				setContent(pview.getForm());
+			}
+		});
         
         
         addMenuItem("Excel", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 			public void click(){
-				excelView = new ExcelViewController(kser, rser,ns, orgser);
+				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
 				setContent(excelView.getForm());
 			}
 		});

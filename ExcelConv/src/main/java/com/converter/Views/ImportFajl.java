@@ -1,6 +1,11 @@
 package com.converter.Views;
 
+import java.io.ByteArrayInputStream;
+import java.util.List;
+
 import com.converter.Component.RecieverUploadFajl;
+import com.converter.Controller.ReadExcelMapping;
+import com.converter.Model.Apoteka;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -18,13 +23,12 @@ import com.vaadin.ui.Window;
 public class ImportFajl extends Window implements Upload.StartedListener, Upload.ProgressListener,
 		Upload.FailedListener, Upload.SucceededListener, Upload.FinishedListener {
 	private final Label state = new Label();
-	private final Label result = new Label();
 	public Label fileName = new Label();
 	private final Label textualProgress = new Label();
 
 	private final ProgressBar progressBar = new ProgressBar();
 	private final Button cancelButton;
-	private final RecieverUploadFajl counter;
+	public final RecieverUploadFajl counter;
 
 	public ImportFajl(final Upload upload, final RecieverUploadFajl lineBreakCounter) {
 		super("Status");
@@ -56,9 +60,6 @@ public class ImportFajl extends Window implements Upload.StartedListener, Upload
 		fileName.setCaption("Ime fajla");
 		uploadInfoLayout.addComponent(fileName);
 
-		result.setCaption("Reciever upload error");
-		uploadInfoLayout.addComponent(result);
-
 		progressBar.setCaption("Progress");
 		progressBar.setVisible(false);
 		uploadInfoLayout.addComponent(progressBar);
@@ -74,8 +75,16 @@ public class ImportFajl extends Window implements Upload.StartedListener, Upload
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void uploadFinished(final FinishedEvent event) {
+		System.out.println(event.getSource().toString());
+		System.out.println(event.getUpload());
+		System.out.println(event.getFilename());
+		System.out.println(event.getLength());
+		System.out.println(event.getMIMEType());
+		
+		
 		state.setValue("Idle");
 		progressBar.setVisible(false);
 		textualProgress.setVisible(false);
@@ -98,18 +107,15 @@ public class ImportFajl extends Window implements Upload.StartedListener, Upload
 	public void updateProgress(final long readBytes, final long contentLength) {
 		progressBar.setValue(readBytes / (float) contentLength);
 		textualProgress.setValue("Procesiurano " + readBytes + " bytes of " + contentLength);
-		result.setValue(counter.getLineBreakCount() + " (counting...)");
 	}
 
 	@Override
 	public void uploadSucceeded(final SucceededEvent event) {
-		result.setValue(counter.getLineBreakCount() + " (total)");
 	}
 
 	@Override
 	public void uploadFailed(final FailedEvent event) {
-		result.setValue(counter.getLineBreakCount() + " (upload prekinut na "
-				+ Math.round(100 * progressBar.getValue()) + "%)");
+		
 	}
 }
 
