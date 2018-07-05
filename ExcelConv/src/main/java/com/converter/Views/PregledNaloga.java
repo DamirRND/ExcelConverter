@@ -1,21 +1,16 @@
 package com.converter.Views;
 
-import com.converter.Component.RestFilterButton;
-import com.converter.Model.Entitet;
 import com.converter.Model.Komitent;
 import com.converter.Model.NalogStavka;
 import com.converter.Model.Roba;
 import com.vaadin.annotations.Theme;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -32,14 +27,19 @@ public class PregledNaloga extends CssLayout implements View{
 	public ComboBox<Komitent> kupci;
 	public ComboBox<Roba> roba;
 	
+	public Button export;
+	
     public PregledNaloga() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
         
         grid.setSizeFull();
-       
-        grid.setColumns("id","sifra", "naziv");
+        grid.addColumn(NalogStavka -> NalogStavka.getRoba().getNaziv()).setCaption("Roba").setId("robaMoja").setHidable(true);
+        grid.addColumn(NalogStavka -> NalogStavka.getKupac_id().getNaziv()).setCaption("Komitent").setId("komitentMoj").setHidable(true);
+        grid.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("nalogMoj").setHidable(true);
+        
+        grid.setColumns("id","komitentMoj", "robaMoja", "cena", "kolicina", "iznos", "nalogMoj");
         grid.getColumn("id").setHidden(true);
        
         VerticalLayout barAndGridLayout = new VerticalLayout();
@@ -67,11 +67,16 @@ public class PregledNaloga extends CssLayout implements View{
     	roba.setPlaceholder("Roba");
     	roba.setItemCaptionGenerator(Roba::getNaziv);
     	
+    	export = new Button("Export");
+    	export.setStyleName(ValoTheme.BUTTON_PRIMARY);
+    	
+    	
         HorizontalLayout topLayout = new HorizontalLayout();
         topLayout.setWidth("100%");
         topLayout.addComponent(veleprodaja);
         topLayout.addComponent(kupci);
         topLayout.addComponent(roba);
+        topLayout.addComponent(export);
         topLayout.setStyleName("top-bar");
         return topLayout;
     }

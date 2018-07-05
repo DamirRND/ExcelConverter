@@ -43,10 +43,13 @@ public class PregledNalogaController extends PregledNaloga{
 				()-> nss.count()
 		  );
 		
-		
 		veleprodaja.setItems(ks.findAllByTip("VP"));
 		kupci.setItems(ks.findAllByTip("KK"));
 		roba.setItems(rs.findAllCombo());
 		
+		
+		export.addClickListener(export->{
+			
+		});
 	}
 }
