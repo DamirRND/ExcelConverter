@@ -31,6 +31,7 @@ public class NalogStavkaService {
 	
 	
 	public List<NalogStavka> lista;
+	public List<NalogStavka> listaZaExport;
 	
 	@Cacheable("stavka")
 	public List<NalogStavka> findAll(int offset, int limit, Map<String, Boolean> sortOrders) {
@@ -49,7 +50,7 @@ public class NalogStavkaService {
 	        return Math.toIntExact(nlgrep.count());
 	 }
 
-	 @CacheEvict(value="roba",allEntries=true)
+	 @CacheEvict(value="stavka",allEntries=true)
 	 public void removeCache() {
 		 System.out.println("Kes izbrisan za robu");
 	 }
@@ -67,35 +68,51 @@ public class NalogStavkaService {
 		this.lista = lista;
 	}
 	
-	
+	@Cacheable("stavka")
 	public List<NalogStavka> findAllByKupac(Komitent k){
 		return nlgrep.findAllByKupac(k);
 	}
 	
+	@Cacheable("stavka")
 	public List<NalogStavka> findAllByRoba(Roba r){
 		return nlgrep.findAllByRoba(r);
 	}
+	@Cacheable("stavka")
 	public List<NalogStavka> findAllByKupacAndRoba(Komitent k, Roba r){
 		return nlgrep.findAllByKupacAndRoba(k, r);
 	}
 	
-	
+	@Cacheable("stavka")
 	public List<NalogStavka> findallByKupacAndNalog(Komitent k, Nalog n){
 		return nlgrep.findAllByKupacAndNalog(k, n);
 	}
 	
+	@Cacheable("stavka")
 	public List<NalogStavka> findallByRobaAndNalog(Roba r, Nalog n){
 		return nlgrep.findAllByRobaAndNalog(r, n);
 	}
 	
+	@Cacheable("stavka")
 	public List<NalogStavka> findallByKupacAndRobaAndNalog(Komitent k, Roba r, Nalog n){
 		return nlgrep.findAllByKupacAndRobaAndNalog(k, r, n);
 	}
 	
+	@Cacheable("stavka")
 	public List<NalogStavka> findallByNalog(Nalog n){
 		return nlgrep.findAllByNalog(n);
 	}
 	
+	
+	public List<NalogStavka> getListaZaExport() {
+		return listaZaExport;
+	}
+
+
+	public void setListaZaExport(List<NalogStavka> listaZaExport) {
+		this.listaZaExport = listaZaExport;
+	}
+
+
 	public NalogStavka save(NalogStavka n )
 	{
 		return nlgrep.saveAndFlush(n);
