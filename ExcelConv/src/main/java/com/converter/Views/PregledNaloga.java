@@ -5,12 +5,14 @@ import com.converter.Model.NalogStavka;
 import com.converter.Model.Roba;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
+import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -23,7 +25,9 @@ public class PregledNaloga extends CssLayout implements View{
 	 
 	
 	public Grid<NalogStavka> grid = new Grid<>(NalogStavka.class);
+	
 	public ComboBox<Komitent> veleprodaja;
+	public InlineDateField datum;
 	public ComboBox<Komitent> kupci;
 	public ComboBox<Roba> roba;
 	
@@ -59,6 +63,10 @@ public class PregledNaloga extends CssLayout implements View{
     	veleprodaja.setPlaceholder("Veleprodaja");
     	veleprodaja.setItemCaptionGenerator(Komitent::getNaziv);
     	
+    	datum = new InlineDateField();
+    	datum.setResolution(DateResolution.MONTH);
+    	
+    	
     	kupci = new ComboBox<>();
     	kupci.setPlaceholder("Kupci");
     	kupci.setItemCaptionGenerator(Komitent::getNaziv);
@@ -72,8 +80,9 @@ public class PregledNaloga extends CssLayout implements View{
     	
     	
         HorizontalLayout topLayout = new HorizontalLayout();
-        topLayout.setWidth("100%");
+        topLayout.setSizeUndefined();
         topLayout.addComponent(veleprodaja);
+        topLayout.addComponent(datum);
         topLayout.addComponent(kupci);
         topLayout.addComponent(roba);
         topLayout.addComponent(export);

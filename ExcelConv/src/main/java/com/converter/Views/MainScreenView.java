@@ -252,7 +252,7 @@ public class MainScreenView extends SideMenu implements View{
 		});
         addMenuItem("Nalozi", VaadinIcons.USER_CARD, new MenuClickHandler(){
 			public void click(){
-				pview = new PregledNalogaController(kser, rser, nss);
+				pview = new PregledNalogaController(kser, rser, nss, ns);
 				setContent(pview.getForm());
 			}
 		});

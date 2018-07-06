@@ -18,6 +18,7 @@ public interface NalogRepository extends JpaRepository<Nalog, Integer>{
 	
 	public Nalog findOneByIzvornifajl(String name);
 	
+	public Nalog findOneByDatumAndMesecAndKomitent(LocalDate datum, int mesec, Komitent k);
 	
 	@Transactional
 	@Query("select n from Nalog n where n.datum = :datum and n.mesec=:mesec and n.komitent=:komitent and n.status != :status")

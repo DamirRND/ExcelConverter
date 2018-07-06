@@ -11,7 +11,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.converter.Model.Komitent;
+import com.converter.Model.Nalog;
 import com.converter.Model.NalogStavka;
+import com.converter.Model.Roba;
 import com.converter.Repository.NalogStavkaRepository;
 
 @Service
@@ -64,6 +67,34 @@ public class NalogStavkaService {
 		this.lista = lista;
 	}
 	
+	
+	public List<NalogStavka> findAllByKupac(Komitent k){
+		return nlgrep.findAllByKupac(k);
+	}
+	
+	public List<NalogStavka> findAllByRoba(Roba r){
+		return nlgrep.findAllByRoba(r);
+	}
+	public List<NalogStavka> findAllByKupacAndRoba(Komitent k, Roba r){
+		return nlgrep.findAllByKupacAndRoba(k, r);
+	}
+	
+	
+	public List<NalogStavka> findallByKupacAndNalog(Komitent k, Nalog n){
+		return nlgrep.findAllByKupacAndNalog(k, n);
+	}
+	
+	public List<NalogStavka> findallByRobaAndNalog(Roba r, Nalog n){
+		return nlgrep.findAllByRobaAndNalog(r, n);
+	}
+	
+	public List<NalogStavka> findallByKupacAndRobaAndNalog(Komitent k, Roba r, Nalog n){
+		return nlgrep.findAllByKupacAndRobaAndNalog(k, r, n);
+	}
+	
+	public List<NalogStavka> findallByNalog(Nalog n){
+		return nlgrep.findAllByNalog(n);
+	}
 	
 	public NalogStavka save(NalogStavka n )
 	{

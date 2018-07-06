@@ -46,6 +46,9 @@ public class NalogService {
 		 nrep.delete(r);
 	 }
 	 
+	 public Nalog findZaExport(LocalDate datum, int mesec, Komitent k) {
+		 return nrep.findOneByDatumAndMesecAndKomitent(datum, mesec, k);
+	 }
 	 
 	 public Nalog findOneByFajl(String name) {
 		 return nrep.findOneByIzvornifajl(name);

@@ -1,11 +1,6 @@
 package com.converter.Views;
 
-import java.io.ByteArrayInputStream;
-import java.util.List;
-
 import com.converter.Component.RecieverUploadFajl;
-import com.converter.Controller.ReadExcelMapping;
-import com.converter.Model.Apoteka;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -75,7 +70,6 @@ public class ImportFajl extends Window implements Upload.StartedListener, Upload
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void uploadFinished(final FinishedEvent event) {
 		System.out.println(event.getSource().toString());
