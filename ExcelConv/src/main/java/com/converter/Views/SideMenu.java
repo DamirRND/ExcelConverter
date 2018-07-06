@@ -108,14 +108,14 @@ public class SideMenu extends HorizontalLayout {
         settings.addStyleName("user-menu");
         userItem = settings.addItem("", new ThemeResource(
                 "img/profile-pic-300px.jpg"), null);
-        userItem.addItem("Podešavanja profila", new Command() {
-            @Override
-            public void menuSelected(final MenuItem selectedItem) {
-            	//UI.getCurrent().addWindow(pp.getWindow());
-            }
-        });
-        
-        userItem.addSeparator();
+//        userItem.addItem("Podešavanja profila", new Command() {
+//            @Override
+//            public void menuSelected(final MenuItem selectedItem) {
+//            	//UI.getCurrent().addWindow(pp.getWindow());
+//            }
+//        });
+//        
+//        userItem.addSeparator();
         userItem.addItem("Izlogujte se", new Command() {
             @Override
             public void menuSelected(final MenuItem selectedItem) {

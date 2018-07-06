@@ -112,6 +112,7 @@ public class ExcelViewController extends ExcelView{
 			        	trenutniNalog.setIzvornifajl(uploadInfoWindow.fileName.getValue());
 			        	ns.save(trenutniNalog);
 			        	
+			        	System.out.println(uploadInfoWindow.fileName.getValue().substring(uploadInfoWindow.fileName.getValue().indexOf(".")));
 			        	ByteArrayInputStream bis = new ByteArrayInputStream(lineBreakCounter.getBaos().toByteArray());
 			    		ReadExcelMapping mapa=new ReadExcelMapping();
 			    		

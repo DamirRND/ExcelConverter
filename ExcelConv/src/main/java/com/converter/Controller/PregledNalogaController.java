@@ -134,13 +134,12 @@ public class PregledNalogaController extends PregledNaloga{
 		});
 
 		export.addClickListener(export->{
-
 			final DateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			Date date = new Date();
 			
 			try {
 				excel.writeFileUsingPOI(nss.getListaZaExport());
-				getUI().getPage().open("/VAADIN/NalogExport"+sdf.format(date).toString()+".xlsx", "_blank");
+				getUI().getPage().open("/ExcelConv/VAADIN/NalogExport"+sdf.format(date).toString()+".xlsx", "_blank");
 				Notification success = new Notification("Uspješno ste exportovali excel.");
                 success.setDelayMsec(5000);
                 success.setStyleName("bar success small");
@@ -154,8 +153,8 @@ public class PregledNalogaController extends PregledNaloga{
                 success.setPosition(Position.BOTTOM_CENTER);
                 success.show(Page.getCurrent());
 			}finally {
-				File fajl =new File(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath() + "/VAADIN/NalogExport"+sdf.format(date).toString()+".xlsx");
-				fajl.delete();
+//				File fajl =new File(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath() + "/VAADIN/NalogExport"+sdf.format(date).toString()+".xlsx");
+//				fajl.delete();
 			}
 		});
 	}

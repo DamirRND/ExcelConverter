@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.converter.Model.Apoteka;
@@ -31,8 +33,7 @@ public class ReadExcelMapping {
 	         List ApotekaLista = new ArrayList();
 	         try {
 	 
-	 
-	             Workbook workbook = new XSSFWorkbook(bis);
+	             Workbook workbook = WorkbookFactory.create(bis);
 	 
 	  
 	 
@@ -150,8 +151,14 @@ public class ReadExcelMapping {
 	         } catch (IOException e) {
 	 
 	             e.printStackTrace();
+	             
+	             
+	             
 	 
-	         }
+	         } catch (InvalidFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	 
 	         return ApotekaLista;
 	 
