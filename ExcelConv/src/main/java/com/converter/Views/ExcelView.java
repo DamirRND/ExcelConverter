@@ -25,6 +25,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
@@ -40,6 +41,8 @@ public class ExcelView extends HorizontalLayout{
 	public VerticalLayout vlLijevo = new VerticalLayout();
 	public VerticalLayout vlDesno = new VerticalLayout();
 	
+	public VerticalLayout tabGridPrvi = new VerticalLayout();
+	public VerticalLayout tabGridDrugi = new VerticalLayout();
 	
 	public VerticalLayout desno = new VerticalLayout();
 	public HorizontalLayout desnoPrvi = new HorizontalLayout();
@@ -58,13 +61,13 @@ public class ExcelView extends HorizontalLayout{
 	
 	
 	
-	public TextField robasifraext = new TextField();
-	public TextField robanazivext = new TextField();
-	public TextField kupacsifraext= new TextField();
-	public TextField kupacnazivext= new TextField();
-	public TextField cena= new TextField();
-	public TextField kolicina= new TextField();
-	public TextField iznos= new TextField();
+	public TextField robasifraext = new TextField("Šifra robe");
+	public TextField robanazivext = new TextField("Naziv robe");
+	public TextField kupacsifraext= new TextField("Šifra komitenta");
+	public TextField kupacnazivext= new TextField("Naziv komitenta");
+	public TextField cena= new TextField("Cena");
+	public TextField kolicina= new TextField("Količina");
+	public TextField iznos= new TextField("Vrijednost");
 	
 	public ComboBox<Komitent> komitent = new ComboBox<>();
 	public ComboBox<Roba> roba = new ComboBox<>();
@@ -74,6 +77,7 @@ public class ExcelView extends HorizontalLayout{
 	public Binder<NalogStavka> nalogstBinder = new Binder<>(NalogStavka.class);
 
 	public Grid<Apoteka> gridStavke = new Grid<>(Apoteka.class);
+	public Grid<NalogStavka> gridStavkeGotove = new Grid<>(NalogStavka.class);
 	
 	public Panel panelDrugi = new Panel();
 	public Nalog nalogProvjera;
@@ -82,12 +86,25 @@ public class ExcelView extends HorizontalLayout{
 	public RecieverUploadFajl lineBreakCounter = new RecieverUploadFajl();
     public Upload upload = new Upload(null, lineBreakCounter);
     public ImportFajl uploadInfoWindow = new ImportFajl(upload, lineBreakCounter);
+    public TabSheet tabovi = new TabSheet();
+    
     
 	@Autowired
 	public ExcelView() {
 		
 		Responsive.makeResponsive(this);
 		setSizeFull();
+		
+		tabovi.addStyleName(ValoTheme.TABSHEET_FRAMED);
+		tabovi.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+		tabGridPrvi.addComponent(gridStavke);
+		tabGridPrvi.setMargin(true);
+		tabGridDrugi.addComponent(gridStavkeGotove);
+		tabGridDrugi.setMargin(true);
+		gridStavkeGotove.setSizeFull();
+        tabovi.addTab(tabGridPrvi, "Neobrađene stavke");
+        tabovi.addTab(tabGridDrugi, "Pregled");
+        
 		datum.setResolution(DateResolution.MONTH);
 		datum.setWidth(250, Unit.PIXELS);
 		addStyleName("jebeniStil");
@@ -137,8 +154,8 @@ public class ExcelView extends HorizontalLayout{
 		
 		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
-		vlDesno.addComponents(upload, desno, gridStavke);
-		vlDesno.setExpandRatio(gridStavke, 1);
+		vlDesno.addComponents(upload, desno, tabovi);
+		vlDesno.setExpandRatio(tabovi, 1);
 		vlDesno.setSizeFull();
 		
 		panelDrugi.setContent(vlDesno);
