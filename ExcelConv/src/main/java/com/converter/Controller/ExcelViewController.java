@@ -9,7 +9,6 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.Component.RecieverUploadFajl;
 import com.converter.Model.Apoteka;
 import com.converter.Model.Komitent;
 import com.converter.Model.MapaKupca;
@@ -32,7 +31,6 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Upload;
 
 @SuppressWarnings("serial")
 @SpringComponent
@@ -82,15 +80,8 @@ public class ExcelViewController extends ExcelView{
 		veleprodaja.setItems(kser.findAllByTip("VP"));
 		orgjed.setItems(orgser.findAll());
 		importFajl.addClickListener(importf ->{
-	        RecieverUploadFajl lineBreakCounter = new RecieverUploadFajl();
-	 
-	        Upload upload = new Upload(null, lineBreakCounter);
-	        upload.setImmediateMode(false);
-	        upload.setButtonCaption("Automatska obrada");
 	        
-	        layoutroota.addComponent(upload);
-	        importFajl.setEnabled(false);
-	        ImportFajl uploadInfoWindow = new ImportFajl(upload, lineBreakCounter);
+			upload.setVisible(true);
 	        
 	        upload.addStartedListener(event -> {
 	            if (uploadInfoWindow.getParent() == null) {

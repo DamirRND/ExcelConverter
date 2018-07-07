@@ -179,6 +179,20 @@ public class MainScreenView extends SideMenu implements View{
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
         setSpacing(false);
         
+        addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
+     			public void click(){
+     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+     				setContent(excelView.getForm());
+     			}
+     	});
+        
+        addMenuItem("Izvještaj", VaadinIcons.USER_CARD, new MenuClickHandler(){
+			public void click(){
+				pview = new PregledNalogaController(kser, rser, nss, ns);
+				setContent(pview.getForm());
+			}
+		});
+
         addMenuItem("Roba", VaadinIcons.BULLETS, new MenuClickHandler(){
 			public void click(){
 				robaview = new RobaController(rser, redit);
@@ -250,20 +264,9 @@ public class MainScreenView extends SideMenu implements View{
 				setContent(kview.getForm());
 			}
 		});
-        addMenuItem("Nalozi", VaadinIcons.USER_CARD, new MenuClickHandler(){
-			public void click(){
-				pview = new PregledNalogaController(kser, rser, nss, ns);
-				setContent(pview.getForm());
-			}
-		});
         
         
-        addMenuItem("Excel", VaadinIcons.WORKPLACE, new MenuClickHandler(){
-			public void click(){
-				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
-				setContent(excelView.getForm());
-			}
-		});
+     
         
         
         

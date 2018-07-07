@@ -2,6 +2,7 @@ package com.converter.Views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.converter.Component.RecieverUploadFajl;
 import com.converter.Model.Apoteka;
 import com.converter.Model.Komitent;
 import com.converter.Model.Nalog;
@@ -20,28 +21,24 @@ import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 @SuppressWarnings("serial")
 @UIScope
 @Theme("mytheme")
-public class ExcelView extends VerticalLayout{
+public class ExcelView extends HorizontalLayout{
 
 	public static final String VIEW_NAME = "excelView";
 	
-
-	
-	public VerticalLayout layoutroota = new VerticalLayout();
-	public HorizontalLayout rootPrviDio = new HorizontalLayout();
-	public HorizontalLayout lijevo = new HorizontalLayout();
-	public VerticalLayout hlLijevo = new VerticalLayout();
-	public VerticalLayout hlDesno = new VerticalLayout();
+	public VerticalLayout vlLijevo = new VerticalLayout();
+	public VerticalLayout vlDesno = new VerticalLayout();
 	
 	
 	public VerticalLayout desno = new VerticalLayout();
@@ -51,11 +48,14 @@ public class ExcelView extends VerticalLayout{
 	public HorizontalLayout desnoCetvrti = new HorizontalLayout();
 	
 	
-	public InlineDateField datum = new InlineDateField();
-	public ComboBox<Komitent> veleprodaja = new ComboBox<>();
-	public ComboBox<OrganizacionaJedinica> orgjed = new ComboBox<>();
+	public DateField datum = new DateField();
+	public ComboBox<Komitent> veleprodaja = new ComboBox<>("Veleprodaja");
+	public ComboBox<OrganizacionaJedinica> orgjed = new ComboBox<>("Org. jedinica");
 	public Button otvoriNalog = new Button("Otvori nalog", VaadinIcons.FILE);
 	public Button importFajl = new Button("Import Excel", VaadinIcons.CREDIT_CARD);
+	public Button autObrada = new Button("Automatska obrada", VaadinIcons.HANDLE_CORNER);
+	public Button zatvoriNalog = new Button("Zatvori nalog", VaadinIcons.ARROW_CIRCLE_UP);
+	
 	
 	
 	public TextField robasifraext = new TextField();
@@ -75,80 +75,81 @@ public class ExcelView extends VerticalLayout{
 
 	public Grid<Apoteka> gridStavke = new Grid<>(Apoteka.class);
 	
-	public Panel panelPrvi = new Panel();
-
 	public Panel panelDrugi = new Panel();
 	public Nalog nalogProvjera;
 	public NalogStavka nsProvjera;
+	
+	public RecieverUploadFajl lineBreakCounter = new RecieverUploadFajl();
+    public Upload upload = new Upload(null, lineBreakCounter);
+    public ImportFajl uploadInfoWindow = new ImportFajl(upload, lineBreakCounter);
+    
 	@Autowired
 	public ExcelView() {
 		
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		datum.setResolution(DateResolution.MONTH);
+		datum.setWidth(250, Unit.PIXELS);
 		addStyleName("jebeniStil");
 		
+	    upload.setImmediateMode(false);
+	    upload.setButtonCaption("Import");
+	    upload.setVisible(false);
+	    
 		otvoriNalog.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		otvoriNalog.setWidth(250, Unit.PIXELS);
 		importFajl.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		importFajl.setWidth(250, Unit.PIXELS);
 		updateZapis.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		
+		autObrada.setWidth(250, Unit.PIXELS);
+		autObrada.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		zatvoriNalog.addStyleName(ValoTheme.BUTTON_DANGER);
+		zatvoriNalog.setWidth(250, Unit.PIXELS);
 		komitent.setPlaceholder("Komitent");
 		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
-		komitent.setStyleName("filter-tekstpolje");
 		
 		orgjed.setPlaceholder("Org. jedinica");
 		orgjed.setItemCaptionGenerator(OrganizacionaJedinica :: getNaziv);
-		orgjed.setStyleName("filter-tekstpolje");
+		orgjed.setWidth(250, Unit.PIXELS);
 		
 		roba.setPlaceholder("Roba");
 		roba.setItemCaptionGenerator(Roba :: getNaziv);
-		roba.setStyleName("filter-tekstpolje");
 		
 		veleprodaja.setPlaceholder("Veleprodaja");
 		veleprodaja.setItemCaptionGenerator(Komitent :: getNaziv);
-		veleprodaja.setStyleName("filter-tekstpolje");
+		veleprodaja.setWidth(250, Unit.PIXELS);
 		
-		panelPrvi.setStyleName(ValoTheme.PANEL_BORDERLESS);
-		panelDrugi.setStyleName(ValoTheme.PANEL_BORDERLESS);
-		hlLijevo.addComponents(datum, veleprodaja,orgjed, otvoriNalog);
-		hlDesno.addComponent(importFajl);
-		lijevo.addComponents(hlLijevo, hlDesno);
-		lijevo.addStyleName(ValoTheme.LAYOUT_CARD);
+		panelDrugi.setStyleName(ValoTheme.PANEL_WELL);
+		vlLijevo.addComponents(orgjed, veleprodaja, datum, otvoriNalog, importFajl, autObrada, zatvoriNalog);
+		vlLijevo.setSizeUndefined();
 		
-		robasifraext.setStyleName("filter-tekstpolje");
-		robanazivext.setStyleName("filter-tekstpolje");
-		kupacsifraext.setStyleName("filter-tekstpolje");
+		robasifraext.setWidth(150, Unit.PIXELS);
+		robanazivext.setWidth(350, Unit.PIXELS);
+		desnoPrvi.addComponents(robasifraext, robanazivext);
 		
-		kupacnazivext.setStyleName("filter-tekstpolje");
-		cena.setStyleName("filter-tekstpolje");
-		kolicina.setStyleName("filter-tekstpolje");
-		iznos.setStyleName("filter-tekstpolje");
-		
-		desnoPrvi.addComponents(robasifraext, robanazivext, kupacsifraext);
-		desnoDrugi.addComponents(kupacnazivext, cena, kolicina);
-		desnoTreci.addComponents(iznos);
+		kupacsifraext.setWidth(150, Unit.PIXELS);
+		kupacnazivext.setWidth(350, Unit.PIXELS);
+		desnoDrugi.addComponents(kupacsifraext, kupacnazivext);
+		desnoTreci.addComponents(kolicina, iznos,cena);
 		desnoCetvrti.addComponents(komitent, roba, updateZapis);
 		
 		desno.addComponents(desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);
-		desno.addStyleName(ValoTheme.LAYOUT_CARD);
-		lijevo.setSizeUndefined();
-		desno.setSizeFull();
-		rootPrviDio.addComponents(lijevo, desno);
-		rootPrviDio.setExpandRatio(desno, 1);
 		
-		layoutroota.addComponent(rootPrviDio);
-		layoutroota.setSizeUndefined();
-
+		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
-		panelPrvi.setContent(layoutroota);
-		panelDrugi.setContent(gridStavke);
-		panelPrvi.setSizeUndefined();
+		vlDesno.addComponents(upload, desno, gridStavke);
+		vlDesno.setExpandRatio(gridStavke, 1);
+		vlDesno.setSizeFull();
+		
+		panelDrugi.setContent(vlDesno);
 		panelDrugi.setSizeFull();
 		
 		initNalogBinder();
 		initNalogStavkaBinder();
-		addComponents(panelPrvi, panelDrugi);
+		addComponents(vlLijevo, panelDrugi);
 		setExpandRatio(panelDrugi, 1);
+		setMargin(false);
+		setSpacing(false);
 	}
 	
 	public final void provjera(Nalog n, NalogService ns){

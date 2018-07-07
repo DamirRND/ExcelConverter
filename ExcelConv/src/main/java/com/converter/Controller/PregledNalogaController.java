@@ -1,6 +1,5 @@
 package com.converter.Controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -11,15 +10,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.converter.Model.Komitent;
 import com.converter.Model.Nalog;
 import com.converter.Model.NalogStavka;
+import com.converter.Model.Roba;
 import com.converter.Service.KomitentService;
 import com.converter.Service.NalogService;
 import com.converter.Service.NalogStavkaService;
 import com.converter.Service.RobaService;
 import com.converter.Views.PregledNaloga;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinService;
 import com.vaadin.shared.Position;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -35,14 +35,11 @@ public class PregledNalogaController extends PregledNaloga{
 	private final KomitentService ks;
 	@SuppressWarnings("unused")
 	private final RobaService rs;
-	@SuppressWarnings("unused")
 	private final NalogStavkaService nss;
 	
-	@SuppressWarnings("unused")
 	private final NalogService ns;
 	
 	
-	@SuppressWarnings("static-access")
 	@Autowired
 	public PregledNalogaController(KomitentService ks, RobaService rs, NalogStavkaService nss, NalogService ns) {
 		super();
@@ -58,79 +55,15 @@ public class PregledNalogaController extends PregledNaloga{
 		StyleExcel excel = new StyleExcel();
 		
 		veleprodaja.addValueChangeListener(vele->{
-			if(vele.getValue()==null) {
-				if(roba.getValue()==null) {
-					exportExcel(grid, nss.findAllByKupac(kupci.getValue()), nss);
-				}else if(kupci.getValue()==null){
-					exportExcel(grid, nss.findAllByRoba(roba.getValue()), nss);
-				}else {
-					exportExcel(grid, nss.findAllByKupacAndRoba(kupci.getValue(), roba.getValue()), nss);
-				}
-			}else {
-				LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-				Nalog nalog = ns.findZaExport(convertedDate, datum.getValue().getMonthValue(), vele.getValue());
-				if(roba.getValue()==null && kupci.getValue()!=null) {
-					exportExcel(grid, nss.findallByKupacAndNalog(kupci.getValue(), nalog), nss);
-				}else if(roba.getValue()!=null && kupci.getValue()==null) {
-					exportExcel(grid, nss.findallByRobaAndNalog(roba.getValue(), nalog), nss);
-				}else if(roba.getValue()==null && kupci.getValue()==null){
-					exportExcel(grid, nss.findallByNalog(nalog), nss);
-				}else {
-					exportExcel(grid, nss.findallByKupacAndRobaAndNalog(kupci.getValue(), roba.getValue(), nalog), nss);
-				}
-			}
+			filter(vele.getValue(), kupci.getValue(), roba.getValue());
 		});
 		
 		kupci.addValueChangeListener(kupci->{
-			if(veleprodaja.getValue()==null) {
-				if(roba.getValue()==null) {
-					exportExcel(grid, nss.findAllByKupac(kupci.getValue()), nss);
-				}else if(kupci.getValue()==null){
-					exportExcel(grid, nss.findAllByRoba(roba.getValue()), nss);
-				}else {
-					exportExcel(grid, nss.findAllByKupacAndRoba(kupci.getValue(), roba.getValue()), nss);
-				}
-			}else {
-				LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-				Nalog nalog = ns.findZaExport(convertedDate, datum.getValue().getMonthValue(), veleprodaja.getValue());
-				if(roba.getValue()==null && kupci.getValue()!=null) {
-					exportExcel(grid, nss.findallByKupacAndNalog(kupci.getValue(), nalog), nss);
-				}else if(roba.getValue()!=null && kupci.getValue()==null) {
-					exportExcel(grid, nss.findallByRobaAndNalog(roba.getValue(), nalog), nss);
-				}else if(roba.getValue()==null && kupci.getValue()==null){
-					exportExcel(grid, nss.findallByNalog(nalog), nss);
-				}else {
-					exportExcel(grid, nss.findallByKupacAndRobaAndNalog(kupci.getValue(), roba.getValue(), nalog), nss);
-				}
-			}
-			
+			filter(veleprodaja.getValue(), kupci.getValue(), roba.getValue());
 		});
 		
 		roba.addValueChangeListener(roba->{
-			if(veleprodaja.getValue()==null) {
-				if(roba.getValue()==null) {
-					exportExcel(grid, nss.findAllByKupac(kupci.getValue()), nss);
-				}else if(kupci.getValue()==null){
-					exportExcel(grid, nss.findAllByRoba(roba.getValue()), nss);
-				}else {
-					exportExcel(grid, nss.findAllByKupacAndRoba(kupci.getValue(), roba.getValue()), nss);
-				}
-			}else {
-				LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-				Nalog nalog = ns.findZaExport(convertedDate, datum.getValue().getMonthValue(), veleprodaja.getValue());
-				if(roba.getValue()==null && kupci.getValue()!=null) {
-					exportExcel(grid, nss.findallByKupacAndNalog(kupci.getValue(), nalog), nss);
-				}else if(roba.getValue()!=null && kupci.getValue()==null) {
-					exportExcel(grid, nss.findallByRobaAndNalog(roba.getValue(), nalog), nss);
-				}else if(roba.getValue()==null && kupci.getValue()==null){
-					exportExcel(grid, nss.findallByNalog(nalog), nss);
-				}else {
-					exportExcel(grid, nss.findallByKupacAndRobaAndNalog(kupci.getValue(), roba.getValue(), nalog), nss);
-				}
-			}
+			filter(veleprodaja.getValue(), kupci.getValue(), roba.getValue());
 		});
 
 		export.addClickListener(export->{
@@ -166,5 +99,30 @@ public class PregledNalogaController extends PregledNaloga{
 		nss.removeCache();
 		nss.setListaZaExport(listaZaGrid);
 		grid.setItems(listaZaGrid);
+	}
+	
+	public void filter(Komitent veleprodaja, Komitent kupci, Roba roba) {
+		if(veleprodaja==null) {
+			if(roba==null) {
+				exportExcel(grid, nss.findAllByKupac(kupci), nss);
+			}else if(kupci==null){
+				exportExcel(grid, nss.findAllByRoba(roba), nss);
+			}else {
+				exportExcel(grid, nss.findAllByKupacAndRoba(kupci, roba), nss);
+			}
+		}else {
+			LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+			Nalog nalog = ns.findZaExport(convertedDate, datum.getValue().getMonthValue(), veleprodaja);
+			if(roba==null && kupci!=null) {
+				exportExcel(grid, nss.findallByKupacAndNalog(kupci, nalog), nss);
+			}else if(roba!=null && kupci==null) {
+				exportExcel(grid, nss.findallByRobaAndNalog(roba, nalog), nss);
+			}else if(roba==null && kupci==null){
+				exportExcel(grid, nss.findallByNalog(nalog), nss);
+			}else {
+				exportExcel(grid, nss.findallByKupacAndRobaAndNalog(kupci, roba, nalog), nss);
+			}
+		}
 	}
 }

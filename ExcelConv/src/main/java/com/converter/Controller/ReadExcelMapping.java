@@ -13,7 +13,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.converter.Model.Apoteka;
 
@@ -27,7 +26,7 @@ import com.converter.Model.Apoteka;
 
 public class ReadExcelMapping {
 	
-	     @SuppressWarnings({ "rawtypes", "unchecked", "resource" })
+	     @SuppressWarnings({ "rawtypes", "unchecked" })
 		public  List getStudentsListFromExcel(ByteArrayInputStream bis) {
 	 
 	         List ApotekaLista = new ArrayList();
