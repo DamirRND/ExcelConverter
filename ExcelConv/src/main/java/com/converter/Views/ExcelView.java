@@ -116,10 +116,19 @@ public class ExcelView extends HorizontalLayout{
 		tabGridDrugi.addComponent(gridStavkeGotove);
 		tabGridDrugi.setMargin(true);
 		gridStavkeGotove.setSizeFull();
+		
+		gridStavke.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("mojNalog");
+		gridStavke.setColumns("id","robasifraext", "robanazivext", "kupacsifraext", "kupacnazivext", "kolicina", "iznos", "cena", "mojNalog");
+		gridStavke.getColumn("id").setHidden(true);
+		
+		gridStavkeGotove.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("mojNalogDva");
+		gridStavkeGotove.setColumns("id","robasifraext", "robanazivext", "kupacsifraext", "kupacnazivext", "kolicina", "iznos", "cena", "mojNalogDva");
+		gridStavkeGotove.getColumn("id").setHidden(true);
         tabovi.addTab(tabGridPrvi, "Neobrađene stavke");
         tabovi.addTab(tabGridDrugi, "Pregled");
         tabovi.getTab(tabGridPrvi).setId("neobradjeni");
         tabovi.getTab(tabGridDrugi).setId("obradjeni");
+        tabovi.setSizeFull();
 		datum.setResolution(DateResolution.MONTH);
 		datum.setWidth(250, Unit.PIXELS);
 		addStyleName("jebeniStil");
@@ -163,12 +172,16 @@ public class ExcelView extends HorizontalLayout{
 		robasifraext.setWidth(150, Unit.PIXELS);
 		robanazivext.setWidth(350, Unit.PIXELS);
 		desnoPrvi.addComponents(robasifraext, robanazivext);
-		
+		desnoPrvi.setSizeUndefined();
 		kupacsifraext.setWidth(150, Unit.PIXELS);
 		kupacnazivext.setWidth(350, Unit.PIXELS);
 		desnoDrugi.addComponents(kupacsifraext, kupacnazivext);
 		desnoTreci.addComponents(kolicina, iznos,cena);
 		desnoCetvrti.addComponents(komitent, roba, updateZapis);
+		
+		desnoDrugi.setSizeUndefined();
+		desnoTreci.setSizeUndefined();
+		desnoCetvrti.setSizeUndefined();
 		
 		dodajNoviZapis.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		desno.addComponents(dodajNoviZapis, desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);

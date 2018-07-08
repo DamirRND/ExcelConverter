@@ -86,15 +86,12 @@ public class ExcelViewController extends ExcelView {
 					.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
 			Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
 					veleprodaja.getValue());
-			System.out.println(tabovi.getTabPosition(tabovi.getTab(change.getTabSheet().getSelectedTab())));
-			
-//			if(change.getTabSheet().getSelectedTab().getId().equals("neobradjeni")) {
-//				gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
-//			}else if(change.getTabSheet().getSelectedTab().getId().equals("obradjeni")) {
-//				gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalog));
-//			}
+			if(tabovi.getTabPosition(tabovi.getTab(change.getTabSheet().getSelectedTab()))==0) {
+				gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
+			}else if(tabovi.getTabPosition(tabovi.getTab(change.getTabSheet().getSelectedTab()))==1) {
+				gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalog));
+			}
 		});
-		//if(tabovi.getSelectedTab().getCaption().equals(""))
 		pretragaSvih.addClickListener(pretraga ->{
 			final LookUpFilter lfilter = new LookUpFilter();
 			lfilter.gridNaloga.setItems(ns.findSve(2));
@@ -147,6 +144,14 @@ public class ExcelViewController extends ExcelView {
 					}
 					UI.getCurrent().removeWindow(lfilter);
 					panelDrugi.setEnabled(true);
+					LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
+							DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+					convertedDate = convertedDate
+							.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+					Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
+							veleprodaja.getValue());
+					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
+
 				}
 			});
 		});
@@ -281,34 +286,35 @@ public class ExcelViewController extends ExcelView {
 		});
 
 		gridStavke.addItemClickListener(event -> {
-			LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-			NalogStavka nsStavkaGrid = new NalogStavka();
-			
-			Nalog trenutniNalogZaStavku = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 1, convertedDate, datum.getValue().getMonthValue(),
-					veleprodaja.getValue());
-			
-//			nsStavkaGrid.setRobanazivext(event.getItem().getNazivRobe());
-//			nsStavkaGrid.setRobasifraext(event.getItem().getSifraRobe());
-//			nsStavkaGrid.setKupacnazivext(event.getItem().getNazivApoteke());
-//			nsStavkaGrid.setKupacsifraext(event.getItem().getSifraApoteke());
-//			nsStavkaGrid.setCena(event.getItem().getVrijednost() / event.getItem().getKolicina());
-//			nsStavkaGrid.setKolicina(Double.valueOf(event.getItem().getKolicina()));
-//			nsStavkaGrid.setIznos(Double.valueOf(event.getItem().getVrijednost()));
-			nsStavkaGrid.setNalog(trenutniNalogZaStavku);
-			insert(nsStavkaGrid, nss);
+			insert(event.getItem(), nss);
 		});
 
-
+		gridStavkeGotove.addItemClickListener(eventDva ->{
+			insert(eventDva.getItem(), nss);
+		});
+		
 		updateZapis.addClickListener(insertNovi -> {
+			
 			try {
+				LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
+						DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+				Nalog trenutniNalogZaStavku = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
+						veleprodaja.getValue());
+				
 				nss.save(nsProvjera);
 				Notification success = new Notification("Uspješno ste ažurirali stavku naloga.");
 				success.setDelayMsec(5000);
 				success.setStyleName("bar success small");
 				success.setPosition(Position.BOTTOM_CENTER);
 				success.show(Page.getCurrent());
+				
+				if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
+					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalogZaStavku));
+				}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
+					gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalogZaStavku));
+				}
+				insert(null, nss);
 			} catch (Exception ec) {
 				ec.printStackTrace();
 				Notification success = new Notification("Nije moguće sačuvati stavku naloga.");
