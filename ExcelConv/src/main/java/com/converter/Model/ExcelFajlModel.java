@@ -1,6 +1,6 @@
 package com.converter.Model;
 
-public class Apoteka {
+public class ExcelFajlModel {
 
 	
 	private int sifraApoteke;
@@ -45,7 +45,7 @@ public class Apoteka {
 	public void setVrijednost(double vrijednost) {
 		this.vrijednost = vrijednost;
 	}
-	public Apoteka(int sifraApoteke, String nazivApoteke, int sifraRobe, String nazivRobe, int kolicina,
+	public ExcelFajlModel(int sifraApoteke, String nazivApoteke, int sifraRobe, String nazivRobe, int kolicina,
 			float vrijednost) {
 		super();
 		this.sifraApoteke = sifraApoteke;
@@ -56,7 +56,7 @@ public class Apoteka {
 		this.vrijednost = vrijednost;
 	}
 	
-	public Apoteka()
+	public ExcelFajlModel()
 	{
 		
 	}

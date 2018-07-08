@@ -112,6 +112,13 @@ public class NalogStavkaService {
 		this.listaZaExport = listaZaExport;
 	}
 
+	public List<NalogStavka> findSveNeobradjene(Nalog n){
+		return (List<NalogStavka>) nlgrep.listaNeobradjenih(n);
+	}
+	
+	public List<NalogStavka> findSveObradjene(Nalog n){
+		return (List<NalogStavka>) nlgrep.listaObradjenih(n);
+	}
 
 	public NalogStavka save(NalogStavka n )
 	{

@@ -3,7 +3,6 @@ package com.converter.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RecieverUploadFajl;
-import com.converter.Model.Apoteka;
 import com.converter.Model.Komitent;
 import com.converter.Model.Nalog;
 import com.converter.Model.NalogStavka;
@@ -38,9 +37,13 @@ public class ExcelView extends HorizontalLayout{
 
 	public static final String VIEW_NAME = "excelView";
 	
+	public HorizontalLayout hlPretraga = new HorizontalLayout();
+	public TextField idNaloga = new TextField();
+	public Button pretragaSvih = new Button();
+			
 	public VerticalLayout vlLijevo = new VerticalLayout();
 	public VerticalLayout vlDesno = new VerticalLayout();
-	
+	public VerticalLayout daObuhvati = new VerticalLayout();
 	public VerticalLayout tabGridPrvi = new VerticalLayout();
 	public VerticalLayout tabGridDrugi = new VerticalLayout();
 	
@@ -54,6 +57,7 @@ public class ExcelView extends HorizontalLayout{
 	public DateField datum = new DateField();
 	public ComboBox<Komitent> veleprodaja = new ComboBox<>("Veleprodaja");
 	public ComboBox<OrganizacionaJedinica> orgjed = new ComboBox<>("Org. jedinica");
+	public TextField nazivFajla = new TextField();
 	public Button otvoriNalog = new Button("Otvori nalog", VaadinIcons.FILE);
 	public Button importFajl = new Button("Import Excel", VaadinIcons.CREDIT_CARD);
 	public Button autObrada = new Button("Automatska obrada", VaadinIcons.HANDLE_CORNER);
@@ -72,11 +76,12 @@ public class ExcelView extends HorizontalLayout{
 	public ComboBox<Komitent> komitent = new ComboBox<>();
 	public ComboBox<Roba> roba = new ComboBox<>();
 	public Button updateZapis=new Button("Ažuriraj stavku", VaadinIcons.UPLOAD);
+	public Button dodajNoviZapis = new Button("Dodaj novu stavku", VaadinIcons.PLUS);
 	
 	public Binder<Nalog> nalogBinder = new Binder<>(Nalog.class);
 	public Binder<NalogStavka> nalogstBinder = new Binder<>(NalogStavka.class);
 
-	public Grid<Apoteka> gridStavke = new Grid<>(Apoteka.class);
+	public Grid<NalogStavka> gridStavke = new Grid<>(NalogStavka.class);
 	public Grid<NalogStavka> gridStavkeGotove = new Grid<>(NalogStavka.class);
 	
 	public Panel panelDrugi = new Panel();
@@ -95,6 +100,15 @@ public class ExcelView extends HorizontalLayout{
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		
+		pretragaSvih.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+		pretragaSvih.setIcon(VaadinIcons.SEARCH);
+		idNaloga.setWidth(250, Unit.PIXELS);
+		hlPretraga.addComponents(idNaloga, pretragaSvih);
+		hlPretraga.setSpacing(false);
+		hlPretraga.setMargin(false);
+		hlPretraga.setSizeUndefined();
+		
+		
 		tabovi.addStyleName(ValoTheme.TABSHEET_FRAMED);
 		tabovi.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
 		tabGridPrvi.addComponent(gridStavke);
@@ -104,7 +118,8 @@ public class ExcelView extends HorizontalLayout{
 		gridStavkeGotove.setSizeFull();
         tabovi.addTab(tabGridPrvi, "Neobrađene stavke");
         tabovi.addTab(tabGridDrugi, "Pregled");
-        
+        tabovi.getTab(tabGridPrvi).setId("neobradjeni");
+        tabovi.getTab(tabGridDrugi).setId("obradjeni");
 		datum.setResolution(DateResolution.MONTH);
 		datum.setWidth(250, Unit.PIXELS);
 		addStyleName("jebeniStil");
@@ -122,6 +137,7 @@ public class ExcelView extends HorizontalLayout{
 		autObrada.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		zatvoriNalog.addStyleName(ValoTheme.BUTTON_DANGER);
 		zatvoriNalog.setWidth(250, Unit.PIXELS);
+		nazivFajla.setWidth(250, Unit.PIXELS);
 		komitent.setPlaceholder("Komitent");
 		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
 		
@@ -137,9 +153,13 @@ public class ExcelView extends HorizontalLayout{
 		veleprodaja.setWidth(250, Unit.PIXELS);
 		
 		panelDrugi.setStyleName(ValoTheme.PANEL_WELL);
-		vlLijevo.addComponents(orgjed, veleprodaja, datum, otvoriNalog, importFajl, autObrada, zatvoriNalog);
-		vlLijevo.setSizeUndefined();
-		
+		vlLijevo.addComponents(hlPretraga,orgjed, veleprodaja, datum, nazivFajla, otvoriNalog, importFajl, autObrada, zatvoriNalog);
+		vlLijevo.setSizeFull();
+		daObuhvati.addComponents(hlPretraga, vlLijevo);
+		daObuhvati.setMargin(false);
+		daObuhvati.setSpacing(false);
+		daObuhvati.setExpandRatio(vlLijevo, 1);
+		daObuhvati.setSizeUndefined();
 		robasifraext.setWidth(150, Unit.PIXELS);
 		robanazivext.setWidth(350, Unit.PIXELS);
 		desnoPrvi.addComponents(robasifraext, robanazivext);
@@ -150,7 +170,8 @@ public class ExcelView extends HorizontalLayout{
 		desnoTreci.addComponents(kolicina, iznos,cena);
 		desnoCetvrti.addComponents(komitent, roba, updateZapis);
 		
-		desno.addComponents(desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);
+		dodajNoviZapis.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+		desno.addComponents(dodajNoviZapis, desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);
 		
 		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
@@ -163,7 +184,7 @@ public class ExcelView extends HorizontalLayout{
 		
 		initNalogBinder();
 		initNalogStavkaBinder();
-		addComponents(vlLijevo, panelDrugi);
+		addComponents(daObuhvati, panelDrugi);
 		setExpandRatio(panelDrugi, 1);
 		setMargin(false);
 		setSpacing(false);
