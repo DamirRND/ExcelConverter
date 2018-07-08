@@ -3,6 +3,7 @@ package com.converter.Controller;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -139,19 +140,22 @@ public class ExcelViewController extends ExcelView {
 					
 					if(izaberi.getItem().getStatus()==0) {
 						importFajl.setEnabled(true);
+						panelDrugi.setEnabled(false);
+						gridStavke.setItems(new ArrayList<NalogStavka>());
+						gridStavkeGotove.setItems(new ArrayList<NalogStavka>());
 					}else {
 						importFajl.setEnabled(false);
+						LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
+								DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+						convertedDate = convertedDate
+								.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+						Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
+								veleprodaja.getValue());
+						gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
+						panelDrugi.setEnabled(true);
 					}
 					UI.getCurrent().removeWindow(lfilter);
-					panelDrugi.setEnabled(true);
-					LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-							DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-					convertedDate = convertedDate
-							.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-					Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-							veleprodaja.getValue());
-					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
-
+					
 				}
 			});
 		});
@@ -353,6 +357,9 @@ public class ExcelViewController extends ExcelView {
 			datum.clear();
 			nazivFajla.clear();
 			importFajl.setEnabled(false);
+			insert(null, nss);
+			panelDrugi.setEnabled(false);
+			ns.removeCache();
 			Notification success = new Notification("Uspješno ste zatvorili nalog.");
 			success.setDelayMsec(5000);
 			success.setStyleName("bar success small");
