@@ -70,6 +70,7 @@ public class KomitentService {
 		this.listaJedan = listaJedan;
 	}
 
+	@Cacheable("komitent")
 	public List<Komitent> findAllByTip(String tip){
 		return (List<Komitent>) krep.findAllByTipStartsWithIgnoreCase(tip);
 	}

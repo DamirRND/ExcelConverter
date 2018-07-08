@@ -11,7 +11,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.converter.Component.RecieverUploadFajl;
 import com.converter.Model.ExcelFajlModel;
+import com.converter.Model.Komitent;
 import com.converter.Model.Nalog;
 import com.converter.Model.NalogStavka;
 import com.converter.Service.KomitentService;
@@ -32,6 +34,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Upload;
 
 @SuppressWarnings("serial")
 @SpringComponent
@@ -46,7 +49,6 @@ public class ExcelViewController extends ExcelView {
 	@SuppressWarnings("unused")
 	private final OrganizacionaJedinicaService orgser;
 
-	@SuppressWarnings("unused")
 	private final NalogService ns;
 
 	@SuppressWarnings("unused")
@@ -74,6 +76,7 @@ public class ExcelViewController extends ExcelView {
 		this.mks = mks;
 
 		importFajl.setEnabled(false);
+		
 		komitent.setItems(kser.findAllByTip("KK"));
 		roba.setItems(rser.findAllCombo());
 		veleprodaja.setItems(kser.findAllByTip("VP"));
@@ -81,12 +84,7 @@ public class ExcelViewController extends ExcelView {
 		panelDrugi.setEnabled(false);
 		
 		tabovi.addSelectedTabChangeListener(change ->{
-			LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			convertedDate = convertedDate
-					.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-			Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-					veleprodaja.getValue());
+			Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 			if(tabovi.getTabPosition(tabovi.getTab(change.getTabSheet().getSelectedTab()))==0) {
 				gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
 			}else if(tabovi.getTabPosition(tabovi.getTab(change.getTabSheet().getSelectedTab()))==1) {
@@ -145,12 +143,7 @@ public class ExcelViewController extends ExcelView {
 						gridStavkeGotove.setItems(new ArrayList<NalogStavka>());
 					}else {
 						importFajl.setEnabled(false);
-						LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-								DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-						convertedDate = convertedDate
-								.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-						Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-								veleprodaja.getValue());
+						Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 						gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
 						panelDrugi.setEnabled(true);
 					}
@@ -161,9 +154,18 @@ public class ExcelViewController extends ExcelView {
 		});
 		
 		importFajl.addClickListener(importf -> {
-
+			panelDrugi.setEnabled(true);
+			
+			RecieverUploadFajl lineBreakCounter = new RecieverUploadFajl();
+			Upload upload = new Upload(null, lineBreakCounter);
+		    ImportFajl uploadInfoWindow = new ImportFajl(upload, lineBreakCounter);
+		    
+		    upload.setImmediateMode(false);
+		    upload.setButtonCaption("Import");
 			upload.setVisible(true);
-
+			
+			hlZaUpload.addComponent(upload);
+			
 			upload.addStartedListener(event -> {
 				if (uploadInfoWindow.getParent() == null) {
 					UI.getCurrent().addWindow(uploadInfoWindow);
@@ -174,28 +176,19 @@ public class ExcelViewController extends ExcelView {
 			upload.addFinishedListener(event -> {
 				Nalog nalogGlavniProvjera = ns.findOneByFajl(event.getFilename());
 				if (nalogGlavniProvjera == null) {
+					
 					try {
-						LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-								DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-						convertedDate = convertedDate
-								.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-
-						Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-								veleprodaja.getValue());
-
+						Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 						trenutniNalog.setStatus(1);
 						trenutniNalog.setIzvornifajl(uploadInfoWindow.fileName.getValue());
 						ns.save(trenutniNalog);
 						
 						nazivFajla.setValue(uploadInfoWindow.fileName.getValue());
-
 						ByteArrayInputStream bis = new ByteArrayInputStream(lineBreakCounter.getBaos().toByteArray());
-						
 						ReadExcelMapping mapa=new ReadExcelMapping();
-			    		
 			    		List<ExcelFajlModel> excel=mapa.getElementFromExcel(bis);
-			    		Nalog trenutniNalogZaStavku = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-								veleprodaja.getValue());
+			    		Nalog trenutniNalogZaStavku = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
+			    		
 			    		for (ExcelFajlModel x : excel)
 			    		{
 			    			try {
@@ -217,6 +210,12 @@ public class ExcelViewController extends ExcelView {
 			    			
 			    	     }
 			    		
+			    		if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
+							gridStavke.setItems(nss.findSveNeobradjene(trenutniNalogZaStavku));
+						}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
+							gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalogZaStavku));
+						}
+			    		
 			    		Notification success = new Notification("Uspješno ste importovali excel fajl.");
 						success.setDelayMsec(2000);
 						success.setStyleName("bar success small");
@@ -233,9 +232,12 @@ public class ExcelViewController extends ExcelView {
 						success.show(Page.getCurrent());
 					}
 					uploadInfoWindow.setClosable(true);
+					UI.getCurrent().removeWindow(uploadInfoWindow);
 				} else {
+					System.out.println("NIJE NULL  "+nalogGlavniProvjera.getIzvornifajl());
 					uploadInfoWindow.setClosable(true);
 					importFajl.setEnabled(true);
+					UI.getCurrent().removeWindow(uploadInfoWindow);
 					Notification success = new Notification(
 							"Podaci iz izabranog fajla su već obrađeni, molimo Vas da izaberete drugi fajl.");
 					success.setDelayMsec(5000);
@@ -243,6 +245,8 @@ public class ExcelViewController extends ExcelView {
 					success.setPosition(Position.BOTTOM_CENTER);
 					success.show(Page.getCurrent());
 				}
+				
+				hlZaUpload.removeAllComponents();
 			});
 		});
 
@@ -278,7 +282,9 @@ public class ExcelViewController extends ExcelView {
 				importFajl.setEnabled(true);
 				idNaloga.setValue(String.valueOf(ns.pronadjiMax(convertedDate, datum.getValue().getMonthValue(), veleprodaja.getValue(), 2)));
 				idNaloga.setReadOnly(true);
-				panelDrugi.setEnabled(true);
+				panelDrugi.setEnabled(false);
+				gridStavke.setItems(new ArrayList<NalogStavka>());
+				insert(null, nss);
 			} catch (Exception ec) {
 				ec.printStackTrace();
 				Notification success = new Notification("Nije moguće otvoriti nalog.");
@@ -300,12 +306,7 @@ public class ExcelViewController extends ExcelView {
 		updateZapis.addClickListener(insertNovi -> {
 			
 			try {
-				LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-						DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-				Nalog trenutniNalogZaStavku = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-						veleprodaja.getValue());
-				
+				Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 				nss.save(nsProvjera);
 				Notification success = new Notification("Uspješno ste ažurirali stavku naloga.");
 				success.setDelayMsec(5000);
@@ -314,9 +315,9 @@ public class ExcelViewController extends ExcelView {
 				success.show(Page.getCurrent());
 				
 				if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
-					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalogZaStavku));
+					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
 				}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
-					gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalogZaStavku));
+					gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalog));
 				}
 				insert(null, nss);
 			} catch (Exception ec) {
@@ -331,26 +332,16 @@ public class ExcelViewController extends ExcelView {
 		
 		
 		dodajNoviZapis.addClickListener(novizapis ->{
-			LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+			Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 			NalogStavka nsStavkaGrid = new NalogStavka();
-			
-			Nalog trenutniNalogZaStavku = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-					veleprodaja.getValue());
-
-			nsStavkaGrid.setNalog(trenutniNalogZaStavku);
+			nsStavkaGrid.setNalog(trenutniNalog);
 			insert(nsStavkaGrid, nss);
 		});
 		
 		zatvoriNalog.addClickListener(zatvori->{
-			LocalDate convertedDate = LocalDate.parse(datum.getValue().toString(),
-					DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-			convertedDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
-			Nalog trenutniNalogZaStavku = ns.findOneNalog(Integer.valueOf(idNaloga.getValue()), 2, convertedDate, datum.getValue().getMonthValue(),
-					veleprodaja.getValue());
-			trenutniNalogZaStavku.setStatus(2);
-			ns.save(trenutniNalogZaStavku);
+			Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
+			trenutniNalog.setStatus(2);
+			ns.save(trenutniNalog);
 			idNaloga.clear();
 			orgjed.clear();
 			veleprodaja.clear();
@@ -367,5 +358,14 @@ public class ExcelViewController extends ExcelView {
 			success.show(Page.getCurrent());
 		});
 		
+	}
+	public Nalog getTrenutniNalog(String datum, String idnalog, int mesec, Komitent vele) {
+		LocalDate convertedDate = LocalDate.parse(datum,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		convertedDate = convertedDate
+				.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+		Nalog trenutniNalog = ns.findOneNalog(Integer.valueOf(idnalog), 2, convertedDate, mesec,
+				vele);
+		return trenutniNalog;
 	}
 }

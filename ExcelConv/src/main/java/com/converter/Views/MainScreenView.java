@@ -2,6 +2,7 @@ package com.converter.Views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.converter.Autentikacija.KontrolaPristupa;
 import com.converter.Controller.EntitetController;
 import com.converter.Controller.EntitetEditController;
 import com.converter.Controller.ExcelViewController;
@@ -126,7 +127,11 @@ public class MainScreenView extends SideMenu implements View{
 	@SuppressWarnings("unused")
 	private MapaKupacService mks;
 	
+	@SuppressWarnings("unused")
 	private PregledNalogaController pview;
+	
+	@SuppressWarnings("unused")
+	private KontrolaPristupa kp;
 	
 	@Autowired
 	public MainScreenView(
@@ -153,7 +158,8 @@ public class MainScreenView extends SideMenu implements View{
 			NalogService ns,
 			NalogStavkaService nss,
 			MapaRobeService ms,
-			MapaKupacService mks) {
+			MapaKupacService mks,
+			KontrolaPristupa kp) {
 		this.rser = rser;
 		this.rgser = rgser;
 		this.user = user;
@@ -174,10 +180,13 @@ public class MainScreenView extends SideMenu implements View{
 		this.nss= nss;
 		this.ms = ms;
 		this.mks = mks;
+		this.kp = kp;
 		
 		Responsive.makeResponsive(this);
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
         setSpacing(false);
+        System.out.println(kp.isUserInRole("Administrator"));
+        
         
         addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
      			public void click(){
@@ -186,12 +195,12 @@ public class MainScreenView extends SideMenu implements View{
      			}
      	});
         
-        addMenuItem("Izvještaj", VaadinIcons.USER_CARD, new MenuClickHandler(){
-			public void click(){
-				pview = new PregledNalogaController(kser, rser, nss, ns);
-				setContent(pview.getForm());
-			}
-		});
+//        addMenuItem("Izvještaj", VaadinIcons.USER_CARD, new MenuClickHandler(){
+//			public void click(){
+//				pview = new PregledNalogaController(kser, rser, nss, ns);
+//				setContent(pview.getForm());
+//			}
+//		});
 
         addMenuItem("Roba", VaadinIcons.BULLETS, new MenuClickHandler(){
 			public void click(){

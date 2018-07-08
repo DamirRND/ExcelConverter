@@ -2,7 +2,6 @@ package com.converter.Views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.converter.Component.RecieverUploadFajl;
 import com.converter.Model.Komitent;
 import com.converter.Model.Nalog;
 import com.converter.Model.NalogStavka;
@@ -26,7 +25,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -41,6 +39,7 @@ public class ExcelView extends HorizontalLayout{
 	public TextField idNaloga = new TextField();
 	public Button pretragaSvih = new Button();
 			
+	public HorizontalLayout hlZaUpload = new HorizontalLayout();
 	public VerticalLayout vlLijevo = new VerticalLayout();
 	public VerticalLayout vlDesno = new VerticalLayout();
 	public VerticalLayout daObuhvati = new VerticalLayout();
@@ -88,9 +87,7 @@ public class ExcelView extends HorizontalLayout{
 	public Nalog nalogProvjera;
 	public NalogStavka nsProvjera;
 	
-	public RecieverUploadFajl lineBreakCounter = new RecieverUploadFajl();
-    public Upload upload = new Upload(null, lineBreakCounter);
-    public ImportFajl uploadInfoWindow = new ImportFajl(upload, lineBreakCounter);
+
     public TabSheet tabovi = new TabSheet();
     
     
@@ -133,9 +130,7 @@ public class ExcelView extends HorizontalLayout{
 		datum.setWidth(250, Unit.PIXELS);
 		addStyleName("jebeniStil");
 		
-	    upload.setImmediateMode(false);
-	    upload.setButtonCaption("Import");
-	    upload.setVisible(false);
+	   
 	    
 		otvoriNalog.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		otvoriNalog.setWidth(250, Unit.PIXELS);
@@ -188,7 +183,10 @@ public class ExcelView extends HorizontalLayout{
 		
 		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
-		vlDesno.addComponents(upload, desno, tabovi);
+		hlZaUpload.setSizeUndefined();
+		hlZaUpload.setSpacing(false);
+		hlZaUpload.setMargin(false);
+		vlDesno.addComponents(hlZaUpload, desno, tabovi);
 		vlDesno.setExpandRatio(tabovi, 1);
 		vlDesno.setSizeFull();
 		
