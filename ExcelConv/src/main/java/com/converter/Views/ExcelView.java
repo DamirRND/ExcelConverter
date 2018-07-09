@@ -99,8 +99,8 @@ public class ExcelView extends HorizontalLayout{
 		
 		komitent.setPlaceholder("Komitent");
 		roba.setPlaceholder("Roba");
-		komitent.setWidth(250,Unit.PIXELS);
-		roba.setWidth(250, Unit.PIXELS);
+		komitent.setWidth(350,Unit.PIXELS);
+		roba.setWidth(350, Unit.PIXELS);
 		pretragaSvih.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		pretragaSvih.setIcon(VaadinIcons.SEARCH);
 		idNaloga.setWidth(250, Unit.PIXELS);
