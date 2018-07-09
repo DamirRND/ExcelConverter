@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
@@ -384,21 +383,28 @@ public class ExcelViewController extends ExcelView {
 		
 		autObrada.addClickListener(auo->{
 			try {
-				nss.mapirajKupca(Integer.valueOf(idNaloga.getValue()));
-				nss.mapirajRobu(Integer.valueOf(idNaloga.getValue()));
-				
-				Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
-				if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
-					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
-				}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
-					gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalog));
+				if(nss.mapirajKupca(Integer.valueOf(idNaloga.getValue()))>0 && nss.mapirajRobu(Integer.valueOf(idNaloga.getValue()))>0){
+					Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
+					if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
+						gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
+					}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
+						gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalog));
+					}
+					insert(null, nss);
+					Notification success = new Notification("Uspješno ste automatski obradili stavke naloga.");
+					success.setDelayMsec(5000);
+					success.setStyleName("bar success small");
+					success.setPosition(Position.BOTTOM_CENTER);
+					success.show(Page.getCurrent());
+				}else {
+					Notification success = new Notification("Nije moguće automatski obraditi stavke naloga. Jer u bazi podataka ne postoji data kombinacija parova.");
+					success.setDelayMsec(5000);
+					success.setStyleName("bar error small");
+					success.setPosition(Position.BOTTOM_CENTER);
+					success.show(Page.getCurrent());
 				}
-				insert(null, nss);
-				Notification success = new Notification("Uspješno ste automatski obradili stavke naloga.");
-				success.setDelayMsec(5000);
-				success.setStyleName("bar success small");
-				success.setPosition(Position.BOTTOM_CENTER);
-				success.show(Page.getCurrent());
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				Notification success = new Notification("Nije moguće automatski obraditi stavke naloga.");
