@@ -3,16 +3,16 @@ package com.converter.Model;
 public class ExcelFajlModel {
 
 	
-	private int sifraApoteke;
+	private String sifraApoteke;
 	private String nazivApoteke;
-	private int sifraRobe;
+	private String sifraRobe;
 	private String nazivRobe;
 	private int kolicina;
 	private double vrijednost;
-	public int getSifraApoteke() {
+	public String getSifraApoteke() {
 		return sifraApoteke;
 	}
-	public void setSifraApoteke(int sifraApoteke) {
+	public void setSifraApoteke(String sifraApoteke) {
 		this.sifraApoteke = sifraApoteke;
 	}
 	public String getNazivApoteke() {
@@ -21,10 +21,10 @@ public class ExcelFajlModel {
 	public void setNazivApoteke(String nazivApoteke) {
 		this.nazivApoteke = nazivApoteke;
 	}
-	public int getSifraRobe() {
+	public String getSifraRobe() {
 		return sifraRobe;
 	}
-	public void setSifraRobe(int sifraRobe) {
+	public void setSifraRobe(String sifraRobe) {
 		this.sifraRobe = sifraRobe;
 	}
 	public String getNazivRobe() {
@@ -45,7 +45,7 @@ public class ExcelFajlModel {
 	public void setVrijednost(double vrijednost) {
 		this.vrijednost = vrijednost;
 	}
-	public ExcelFajlModel(int sifraApoteke, String nazivApoteke, int sifraRobe, String nazivRobe, int kolicina,
+	public ExcelFajlModel(String sifraApoteke, String nazivApoteke, String sifraRobe, String nazivRobe, int kolicina,
 			float vrijednost) {
 		super();
 		this.sifraApoteke = sifraApoteke;

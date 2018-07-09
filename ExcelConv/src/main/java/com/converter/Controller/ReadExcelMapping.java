@@ -21,7 +21,7 @@ public class ReadExcelMapping {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List getElementFromExcel(ByteArrayInputStream bis) {
 
-		List ApotekaLista = new ArrayList();
+		List ExcelFajlLista = new ArrayList();
 		try {
 
 			Workbook workbook = WorkbookFactory.create(bis);
@@ -38,7 +38,7 @@ public class ReadExcelMapping {
 
 				while (rowIterator.hasNext()) {
 
-					ExcelFajlModel apoteka = new ExcelFajlModel();
+					ExcelFajlModel excel = new ExcelFajlModel();
 
 					Row row = (Row) rowIterator.next();
 					Iterator cellIterator = row.cellIterator();
@@ -49,35 +49,32 @@ public class ReadExcelMapping {
 						Cell cell = (Cell) cellIterator.next();
 
 						if (cell.getColumnIndex() == 0) {
-
-							apoteka.setSifraApoteke((int) (cell.getNumericCellValue()));
-
+							 excel.setSifraApoteke(cell.getStringCellValue());
+							
 						}
 
 						else if (cell.getColumnIndex() == 1) {
-							apoteka.setNazivApoteke(cell.getStringCellValue());
+							excel.setNazivApoteke(cell.getStringCellValue());
 
 						}
 
 						else if (cell.getColumnIndex() == 2) {
-
-							apoteka.setSifraRobe((int) (cell.getNumericCellValue()));
-
+							excel.setSifraRobe(cell.getStringCellValue());
 						} else if (cell.getColumnIndex() == 3) {
 
-							apoteka.setNazivRobe(cell.getStringCellValue());
+							excel.setNazivRobe(cell.getStringCellValue());
 
 						} else if (cell.getColumnIndex() == 4) {
 
-							apoteka.setKolicina((int) cell.getNumericCellValue());
+							excel.setKolicina((int) cell.getNumericCellValue());
 
 						} else if (cell.getColumnIndex() == 5) {
-							apoteka.setVrijednost(cell.getNumericCellValue());
+							excel.setVrijednost(cell.getNumericCellValue());
 
 						}
 
 					}
-					ApotekaLista.add(apoteka);
+					ExcelFajlLista.add(excel);
 
 				}
 
@@ -95,7 +92,7 @@ public class ReadExcelMapping {
 			e.printStackTrace();
 		}
 
-		return ApotekaLista;
+		return ExcelFajlLista;
 
 	}
 

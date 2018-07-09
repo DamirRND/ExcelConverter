@@ -33,4 +33,5 @@ public interface NalogRepository extends JpaRepository<Nalog, Integer>{
 	@Transactional
 	@Query("select n from Nalog n where n.status != :status")
     public List<Nalog> findAllOtvorene(@Param("status") int status );
+	
 }

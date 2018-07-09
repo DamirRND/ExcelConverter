@@ -40,14 +40,14 @@ public class NalogStavka implements Serializable{
 	@ManyToOne
 	private Nalog nalog;
 	
-	@Column(name="robasifraext")
-	private int robasifraext;
+	@Column(name="robasifraext", nullable=true)
+	private Integer robasifraext;
 	
 	@Column(name="robanazivext")
 	private String robanazivext;
 	
-	@Column(name="kupacsifraext")
-	private int kupacsifraext;
+	@Column(name="kupacsifraext", nullable=true)
+	private Integer kupacsifraext;
 	
 	@Column(name="kupacnazivext")
 	private String kupacnazivext;
@@ -126,11 +126,11 @@ public class NalogStavka implements Serializable{
 		this.nalog = nalog;
 	}
 
-	public int getRobasifraext() {
+	public Integer getRobasifraext() {
 		return robasifraext;
 	}
 
-	public void setRobasifraext(int robasifraext) {
+	public void setRobasifraext(Integer robasifraext) {
 		this.robasifraext = robasifraext;
 	}
 
@@ -142,11 +142,11 @@ public class NalogStavka implements Serializable{
 		this.robanazivext = robanazivext;
 	}
 
-	public int getKupacsifraext() {
+	public Integer getKupacsifraext() {
 		return kupacsifraext;
 	}
 
-	public void setKupacsifraext(int kupacsifraext) {
+	public void setKupacsifraext(Integer kupacsifraext) {
 		this.kupacsifraext = kupacsifraext;
 	}
 

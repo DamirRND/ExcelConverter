@@ -103,6 +103,14 @@ public class NalogStavkaService {
 	}
 	
 	
+	public int mapirajKupca() {
+		return nlgrep.mapirajKupce();
+	}
+	
+	public int mapirajRobu() {
+		return nlgrep.mapirajRobu();
+	}
+	
 	public List<NalogStavka> getListaZaExport() {
 		return listaZaExport;
 	}

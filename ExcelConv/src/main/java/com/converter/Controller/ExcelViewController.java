@@ -83,6 +83,7 @@ public class ExcelViewController extends ExcelView {
 		veleprodaja.setItems(kser.findAllByTip("VP"));
 		orgjed.setItems(orgser.findAll());
 		panelDrugi.setEnabled(false);
+		datum.setValue(LocalDate.now());
 		
 		tabovi.addSelectedTabChangeListener(change ->{
 			Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
@@ -181,52 +182,72 @@ public class ExcelViewController extends ExcelView {
 				if (nalogGlavniProvjera == null) {
 					
 					try {
-						Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
-						trenutniNalog.setStatus(1);
-						trenutniNalog.setIzvornifajl(uploadInfoWindow.fileName.getValue());
-						ns.save(trenutniNalog);
-						
 						nazivFajla.setValue(uploadInfoWindow.fileName.getValue());
 						ByteArrayInputStream bis = new ByteArrayInputStream(lineBreakCounter.getBaos().toByteArray());
 						ReadExcelMapping mapa=new ReadExcelMapping();
 			    		List<ExcelFajlModel> excel=mapa.getElementFromExcel(bis);
 			    		Nalog trenutniNalogZaStavku = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 			    		
-			    		for (ExcelFajlModel x : excel)
-			    		{
-			    			try {
-			    				NalogStavka stavka=new NalogStavka();
-			    				
-			    				stavka.setCena(x.getVrijednost()/x.getKolicina());
-			    				stavka.setKolicina((double)x.getKolicina());
-			    				stavka.setIznos((double)x.getVrijednost());
-			    				stavka.setNalog(trenutniNalogZaStavku);
-			    				stavka.setRobasifraext(x.getSifraRobe());
-			    				stavka.setRobanazivext(x.getNazivRobe());
-			    				stavka.setKupacsifraext(x.getSifraApoteke());
-			    				stavka.setKupacnazivext(x.getNazivApoteke());
-			    				
-			    				nss.save(stavka);
-			    			} catch (Exception e) {
-			    				e.printStackTrace();
-			    			}
+			    		try {
+			    			for (ExcelFajlModel x : excel)
+				    		{
+				    				NalogStavka stavka=new NalogStavka();
+				    				
+				    				stavka.setCena(x.getVrijednost()/x.getKolicina());
+				    				stavka.setKolicina((double)x.getKolicina());
+				    				stavka.setIznos((double)x.getVrijednost());
+				    				stavka.setNalog(trenutniNalogZaStavku);
+				    				if(x.getSifraApoteke() != null) {
+				    					stavka.setKupacsifraext(Integer.valueOf(x.getSifraApoteke()));
+				    				}else {
+				    					stavka.setKupacsifraext(null);
+				    				}
+				    				stavka.setRobanazivext(x.getNazivRobe());
+				    				if(x.getSifraRobe() !=null) {
+				    					stavka.setRobasifraext(Integer.valueOf(x.getSifraRobe()));
+				    				}else {
+				    					stavka.setRobasifraext(null);
+				    				}
+				    				stavka.setKupacnazivext(x.getNazivApoteke());
+				    				
+				    				nss.save(stavka);
+				    	     }
 			    			
-			    	     }
-			    		
-			    		if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
-							gridStavke.setItems(nss.findSveNeobradjene(trenutniNalogZaStavku));
-						}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
-							gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalogZaStavku));
+			    			Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
+							trenutniNalog.setStatus(1);
+							trenutniNalog.setIzvornifajl(uploadInfoWindow.fileName.getValue());
+							ns.save(trenutniNalog);
+							
+							if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
+								gridStavke.setItems(nss.findSveNeobradjene(trenutniNalogZaStavku));
+							}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
+								gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalogZaStavku));
+							}
+				    		
+				    		Notification success = new Notification("Uspješno ste importovali excel fajl.");
+							success.setDelayMsec(2000);
+							success.setStyleName("bar success small");
+							success.setPosition(Position.BOTTOM_CENTER);
+							success.show(Page.getCurrent());
+							
+							importFajl.setEnabled(false);
+							uploadInfoWindow.setClosable(true);
+							UI.getCurrent().removeWindow(uploadInfoWindow);
+						} catch (Exception e) {
+							uploadInfoWindow.setClosable(true);
+							UI.getCurrent().removeWindow(uploadInfoWindow);
+							importFajl.setEnabled(true);
+							e.printStackTrace();
+							Notification success = new Notification("Nije moguće insertovati stavke naloga excel.");
+							success.setDelayMsec(5000);
+							success.setStyleName("bar error small");
+							success.setPosition(Position.BOTTOM_CENTER);
+							success.show(Page.getCurrent());
 						}
-			    		
-			    		Notification success = new Notification("Uspješno ste importovali excel fajl.");
-						success.setDelayMsec(2000);
-						success.setStyleName("bar success small");
-						success.setPosition(Position.BOTTOM_CENTER);
-						success.show(Page.getCurrent());
-			    		
-
 					} catch (Exception ec) {
+						uploadInfoWindow.setClosable(true);
+						UI.getCurrent().removeWindow(uploadInfoWindow);
+						importFajl.setEnabled(true);
 						ec.printStackTrace();
 						Notification success = new Notification("Nije moguće importovati excel.");
 						success.setDelayMsec(5000);
@@ -234,10 +255,8 @@ public class ExcelViewController extends ExcelView {
 						success.setPosition(Position.BOTTOM_CENTER);
 						success.show(Page.getCurrent());
 					}
-					uploadInfoWindow.setClosable(true);
-					UI.getCurrent().removeWindow(uploadInfoWindow);
+				
 				} else {
-					System.out.println("NIJE NULL  "+nalogGlavniProvjera.getIzvornifajl());
 					uploadInfoWindow.setClosable(true);
 					importFajl.setEnabled(true);
 					UI.getCurrent().removeWindow(uploadInfoWindow);
@@ -361,6 +380,35 @@ public class ExcelViewController extends ExcelView {
 			success.setStyleName("bar success small");
 			success.setPosition(Position.BOTTOM_CENTER);
 			success.show(Page.getCurrent());
+		});
+		
+		autObrada.addClickListener(auo->{
+			try {
+				nss.mapirajKupca();
+				nss.mapirajRobu();
+				
+				Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
+				if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
+					gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
+				}else if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==1) {
+					gridStavkeGotove.setItems(nss.findSveObradjene(trenutniNalog));
+				}
+				insert(null, nss);
+				Notification success = new Notification("Uspješno ste automatski obradili stavke naloga.");
+				success.setDelayMsec(5000);
+				success.setStyleName("bar success small");
+				success.setPosition(Position.BOTTOM_CENTER);
+				success.show(Page.getCurrent());
+			} catch (Exception e) {
+				e.printStackTrace();
+				Notification success = new Notification("Nije moguće automatski obraditi stavke naloga.");
+				success.setDelayMsec(5000);
+				success.setStyleName("bar error small");
+				success.setPosition(Position.BOTTOM_CENTER);
+				success.show(Page.getCurrent());
+			}
+			
+			
 		});
 		
 	}

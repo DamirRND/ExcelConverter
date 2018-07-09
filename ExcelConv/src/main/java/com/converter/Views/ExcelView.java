@@ -72,8 +72,8 @@ public class ExcelView extends HorizontalLayout{
 	public TextField kolicina= new TextField("Količina");
 	public TextField iznos= new TextField("Vrijednost");
 	
-	public ComboBox<Komitent> komitent = new ComboBox<>("Komitent");
-	public ComboBox<Roba> roba = new ComboBox<>("Roba");
+	public ComboBox<Komitent> komitent = new ComboBox<>();
+	public ComboBox<Roba> roba = new ComboBox<>();
 	public Button updateZapis=new Button("Ažuriraj stavku", VaadinIcons.UPLOAD);
 	public Button dodajNoviZapis = new Button("Dodaj novu stavku", VaadinIcons.PLUS);
 	
@@ -97,6 +97,10 @@ public class ExcelView extends HorizontalLayout{
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		
+		komitent.setPlaceholder("Komitent");
+		roba.setPlaceholder("Roba");
+		komitent.setWidth(250,Unit.PIXELS);
+		roba.setWidth(250, Unit.PIXELS);
 		pretragaSvih.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		pretragaSvih.setIcon(VaadinIcons.SEARCH);
 		idNaloga.setWidth(250, Unit.PIXELS);
@@ -177,11 +181,11 @@ public class ExcelView extends HorizontalLayout{
 		desnoDrugi.setSizeUndefined();
 		desnoTreci.setSizeUndefined();
 		desnoCetvrti.setSizeUndefined();
+		desnoCetvrti.setSpacing(true);
 		
 		dodajNoviZapis.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		desno.addComponents(dodajNoviZapis, desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);
 		desno.setMargin(false);
-		desno.setSpacing(false);
 		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
 		hlZaUpload.setSizeUndefined();
