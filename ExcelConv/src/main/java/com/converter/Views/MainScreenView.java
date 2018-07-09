@@ -185,100 +185,188 @@ public class MainScreenView extends SideMenu implements View{
 		Responsive.makeResponsive(this);
 		setUserName(VaadinSession.getCurrent().getAttribute("Ime").toString());
         setSpacing(false);
-        System.out.println(kp.isUserInRole("Administrator"));
+        System.out.println();
         
-        
-        addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
-     			public void click(){
-     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
-     				setContent(excelView.getForm());
-     			}
-     	});
-        
-//        addMenuItem("Izvještaj", VaadinIcons.USER_CARD, new MenuClickHandler(){
-//			public void click(){
-//				pview = new PregledNalogaController(kser, rser, nss, ns);
-//				setContent(pview.getForm());
-//			}
-//		});
+        switch (kp.getUloguKorisnika()) {
+		case 1:
+			 addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
+	     			public void click(){
+	     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+	     				setContent(excelView.getForm());
+	     			}
+	     	});
+	        
+//	        addMenuItem("Izvještaj", VaadinIcons.USER_CARD, new MenuClickHandler(){
+//				public void click(){
+//					pview = new PregledNalogaController(kser, rser, nss, ns);
+//					setContent(pview.getForm());
+//				}
+//			});
 
-        addMenuItem("Roba", VaadinIcons.BULLETS, new MenuClickHandler(){
-			public void click(){
-				robaview = new RobaController(rser, redit);
-				setContent(robaview.getForm());
-			}
-		});
-        
-        addMenuItem("Roba grupe", VaadinIcons.FILE_TREE, new MenuClickHandler(){
-			public void click(){
-				rgview = new RobaGrupeController(rgser, rgeditcont);
-				setContent(rgview.getForm());
-			}
-		});
-        
-        addMenuItem("Ustanove", VaadinIcons.BUILDING, new MenuClickHandler(){
-			public void click(){
-				uview = new UstanoveController(user, uedit);
-				setContent(uview.getForm());
-			}
-		});
-        
-        addMenuItem("Entiteti", VaadinIcons.GLOBE, new MenuClickHandler(){
-			public void click(){
-				eview = new EntitetController(eserv, eedit);
-				setContent(eview.getForm());
-			}
-		});
-        
-        addMenuItem("Organizaciona jedinica", VaadinIcons.BUILDING_O, new MenuClickHandler(){
-			public void click(){
-				orgview = new OrgJedController(orgser, orgedit);
-				setContent(orgview.getForm());
-			}
-		});
-        
-        addMenuItem("Region", VaadinIcons.AREA_SELECT, new MenuClickHandler(){
-			public void click(){
-				rview = new RegionController(regser, rgedit);
-				setContent(rview.getForm());
-			}
-		});
-        
+	        addMenuItem("Roba", VaadinIcons.BULLETS, new MenuClickHandler(){
+				public void click(){
+					robaview = new RobaController(rser, redit);
+					setContent(robaview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Roba grupe", VaadinIcons.FILE_TREE, new MenuClickHandler(){
+				public void click(){
+					rgview = new RobaGrupeController(rgser, rgeditcont);
+					setContent(rgview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Ustanove", VaadinIcons.BUILDING, new MenuClickHandler(){
+				public void click(){
+					uview = new UstanoveController(user, uedit);
+					setContent(uview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Entiteti", VaadinIcons.GLOBE, new MenuClickHandler(){
+				public void click(){
+					eview = new EntitetController(eserv, eedit);
+					setContent(eview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Organizaciona jedinica", VaadinIcons.BUILDING_O, new MenuClickHandler(){
+				public void click(){
+					orgview = new OrgJedController(orgser, orgedit);
+					setContent(orgview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Region", VaadinIcons.AREA_SELECT, new MenuClickHandler(){
+				public void click(){
+					rview = new RegionController(regser, rgedit);
+					setContent(rview.getForm());
+				}
+			});
+	        
 
-        addMenuItem("Radnici", VaadinIcons.USERS, new MenuClickHandler(){
-			public void click(){
-				raview = new RadnikController(raser, redc);
-				setContent(raview.getForm());
-			}
-		});
-        
-        
-        addMenuItem("Uloge radnika", VaadinIcons.USER, new MenuClickHandler(){
-			public void click(){
-				kgview = new KorGrupaController(kgser, kgedit);
-				setContent(kgview.getForm());
-			}
-		});
-        
-        addMenuItem("Mesto", VaadinIcons.GLOBE, new MenuClickHandler(){
-			public void click(){
-				mview = new MestoController(mser, medit);
-				setContent(mview.getForm());
-			}
-		});
-        
-        addMenuItem("Komitenti", VaadinIcons.USER_CARD, new MenuClickHandler(){
-			public void click(){
-				kview = new KomitentController(kser, kedit);
-				setContent(kview.getForm());
-			}
-		});
-        
-        
-     
-        
-        
-        
+	        addMenuItem("Radnici", VaadinIcons.USERS, new MenuClickHandler(){
+				public void click(){
+					raview = new RadnikController(raser, redc);
+					setContent(raview.getForm());
+				}
+			});
+	        
+	        
+	        addMenuItem("Uloge radnika", VaadinIcons.USER, new MenuClickHandler(){
+				public void click(){
+					kgview = new KorGrupaController(kgser, kgedit);
+					setContent(kgview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Mesto", VaadinIcons.GLOBE, new MenuClickHandler(){
+				public void click(){
+					mview = new MestoController(mser, medit);
+					setContent(mview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Komitenti", VaadinIcons.USER_CARD, new MenuClickHandler(){
+				public void click(){
+					kview = new KomitentController(kser, kedit);
+					setContent(kview.getForm());
+				}
+			});
+			break;
+		case 2:
+			
+			 addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
+	     			public void click(){
+	     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+	     				setContent(excelView.getForm());
+	     			}
+	     	});
+
+	        addMenuItem("Roba", VaadinIcons.BULLETS, new MenuClickHandler(){
+				public void click(){
+					robaview = new RobaController(rser, redit);
+					setContent(robaview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Roba grupe", VaadinIcons.FILE_TREE, new MenuClickHandler(){
+				public void click(){
+					rgview = new RobaGrupeController(rgser, rgeditcont);
+					setContent(rgview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Ustanove", VaadinIcons.BUILDING, new MenuClickHandler(){
+				public void click(){
+					uview = new UstanoveController(user, uedit);
+					setContent(uview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Entiteti", VaadinIcons.GLOBE, new MenuClickHandler(){
+				public void click(){
+					eview = new EntitetController(eserv, eedit);
+					setContent(eview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Organizaciona jedinica", VaadinIcons.BUILDING_O, new MenuClickHandler(){
+				public void click(){
+					orgview = new OrgJedController(orgser, orgedit);
+					setContent(orgview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Region", VaadinIcons.AREA_SELECT, new MenuClickHandler(){
+				public void click(){
+					rview = new RegionController(regser, rgedit);
+					setContent(rview.getForm());
+				}
+			});
+	        
+
+	        addMenuItem("Radnici", VaadinIcons.USERS, new MenuClickHandler(){
+				public void click(){
+					raview = new RadnikController(raser, redc);
+					setContent(raview.getForm());
+				}
+			});
+	        
+	        
+	        addMenuItem("Uloge radnika", VaadinIcons.USER, new MenuClickHandler(){
+				public void click(){
+					kgview = new KorGrupaController(kgser, kgedit);
+					setContent(kgview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Mesto", VaadinIcons.GLOBE, new MenuClickHandler(){
+				public void click(){
+					mview = new MestoController(mser, medit);
+					setContent(mview.getForm());
+				}
+			});
+	        
+	        addMenuItem("Komitenti", VaadinIcons.USER_CARD, new MenuClickHandler(){
+				public void click(){
+					kview = new KomitentController(kser, kedit);
+					setContent(kview.getForm());
+				}
+			});
+			break;
+		case 3:
+			 addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
+	     			public void click(){
+	     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+	     				setContent(excelView.getForm());
+	     			}
+	     	});
+	        break;
+		default:
+			break;
+		}
         setSizeFull();
     }
 	

@@ -22,4 +22,6 @@ public interface KontrolaPristupa extends Serializable{
     public Radnik getRadnik();
     
     public void sessionDestroy();
+
+	int getUloguKorisnika();
 }

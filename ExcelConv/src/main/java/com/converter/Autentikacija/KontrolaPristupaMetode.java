@@ -51,6 +51,11 @@ public class KontrolaPristupaMetode implements KontrolaPristupa{
     public String getImeKorisnika() {
         return KorisnikMetode.get().getNaziv();
     }
+    
+    @Override
+    public int getUloguKorisnika() {
+    	return KorisnikMetode.get().getKorgrupa().getNivo();
+    }
 
     @Override
     public Radnik getRadnik() {

@@ -76,6 +76,7 @@ public class ExcelViewController extends ExcelView {
 		this.mks = mks;
 
 		importFajl.setEnabled(false);
+		autObrada.setEnabled(false);
 		
 		komitent.setItems(kser.findAllByTip("KK"));
 		roba.setItems(rser.findAllCombo());
@@ -137,11 +138,13 @@ public class ExcelViewController extends ExcelView {
 					datum.setValue(izaberi.getItem().getDatum());
 					
 					if(izaberi.getItem().getStatus()==0) {
+						autObrada.setEnabled(false);
 						importFajl.setEnabled(true);
 						panelDrugi.setEnabled(false);
 						gridStavke.setItems(new ArrayList<NalogStavka>());
 						gridStavkeGotove.setItems(new ArrayList<NalogStavka>());
 					}else {
+						autObrada.setEnabled(true);
 						importFajl.setEnabled(false);
 						Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 						gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
@@ -247,6 +250,7 @@ public class ExcelViewController extends ExcelView {
 				}
 				
 				hlZaUpload.removeAllComponents();
+				autObrada.setEnabled(true);
 			});
 		});
 
@@ -284,6 +288,7 @@ public class ExcelViewController extends ExcelView {
 				idNaloga.setReadOnly(true);
 				panelDrugi.setEnabled(false);
 				gridStavke.setItems(new ArrayList<NalogStavka>());
+				autObrada.setEnabled(false);
 				insert(null, nss);
 			} catch (Exception ec) {
 				ec.printStackTrace();

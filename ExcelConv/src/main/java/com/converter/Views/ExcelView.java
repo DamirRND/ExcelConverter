@@ -72,8 +72,8 @@ public class ExcelView extends HorizontalLayout{
 	public TextField kolicina= new TextField("Količina");
 	public TextField iznos= new TextField("Vrijednost");
 	
-	public ComboBox<Komitent> komitent = new ComboBox<>();
-	public ComboBox<Roba> roba = new ComboBox<>();
+	public ComboBox<Komitent> komitent = new ComboBox<>("Komitent");
+	public ComboBox<Roba> roba = new ComboBox<>("Roba");
 	public Button updateZapis=new Button("Ažuriraj stavku", VaadinIcons.UPLOAD);
 	public Button dodajNoviZapis = new Button("Dodaj novu stavku", VaadinIcons.PLUS);
 	
@@ -180,7 +180,8 @@ public class ExcelView extends HorizontalLayout{
 		
 		dodajNoviZapis.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		desno.addComponents(dodajNoviZapis, desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);
-		
+		desno.setMargin(false);
+		desno.setSpacing(false);
 		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
 		hlZaUpload.setSizeUndefined();
