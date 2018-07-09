@@ -18,7 +18,7 @@ import com.converter.Model.Roba;
 @SuppressWarnings("rawtypes")
 public interface NalogStavkaRepository extends JpaRepository<NalogStavka, Integer>, JpaSpecificationExecutor{
 
-	List<NalogStavka> findAllByKupacIdAndKupacsifraext(int id, int sifra);
+	List<NalogStavka> findAllByKupacIdAndKupacSifraExt(int id, int sifra);
 
 	
 	List<NalogStavka> findAllByKupac(Komitent k);

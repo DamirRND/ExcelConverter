@@ -55,7 +55,7 @@ public class NalogService {
 	 }
 	 
 	 public Nalog findOneByFajl(String name) {
-		 return nrep.findOneByIzvornifajl(name);
+		 return nrep.findOneByIzvorniFajl(name);
 	 }
 	 
 	 @Cacheable("nalozi")

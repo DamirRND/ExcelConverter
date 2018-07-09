@@ -20,11 +20,11 @@ public class KorGrupa implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	@Column(name="opis")
 	private String opis;
@@ -34,8 +34,9 @@ public class KorGrupa implements Serializable{
 
 	
 	public KorGrupa() {}
-	
-	public KorGrupa(int id, int sifra, String opis, int nivo) {
+
+
+	public KorGrupa(Integer id, Integer sifra, String opis, int nivo) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -43,33 +44,41 @@ public class KorGrupa implements Serializable{
 		this.nivo = nivo;
 	}
 
-	public int getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getSifra() {
+
+	public Integer getSifra() {
 		return sifra;
 	}
 
-	public void setSifra(int sifra) {
+
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
+
 
 	public String getOpis() {
 		return opis;
 	}
 
+
 	public void setOpis(String opis) {
 		this.opis = opis;
 	}
 
+
 	public int getNivo() {
 		return nivo;
 	}
+
 
 	public void setNivo(int nivo) {
 		this.nivo = nivo;

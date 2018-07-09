@@ -158,7 +158,7 @@ public class RobaEdit extends Window{
     	 	.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
     	 	.bind(Roba :: getCena, Roba :: setCena);
     	 binder.forField(grupa)
-    	 	.bind(Roba :: getRobagrupa, Roba :: setRobagrupa);
+    	 	.bind(Roba :: getGrupa, Roba :: setGrupa);
     	 binder.forField(jm)
     	 	.withNullRepresentation("")
     	 	.bind(Roba :: getJm, Roba :: setJm);

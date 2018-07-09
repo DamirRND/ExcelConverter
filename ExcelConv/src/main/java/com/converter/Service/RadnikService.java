@@ -26,7 +26,7 @@ public class RadnikService {
 	
 	
 	public Radnik findOne(String korime, String korlozinka) {
-		return radnikrep.findOneByKorimeAndKorlozinka(korime, korlozinka);
+		return radnikrep.findOneByKorImeAndKorLozinka(korime, korlozinka);
 	}
 	
 	@Cacheable("radnici")

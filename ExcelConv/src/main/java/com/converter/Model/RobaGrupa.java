@@ -19,36 +19,37 @@ public class RobaGrupa implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	@Column(name="naziv")
 	private String naziv;
 
 	public RobaGrupa() {}
-	public RobaGrupa(int id, int sifra, String naziv) {
+
+	public RobaGrupa(Integer id, Integer sifra, String naziv) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
 		this.naziv = naziv;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getSifra() {
+	public Integer getSifra() {
 		return sifra;
 	}
 
-	public void setSifra(int sifra) {
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
 

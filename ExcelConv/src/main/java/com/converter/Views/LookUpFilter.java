@@ -24,9 +24,7 @@ public class LookUpFilter extends Window{
 		vl.setSpacing(false);
 		gridNaloga.setSizeFull();
 		gridNaloga.addColumn(Nalog -> Nalog.getKomitent().getNaziv()).setCaption("Naziv komitenta").setId("mojKomitent");
-		gridNaloga.setColumns("id","status", "sifra", "datum", "izvornifajl", "mesec", "mojKomitent");
-		gridNaloga.getColumn("id").setHidden(true);
-		gridNaloga.getColumn("status").setHidden(true);
+		gridNaloga.setColumns("id","sifra","datum", "izvorniFajl", "mesec", "mojKomitent");
 		filter.setPlaceholder("Pretraga..");
 		vl.addComponents(filter, gridNaloga);
 		vl.setExpandRatio(gridNaloga, 1);

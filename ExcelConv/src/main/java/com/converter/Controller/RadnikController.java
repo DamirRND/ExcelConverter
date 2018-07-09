@@ -58,7 +58,7 @@ public class RadnikController extends RadnikView{
  				 List<Radnik> result = (List<Radnik>) rser.getListaJedan().stream()
  			                .filter(r -> {
  			                    if (
- 			                    	String.valueOf(r.getKorime()).toLowerCase().contains(event.getValue().toLowerCase()) || 
+ 			                    	String.valueOf(r.getKorIme()).toLowerCase().contains(event.getValue().toLowerCase()) || 
  			                    	r.getNaziv().toLowerCase().contains(event.getValue()) ||
  			                    	r.getKorgrupa().getOpis().toLowerCase().contains(event.getValue().toLowerCase()) 
  			                    		) {

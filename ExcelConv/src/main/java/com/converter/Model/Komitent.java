@@ -20,11 +20,11 @@ public class Komitent implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	@Column(name="naziv")
 	private String naziv;
@@ -47,8 +47,8 @@ public class Komitent implements Serializable{
 	private Ustanova ustanova;
 
 	public Komitent() {}
-	
-	public Komitent(int id, int sifra, String naziv, String pib, String adresa, String tip, Mesto mesto,
+
+	public Komitent(Integer id, Integer sifra, String naziv, String pib, String adresa, String tip, Mesto mesto,
 			Ustanova ustanova) {
 		super();
 		this.id = id;
@@ -61,86 +61,69 @@ public class Komitent implements Serializable{
 		this.ustanova = ustanova;
 	}
 
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
-	public int getSifra() {
+	public Integer getSifra() {
 		return sifra;
 	}
 
-
-	public void setSifra(int sifra) {
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
-
 
 	public String getNaziv() {
 		return naziv;
 	}
 
-
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
-
 
 	public String getPib() {
 		return pib;
 	}
 
-
 	public void setPib(String pib) {
 		this.pib = pib;
 	}
-
 
 	public String getAdresa() {
 		return adresa;
 	}
 
-
 	public void setAdresa(String adresa) {
 		this.adresa = adresa;
 	}
-
 
 	public String getTip() {
 		return tip;
 	}
 
-
 	public void setTip(String tip) {
 		this.tip = tip;
 	}
-
 
 	public Mesto getMesto() {
 		return mesto;
 	}
 
-
 	public void setMesto(Mesto mesto) {
 		this.mesto = mesto;
 	}
-
 
 	public Ustanova getUstanova() {
 		return ustanova;
 	}
 
-
 	public void setUstanova(Ustanova ustanova) {
 		this.ustanova = ustanova;
 	}
-	
 	
 	
 	

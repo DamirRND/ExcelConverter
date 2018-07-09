@@ -20,7 +20,7 @@ public class NalogStavka implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@ManyToOne
 	private Komitent kupac;
@@ -41,21 +41,22 @@ public class NalogStavka implements Serializable{
 	private Nalog nalog;
 	
 	@Column(name="robasifraext", nullable=true)
-	private Integer robasifraext;
+	private Integer robaSifraExt;
 	
 	@Column(name="robanazivext")
-	private String robanazivext;
+	private String robaNazivExt;
 	
 	@Column(name="kupacsifraext", nullable=true)
-	private Integer kupacsifraext;
+	private Integer kupacSifraExt;
 	
 	@Column(name="kupacnazivext")
-	private String kupacnazivext;
+	private String kupacNazivExt;
 
 	public NalogStavka() {}
+
 	
-	public NalogStavka(int id, Komitent kupac, Roba roba, Double cena, Double kolicina, Double iznos, Nalog nalog,
-			int robasifraext, String robanazivext, int kupacsifraext, String kupacnazivext) {
+	public NalogStavka(Integer id, Komitent kupac, Roba roba, Double cena, Double kolicina, Double iznos, Nalog nalog,
+			Integer robaSifraExt, String robaNazivExt, Integer kupacSifraExt, String kupacNazivExt) {
 		super();
 		this.id = id;
 		this.kupac = kupac;
@@ -64,25 +65,26 @@ public class NalogStavka implements Serializable{
 		this.kolicina = kolicina;
 		this.iznos = iznos;
 		this.nalog = nalog;
-		this.robasifraext = robasifraext;
-		this.robanazivext = robanazivext;
-		this.kupacsifraext = kupacsifraext;
-		this.kupacnazivext = kupacnazivext;
+		this.robaSifraExt = robaSifraExt;
+		this.robaNazivExt = robaNazivExt;
+		this.kupacSifraExt = kupacSifraExt;
+		this.kupacNazivExt = kupacNazivExt;
 	}
 
-	public int getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Komitent getKupac_id() {
+	public Komitent getKupac() {
 		return kupac;
 	}
 
-	public void setKupac_id(Komitent kupac) {
+	public void setKupac(Komitent kupac) {
 		this.kupac = kupac;
 	}
 
@@ -126,39 +128,37 @@ public class NalogStavka implements Serializable{
 		this.nalog = nalog;
 	}
 
-	public Integer getRobasifraext() {
-		return robasifraext;
+	public Integer getRobaSifraExt() {
+		return robaSifraExt;
 	}
 
-	public void setRobasifraext(Integer robasifraext) {
-		this.robasifraext = robasifraext;
+	public void setRobaSifraExt(Integer robaSifraExt) {
+		this.robaSifraExt = robaSifraExt;
 	}
 
-	public String getRobanazivext() {
-		return robanazivext;
+	public String getRobaNazivExt() {
+		return robaNazivExt;
 	}
 
-	public void setRobanazivext(String robanazivext) {
-		this.robanazivext = robanazivext;
+	public void setRobaNazivExt(String robaNazivExt) {
+		this.robaNazivExt = robaNazivExt;
 	}
 
-	public Integer getKupacsifraext() {
-		return kupacsifraext;
+	public Integer getKupacSifraExt() {
+		return kupacSifraExt;
 	}
 
-	public void setKupacsifraext(Integer kupacsifraext) {
-		this.kupacsifraext = kupacsifraext;
+	public void setKupacSifraExt(Integer kupacSifraExt) {
+		this.kupacSifraExt = kupacSifraExt;
 	}
 
-	public String getKupacnazivext() {
-		return kupacnazivext;
+	public String getKupacNazivExt() {
+		return kupacNazivExt;
 	}
 
-	public void setKupacnazivext(String kupacnazivext) {
-		this.kupacnazivext = kupacnazivext;
+	public void setKupacNazivExt(String kupacNazivExt) {
+		this.kupacNazivExt = kupacNazivExt;
 	}
-	
-	
 	
 
 }

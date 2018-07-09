@@ -8,7 +8,7 @@ import com.converter.Model.MapaRobe;
 
 public interface MapaRobeRepository extends JpaRepository<MapaRobe, Integer>{
 	
-	MapaRobe findOneByRobasifraextAndRobanazivextAndVpid(int sifra,String naziv, int vp);
+	MapaRobe findOneByRobaSifraExtAndRobaNazivExtAndVpid(int sifra,String naziv, int vp);
 	
 
 }

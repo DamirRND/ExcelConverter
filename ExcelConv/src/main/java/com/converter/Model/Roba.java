@@ -21,10 +21,10 @@ public class Roba implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	
 	@Column(name="naziv")
@@ -42,7 +42,9 @@ public class Roba implements Serializable{
 
 	public Roba() {}
 	
-	public Roba(int id, int sifra, String naziv, Double cena, RobaGrupa grupa, String jm) {
+	
+
+	public Roba(Integer id, Integer sifra, String naziv, Double cena, RobaGrupa grupa, String jm) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -52,19 +54,21 @@ public class Roba implements Serializable{
 		this.jm = jm;
 	}
 
-	public int getId() {
+
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getSifra() {
+	public Integer getSifra() {
 		return sifra;
 	}
 
-	public void setSifra(int sifra) {
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
 
@@ -80,21 +84,15 @@ public class Roba implements Serializable{
 		return cena;
 	}
 
-	public void setCena(double cena) {
-		if(Double.valueOf(cena) != null) {
-			this.cena = cena;
-		}else {
-			double cijenaNova =0.0;
-			this.cena = cijenaNova;
-		}
-		
+	public void setCena(Double cena) {
+		this.cena = cena;
 	}
 
-	public RobaGrupa getRobagrupa() {
+	public RobaGrupa getGrupa() {
 		return grupa;
 	}
 
-	public void setRobagrupa(RobaGrupa grupa) {
+	public void setGrupa(RobaGrupa grupa) {
 		this.grupa = grupa;
 	}
 
@@ -105,6 +103,7 @@ public class Roba implements Serializable{
 	public void setJm(String jm) {
 		this.jm = jm;
 	}
+	
 	
 	
 	

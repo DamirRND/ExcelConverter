@@ -17,6 +17,7 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
@@ -50,24 +51,23 @@ public class ExcelView extends HorizontalLayout{
 	public HorizontalLayout desnoPrvi = new HorizontalLayout();
 	public HorizontalLayout desnoDrugi = new HorizontalLayout();
 	public HorizontalLayout desnoTreci = new HorizontalLayout();
-	public HorizontalLayout desnoCetvrti = new HorizontalLayout();
 	
 	
 	public DateField datum = new DateField();
 	public ComboBox<Komitent> veleprodaja = new ComboBox<>("Veleprodaja");
 	public ComboBox<OrganizacionaJedinica> orgjed = new ComboBox<>("Org. jedinica");
 	public TextField nazivFajla = new TextField();
-	public Button otvoriNalog = new Button("Otvori nalog", VaadinIcons.FILE);
+	public Button otvoriNalog = new Button("Sačuvaj nalog", VaadinIcons.FILE);
 	public Button importFajl = new Button("Import Excel", VaadinIcons.CREDIT_CARD);
 	public Button autObrada = new Button("Automatska obrada", VaadinIcons.HANDLE_CORNER);
-	public Button zatvoriNalog = new Button("Zatvori nalog", VaadinIcons.ARROW_CIRCLE_UP);
+	public Button zatvoriNalog = new Button("Zaključaj nalog", VaadinIcons.LOCK);
+	public Button noviNalog = new Button("Novi", VaadinIcons.PLUS);
 	
 	
-	
-	public TextField robasifraext = new TextField("Šifra robe");
-	public TextField robanazivext = new TextField("Naziv robe");
-	public TextField kupacsifraext= new TextField("Šifra komitenta");
-	public TextField kupacnazivext= new TextField("Naziv komitenta");
+	public TextField robasifraext = new TextField();
+	public TextField robanazivext = new TextField();
+	public TextField kupacsifraext= new TextField();
+	public TextField kupacnazivext= new TextField();
 	public TextField cena= new TextField("Cena");
 	public TextField kolicina= new TextField("Količina");
 	public TextField iznos= new TextField("Vrijednost");
@@ -99,12 +99,13 @@ public class ExcelView extends HorizontalLayout{
 		
 		komitent.setPlaceholder("Komitent");
 		roba.setPlaceholder("Roba");
-		komitent.setWidth(350,Unit.PIXELS);
-		roba.setWidth(350, Unit.PIXELS);
+		komitent.setWidth(512,Unit.PIXELS);
+		roba.setWidth(512, Unit.PIXELS);
 		pretragaSvih.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		pretragaSvih.setIcon(VaadinIcons.SEARCH);
-		idNaloga.setWidth(250, Unit.PIXELS);
-		hlPretraga.addComponents(idNaloga, pretragaSvih);
+		idNaloga.setWidth(170, Unit.PIXELS);
+		noviNalog.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		hlPretraga.addComponents(noviNalog, idNaloga, pretragaSvih);
 		hlPretraga.setSpacing(false);
 		hlPretraga.setMargin(false);
 		hlPretraga.setSizeUndefined();
@@ -119,11 +120,11 @@ public class ExcelView extends HorizontalLayout{
 		gridStavkeGotove.setSizeFull();
 		
 		gridStavke.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("mojNalog");
-		gridStavke.setColumns("id","robasifraext", "robanazivext", "kupacsifraext", "kupacnazivext", "kolicina", "iznos", "cena", "mojNalog");
+		gridStavke.setColumns("id","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena", "mojNalog");
 		gridStavke.getColumn("id").setHidden(true);
 		
 		gridStavkeGotove.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("mojNalogDva");
-		gridStavkeGotove.setColumns("id","robasifraext", "robanazivext", "kupacsifraext", "kupacnazivext", "kolicina", "iznos", "cena", "mojNalogDva");
+		gridStavkeGotove.setColumns("id","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena", "mojNalogDva");
 		gridStavkeGotove.getColumn("id").setHidden(true);
         tabovi.addTab(tabGridPrvi, "Neobrađene stavke");
         tabovi.addTab(tabGridDrugi, "Pregled");
@@ -161,7 +162,7 @@ public class ExcelView extends HorizontalLayout{
 		veleprodaja.setWidth(250, Unit.PIXELS);
 		
 		panelDrugi.setStyleName(ValoTheme.PANEL_WELL);
-		vlLijevo.addComponents(hlPretraga,orgjed, veleprodaja, datum, nazivFajla, otvoriNalog, importFajl, autObrada, zatvoriNalog);
+		vlLijevo.addComponents(hlPretraga,orgjed, veleprodaja, datum, otvoriNalog, importFajl,nazivFajla, hlZaUpload, autObrada, zatvoriNalog);
 		vlLijevo.setSizeFull();
 		daObuhvati.addComponents(hlPretraga, vlLijevo);
 		daObuhvati.setMargin(false);
@@ -175,23 +176,20 @@ public class ExcelView extends HorizontalLayout{
 		kupacsifraext.setWidth(150, Unit.PIXELS);
 		kupacnazivext.setWidth(350, Unit.PIXELS);
 		desnoDrugi.addComponents(kupacsifraext, kupacnazivext);
-		desnoTreci.addComponents(kolicina, iznos,cena);
-		desnoCetvrti.addComponents(komitent, roba, updateZapis);
-		
+		desnoTreci.addComponents(cena, kolicina, iznos,updateZapis, dodajNoviZapis);
+		desnoTreci.setDefaultComponentAlignment(Alignment.BOTTOM_RIGHT);
 		desnoDrugi.setSizeUndefined();
 		desnoTreci.setSizeUndefined();
-		desnoCetvrti.setSizeUndefined();
-		desnoCetvrti.setSpacing(true);
 		
 		dodajNoviZapis.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-		desno.addComponents(dodajNoviZapis, desnoPrvi, desnoDrugi, desnoTreci, desnoCetvrti);
+		desno.addComponents(komitent,desnoPrvi, roba, desnoDrugi, desnoTreci);
 		desno.setMargin(false);
 		desno.setSizeUndefined();
 		gridStavke.setSizeFull();
 		hlZaUpload.setSizeUndefined();
 		hlZaUpload.setSpacing(false);
 		hlZaUpload.setMargin(false);
-		vlDesno.addComponents(hlZaUpload, desno, tabovi);
+		vlDesno.addComponents(desno, tabovi);
 		vlDesno.setExpandRatio(tabovi, 1);
 		vlDesno.setSizeFull();
 		
@@ -210,6 +208,8 @@ public class ExcelView extends HorizontalLayout{
 		final boolean persisted = n != null;
 		if (persisted) {
 			nalogProvjera = ns.findOne(n.getId());
+		}else {
+			nalogProvjera = new Nalog();
 		}
 		nalogBinder.setBean(nalogProvjera);
     }
@@ -232,15 +232,15 @@ public class ExcelView extends HorizontalLayout{
 		nalogstBinder.forField(robasifraext)
 		 	.withNullRepresentation("")
 			.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-	 		.bind(NalogStavka :: getRobasifraext, NalogStavka :: setRobasifraext);
+	 		.bind(NalogStavka :: getRobaSifraExt, NalogStavka :: setRobaSifraExt);
 		nalogstBinder.forField(robanazivext)
-		 	.bind(NalogStavka :: getRobanazivext, NalogStavka :: setRobanazivext);
+		 	.bind(NalogStavka :: getRobaNazivExt, NalogStavka :: setRobaNazivExt);
 		nalogstBinder.forField(kupacsifraext)
 			.withNullRepresentation("")
 			.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-	 		.bind(NalogStavka :: getKupacsifraext, NalogStavka :: setKupacsifraext);
+	 		.bind(NalogStavka :: getKupacSifraExt, NalogStavka :: setKupacSifraExt);
 		nalogstBinder.forField(kupacnazivext)
- 			.bind(NalogStavka :: getKupacnazivext, NalogStavka :: setKupacnazivext);
+ 			.bind(NalogStavka :: getKupacNazivExt, NalogStavka :: setKupacNazivExt);
 		nalogstBinder.forField(cena)
 			.withNullRepresentation("")
 			.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
@@ -254,7 +254,7 @@ public class ExcelView extends HorizontalLayout{
 			.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
 			.bind(NalogStavka :: getIznos, NalogStavka :: setIznos);
 		nalogstBinder.forField(komitent)
-			.bind(NalogStavka :: getKupac_id, NalogStavka :: setKupac_id);
+			.bind(NalogStavka :: getKupac, NalogStavka :: setKupac);
 		nalogstBinder.forField(roba)
 			.bind(NalogStavka :: getRoba, NalogStavka :: setRoba);
 	}

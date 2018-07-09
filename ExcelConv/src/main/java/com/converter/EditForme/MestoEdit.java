@@ -147,7 +147,7 @@ public class MestoEdit extends Window{
     	 binder.forField(pttbroj)
     	 	.withNullRepresentation("")
     		.withConverter(new StringToIntegerConverter(Integer.valueOf(0), "Samo brojevi"))
-     		.bind(Mesto :: getPttbroj, Mesto :: setPttbroj);
+     		.bind(Mesto :: getPttBroj, Mesto :: setPttBroj);
     	 binder.forField(naziv)
     	 	.withNullRepresentation("")
     	 	.bind(Mesto :: getNaziv, Mesto :: setNaziv);

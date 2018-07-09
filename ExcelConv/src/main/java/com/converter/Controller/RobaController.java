@@ -75,7 +75,7 @@ public class RobaController extends RobaView{
 			                    	String.valueOf(r.getCena()).toLowerCase().contains(event.getValue().toLowerCase()) || 
 			                    	String.valueOf(r.getSifra()).toLowerCase().contains(event.getValue().toLowerCase()) ||
 			                    	r.getNaziv().toLowerCase().contains(event.getValue()) ||
-			                    	r.getRobagrupa().getNaziv().toLowerCase().contains(event.getValue().toLowerCase()) || 
+			                    	r.getGrupa().getNaziv().toLowerCase().contains(event.getValue().toLowerCase()) || 
 			                    	r.getJm().toLowerCase().contains(event.getValue().toLowerCase())
 			                    		) {
 			                        return true;

@@ -10,35 +10,62 @@ public class MapaRobe {
 	
 	@Id
 	@Column(name="vp_id")
-	private int vpid;
-	private int robasifraext;
-	private String robanazivext;
-	private int roba_id;
-	public int getVp_id() {
+	private Integer vpid;
+	
+	
+	
+	
+	@Column(name="robasifraext")
+	private Integer robaSifraExt;
+	
+	@Column(name="robanazivext")
+	private String robaNazivExt;
+	
+	@Column(name="roba_id")
+	private Integer robaId;
+
+	public MapaRobe() {}
+	public MapaRobe(Integer vpid, Integer robaSifraExt, String robaNazivExt, Integer robaId) {
+		super();
+		this.vpid = vpid;
+		this.robaSifraExt = robaSifraExt;
+		this.robaNazivExt = robaNazivExt;
+		this.robaId = robaId;
+	}
+
+	public Integer getVpid() {
 		return vpid;
 	}
-	public void setVp_id(int vpid) {
+
+	public void setVpid(Integer vpid) {
 		this.vpid = vpid;
 	}
-	public int getRobasifraext() {
-		return robasifraext;
+
+	public Integer getRobaSifraExt() {
+		return robaSifraExt;
 	}
-	public void setRobasifraext(int robasifraext) {
-		this.robasifraext = robasifraext;
+
+	public void setRobaSifraExt(Integer robaSifraExt) {
+		this.robaSifraExt = robaSifraExt;
 	}
-	public String getRobanazivext() {
-		return robanazivext;
+
+	public String getRobaNazivExt() {
+		return robaNazivExt;
 	}
-	public void setRobanazivext(String robanazivext) {
-		this.robanazivext = robanazivext;
+
+	public void setRobaNazivExt(String robaNazivExt) {
+		this.robaNazivExt = robaNazivExt;
 	}
-	public int getRoba_id() {
-		return roba_id;
+
+	public Integer getRobaId() {
+		return robaId;
 	}
-	public void setRoba_id(int roba_id) {
-		this.roba_id = roba_id;
+
+	public void setRobaId(Integer robaId) {
+		this.robaId = robaId;
 	}
 	
+	 
 	
 	
 }

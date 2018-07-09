@@ -22,7 +22,7 @@ public class MapaRobeService {
 	
 	public MapaRobe findOne(int sifra,String naziv, int vp)
 	{
-		return mpRepository.findOneByRobasifraextAndRobanazivextAndVpid(sifra, naziv, vp);
+		return mpRepository.findOneByRobaSifraExtAndRobaNazivExtAndVpid(sifra, naziv, vp);
 	}
 
 }

@@ -82,7 +82,7 @@ public class StyleExcel {
 					    cell.setCellValue((Integer)obj.getId());
 					    sheet.autoSizeColumn(cellnum);
 					    cell = row.createCell(cellnum++);
-					    cell.setCellValue(obj.getKupac_id().getNaziv());
+					    cell.setCellValue(obj.getKupac().getNaziv());
 					    sheet.autoSizeColumn(cellnum);
 					    cell = row.createCell(cellnum++);
 					    cell.setCellValue(obj.getRoba().getNaziv());

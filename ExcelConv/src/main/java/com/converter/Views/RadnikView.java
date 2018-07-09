@@ -38,8 +38,8 @@ public class RadnikView extends CssLayout implements View{
         grid.setSizeFull();
         
         grid.addColumn(Radnik -> Radnik.getKorgrupa().getOpis()).setCaption("Uloga").setId("uloga").setHidable(true);
-        grid.setColumns("id","korime", "korlozinka", "naziv", "uloga");
-        grid.getColumn("korlozinka").setHidden(true);
+        grid.setColumns("id","korIme", "korLozinka", "naziv", "uloga");
+        grid.getColumn("korLozinka").setHidden(true);
         grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);

@@ -40,7 +40,7 @@ public class PregledNaloga extends CssLayout implements View{
         
         grid.setSizeFull();
         grid.addColumn(NalogStavka -> NalogStavka.getRoba().getNaziv()).setCaption("Roba").setId("robaMoja").setHidable(true);
-        grid.addColumn(NalogStavka -> NalogStavka.getKupac_id().getNaziv()).setCaption("Komitent").setId("komitentMoj").setHidable(true);
+        grid.addColumn(NalogStavka -> NalogStavka.getKupac().getNaziv()).setCaption("Komitent").setId("komitentMoj").setHidable(true);
         grid.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("nalogMoj").setHidable(true);
         
         grid.setColumns("id","komitentMoj", "robaMoja", "cena", "kolicina", "iznos", "nalogMoj");

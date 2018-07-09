@@ -48,8 +48,10 @@ public class KomitentiEdit extends Window{
 	
 	public Komitent komitent;
 	
-	private Grid<Komitent> komGrid;
-	private TextField filter;
+	private Grid<Komitent> komGridVele;
+	private Grid<Komitent> komGridMalo;
+	private TextField filterVele;
+	private TextField filterMalo;
 	
 	@Autowired
 	public KomitentiEdit() {
@@ -177,26 +179,42 @@ public class KomitentiEdit extends Window{
     	 binder.forField(ustanova)
 	 	 	.bind(Komitent :: getUstanova, Komitent :: setUstanova);
     }
+
+	public Grid<Komitent> getKomGridVele() {
+		return komGridVele;
+	}
+
+	public void setKomGridVele(Grid<Komitent> komGridVele) {
+		this.komGridVele = komGridVele;
+	}
+
+	public Grid<Komitent> getKomGridMalo() {
+		return komGridMalo;
+	}
+
+	public void setKomGridMalo(Grid<Komitent> komGridMalo) {
+		this.komGridMalo = komGridMalo;
+	}
+
+	public TextField getFilterVele() {
+		return filterVele;
+	}
+
+	public void setFilterVele(TextField filterVele) {
+		this.filterVele = filterVele;
+	}
+
+	public TextField getFilterMalo() {
+		return filterMalo;
+	}
+
+	public void setFilterMalo(TextField filterMalo) {
+		this.filterMalo = filterMalo;
+	}
     
+	public KomitentiEdit getWindow() {
+		return this;
+	}
     
 
-	public TextField getFilter() {
-		return filter;
-	}
-
-	public void setFilter(TextField filter) {
-		this.filter = filter;
-	}
-
-	public Grid<Komitent> getKomGrid() {
-		return komGrid;
-	}
-
-	public void setKomGrid(Grid<Komitent> komGrid) {
-		this.komGrid = komGrid;
-	}
-
-	public KomitentiEdit getWindow(){
-    	return this;
-    }
 }

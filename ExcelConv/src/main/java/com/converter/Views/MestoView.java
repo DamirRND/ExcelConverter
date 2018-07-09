@@ -34,9 +34,9 @@ public class MestoView extends CssLayout implements View{
         
         grid.setSizeFull();
         grid.addColumn(Mesto -> Mesto.getRegion().getNaziv()).setCaption("Naziv regiona").setId("regionNaziv").setHidable(true);
-        grid.addColumn(Mesto -> Mesto.getEntitet()).setCaption("Naziv entiteta").setId("entiteNaziv").setHidable(true);
+        grid.addColumn(Mesto -> Mesto.getEntitet().getNaziv()).setCaption("Naziv entiteta").setId("entiteNaziv").setHidable(true);
       
-        grid.setColumns("id","pttbroj", "naziv", "regionNaziv", "entiteNaziv");
+        grid.setColumns("id","pttBroj", "naziv", "regionNaziv", "entiteNaziv");
         grid.getColumn("id").setHidden(true);
         
         VerticalLayout barAndGridLayout = new VerticalLayout();

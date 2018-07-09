@@ -3,7 +3,7 @@ package com.converter.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.converter.Component.RestFilterButton;
-import com.converter.Model.Roba;
+import com.converter.Model.Komitent;
 import com.vaadin.annotations.Theme;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
@@ -17,34 +17,34 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-
 @SuppressWarnings("serial")
 @UIScope
 @Theme("mytheme")
-public class RobaView extends CssLayout implements View{
-
-	public static final String VIEW_NAME = "robaView";
-
-	public Grid<Roba> grid = new Grid<>(Roba.class);
+public class KomitentVeleprodajaView extends CssLayout implements View{
+	public static final String VIEW_NAME = "komitentView";
+	
+	public Grid<Komitent> grid = new Grid<>(Komitent.class);
     public TextField filter;
     public Button newProduct;
     
-	@Autowired
-    public RobaView() {
-		
+    @Autowired
+    public KomitentVeleprodajaView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
+        
         grid.setSizeFull();
-        grid.addColumn(Roba -> Roba.getGrupa().getNaziv()).setCaption("Grupa robe").setId("mojagrupa").setHidable(true);
-	    grid.setColumns("id","sifra", "naziv", "jm", "mojagrupa", "cena");
-	    grid.getColumn("id").setHidden(true);
+        grid.addColumn(Komitent -> Komitent.getMesto().getNaziv()).setCaption("Mesto").setId("mestoNaziv").setHidable(true);
+        grid.addColumn(Komitent -> Komitent.getUstanova().getNaziv()).setCaption("Ustanova").setId("ustanovaNaziv").setHidable(true);
+        grid.setColumns("id", "sifra", "naziv", "pib", "adresa", "tip", "mestoNaziv", "ustanovaNaziv");
+        grid.getColumn("id").setHidden(true);
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.addComponent(topLayout);
         barAndGridLayout.addComponent(grid);
         barAndGridLayout.setSizeFull();
         barAndGridLayout.setExpandRatio(grid, 1);
         barAndGridLayout.setStyleName("crud-main-layout");
+
         addComponent(barAndGridLayout);
 
     }
@@ -55,7 +55,9 @@ public class RobaView extends CssLayout implements View{
         filter.setPlaceholder("Pretraga");
         RestFilterButton.extend(filter);
         
-        newProduct = new Button("Novi proizvod");
+        filter.addValueChangeListener(event -> {});
+
+        newProduct = new Button("Novi komitent");
         newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
         newProduct.setIcon(VaadinIcons.PLUS_CIRCLE);
 
@@ -69,7 +71,9 @@ public class RobaView extends CssLayout implements View{
         return topLayout;
     }
     
-    public RobaView getForm() {
+    public KomitentVeleprodajaView getForm() {
     	return this;
     }
+
+
 }

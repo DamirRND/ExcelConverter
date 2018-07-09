@@ -56,8 +56,8 @@ public class NalogStavkaService {
 	 }
 	 
 	public List<NalogStavka> findSveCustom(int id, int sifra){
-		setLista(nlgrep.findAllByKupacIdAndKupacsifraext(id, sifra));
-		return (List<NalogStavka>) nlgrep.findAllByKupacIdAndKupacsifraext(id, sifra);
+		setLista(nlgrep.findAllByKupacIdAndKupacSifraExt(id, sifra));
+		return (List<NalogStavka>) nlgrep.findAllByKupacIdAndKupacSifraExt(id, sifra);
 	}
 
 	public List<NalogStavka> getLista() {

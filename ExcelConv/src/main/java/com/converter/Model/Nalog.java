@@ -24,13 +24,13 @@ public class Nalog implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(name="status")
-	private int status;
+	private Integer status;
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	
 	@Column(name="datum")
@@ -39,7 +39,7 @@ public class Nalog implements Serializable{
 	
 	
 	@Column(name="izvornifajl")
-	private String izvornifajl;
+	private String izvorniFajl;
 	
 	@Column(name="napomena")
 	private String napomena;
@@ -52,45 +52,45 @@ public class Nalog implements Serializable{
 	private Komitent komitent;
 	
 	@Column(name="mesec")
-	private int mesec;
+	private Integer mesec;
 
 	public Nalog() {}
-	
-	public Nalog(int id, int status, int sifra, LocalDate datum, String izvornifajl, String napomena,
-			OrganizacionaJedinica orgjed, Komitent komitent, int mesec) {
+
+	public Nalog(Integer id, Integer status, Integer sifra, LocalDate datum, String izvorniFajl, String napomena,
+			OrganizacionaJedinica orgjed, Komitent komitent, Integer mesec) {
 		super();
 		this.id = id;
 		this.status = status;
 		this.sifra = sifra;
 		this.datum = datum;
-		this.izvornifajl = izvornifajl;
+		this.izvorniFajl = izvorniFajl;
 		this.napomena = napomena;
 		this.orgjed = orgjed;
 		this.komitent = komitent;
 		this.mesec = mesec;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public int getSifra() {
+	public Integer getSifra() {
 		return sifra;
 	}
 
-	public void setSifra(int sifra) {
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
 
@@ -102,12 +102,12 @@ public class Nalog implements Serializable{
 		this.datum = datum;
 	}
 
-	public String getIzvornifajl() {
-		return izvornifajl;
+	public String getIzvorniFajl() {
+		return izvorniFajl;
 	}
 
-	public void setIzvornifajl(String izvornifajl) {
-		this.izvornifajl = izvornifajl;
+	public void setIzvorniFajl(String izvorniFajl) {
+		this.izvorniFajl = izvorniFajl;
 	}
 
 	public String getNapomena() {
@@ -134,15 +134,14 @@ public class Nalog implements Serializable{
 		this.komitent = komitent;
 	}
 
-	public int getMesec() {
+	public Integer getMesec() {
 		return mesec;
 	}
 
-	public void setMesec(int mesec) {
+	public void setMesec(Integer mesec) {
 		this.mesec = mesec;
 	}
-	
-	
+
 	
 	
 }

@@ -8,6 +8,6 @@ import com.converter.Model.MapaKupca;
 
 public interface MapaKupacRepository extends JpaRepository<MapaKupca, Integer>{
 	
-	MapaKupca findOneByKupacsifraextAndKupacnazivextAndVpid(int sifra,String naziv, int vp);
+	MapaKupca findOneByKupacSifraExtAndKupacNazivExtAndVpid(int sifra,String naziv, int vp);
 
 }

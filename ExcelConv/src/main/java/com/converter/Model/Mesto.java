@@ -20,10 +20,10 @@ public class Mesto implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(name="pttbroj")
-	private int pttbroj;
+	private Integer pttBroj;
 	
 	@Column(name="naziv")
 	private String naziv;
@@ -38,54 +38,66 @@ public class Mesto implements Serializable{
 	
 	public Mesto() {}
 
-	public Mesto(int id, int pttbroj, String naziv, Region region, Entitet entitet) {
+
+	public Mesto(Integer id, Integer pttBroj, String naziv, Region region, Entitet entitet) {
 		super();
 		this.id = id;
-		this.pttbroj = pttbroj;
+		this.pttBroj = pttBroj;
 		this.naziv = naziv;
 		this.region = region;
 		this.entitet = entitet;
 	}
 
-	public int getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getPttbroj() {
-		return pttbroj;
+
+	public Integer getPttBroj() {
+		return pttBroj;
 	}
 
-	public void setPttbroj(int pttbroj) {
-		this.pttbroj = pttbroj;
+
+	public void setPttBroj(Integer pttBroj) {
+		this.pttBroj = pttBroj;
 	}
+
 
 	public String getNaziv() {
 		return naziv;
 	}
 
+
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
 	}
+
 
 	public Region getRegion() {
 		return region;
 	}
 
+
 	public void setRegion(Region region) {
 		this.region = region;
 	}
+
 
 	public Entitet getEntitet() {
 		return entitet;
 	}
 
+
 	public void setEntitet(Entitet entitet) {
 		this.entitet = entitet;
 	}
+
 	
 	
 

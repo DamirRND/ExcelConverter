@@ -58,7 +58,7 @@ public class MestoController extends MestoView{
 	 				 List<Mesto> result = (List<Mesto>) mser.getListaJedan().stream()
 	 			                .filter(r -> {
 	 			                    if (
-	 			                    	String.valueOf(r.getPttbroj()).toLowerCase().contains(event.getValue().toLowerCase()) || 
+	 			                    	String.valueOf(r.getPttBroj()).toLowerCase().contains(event.getValue().toLowerCase()) || 
 	 			                    	r.getNaziv().toLowerCase().contains(event.getValue().toLowerCase()) ||
 	 			                    	r.getRegion().getNaziv().toLowerCase().contains(event.getValue().toLowerCase()) ||
 	 			                    	r.getEntitet().getNaziv().toLowerCase().contains(event.getValue().toLowerCase())

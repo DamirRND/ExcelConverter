@@ -144,10 +144,10 @@ public class RadniciEdit extends Window{
     public void initBind(){
     	 binder.forField(korime)
     	 	.withNullRepresentation("")
-     		.bind(Radnik :: getKorime, Radnik :: setKorime);
+     		.bind(Radnik :: getKorIme, Radnik :: setKorIme);
     	 binder.forField(korlozinka)
     	 	.withNullRepresentation("")
-    	 	.bind(Radnik :: getKorlozinka, Radnik :: setKorlozinka);
+    	 	.bind(Radnik :: getKorLozinka, Radnik :: setKorLozinka);
     	 binder.forField(grupa)
  	 		.bind(Radnik :: getKorgrupa, Radnik :: setKorgrupa);
     	 binder.forField(naziv)

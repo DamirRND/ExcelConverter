@@ -6,5 +6,5 @@ import com.converter.Model.Radnik;
 
 public interface RadnikRepository extends JpaRepository<Radnik, Integer>{
 
-	Radnik findOneByKorimeAndKorlozinka(String korime, String korlozinka);
+	Radnik findOneByKorImeAndKorLozinka(String korime, String korlozinka);
 }

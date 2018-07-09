@@ -16,7 +16,7 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @SpringComponent
 @UIScope
-public class KomitentEditController extends KomitentiEdit{
+public class KomitentEditVeleprodajaController extends KomitentiEdit{
 	
 	@SuppressWarnings("unused")
 	private final KomitentService kms;
@@ -26,7 +26,7 @@ public class KomitentEditController extends KomitentiEdit{
 	private final UstanovaService us;
 	
 	@Autowired
-	public KomitentEditController(KomitentService kms, MestoService ms, UstanovaService us) {
+	public KomitentEditVeleprodajaController(KomitentService kms, MestoService ms, UstanovaService us) {
 		this.kms = kms;
 		this.ms = ms;
 		this.us = us;
@@ -44,8 +44,8 @@ public class KomitentEditController extends KomitentiEdit{
 	               kms.getListaJedan().clear();
 	               kms.izbrisiCache();
 	               kms.setListaJedan(kms.findZaList());
-	               getFilter().clear();
-	               getKomGrid().getDataProvider().refreshAll();
+	              getFilterVele().clear();
+	              getKomGridVele().setItems(kms.findAllByTip("VP"));
 	    	   }catch(Exception ec){
 	    		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	      		   	Notification success = new Notification("Nije moguće sačuvati komitenta.");
@@ -56,8 +56,8 @@ public class KomitentEditController extends KomitentiEdit{
 	                 kms.getListaJedan().clear();
 		               kms.izbrisiCache();
 		               kms.setListaJedan(kms.findZaList());
-		               getFilter().clear();
-	                 getKomGrid().getDataProvider().refreshAll();
+		               getFilterVele().clear();
+			              getKomGridVele().setItems(kms.findAllByTip("VP"));
 	    	   }
 	       });
 	 
@@ -73,8 +73,8 @@ public class KomitentEditController extends KomitentiEdit{
 	                 kms.getListaJedan().clear();
 		               kms.izbrisiCache();
 		               kms.setListaJedan(kms.findZaList());
-		               getFilter().clear();
-	                 getKomGrid().getDataProvider().refreshAll();
+		               getFilterVele().clear();
+			              getKomGridVele().setItems(kms.findAllByTip("VP"));
 	      	   }catch(Exception ec){
 	      		   ((UI) getWindow().getParent()).removeWindow(getWindow());
 	      		   	Notification success = new Notification("Nije moguće izbrisati komitenta. Komitent je povezan sa stavkom iz naloga.");
@@ -85,8 +85,8 @@ public class KomitentEditController extends KomitentiEdit{
 	                 kms.getListaJedan().clear();
 		               kms.izbrisiCache();
 		               kms.setListaJedan(kms.findZaList());
-		               getFilter().clear();
-	                 getKomGrid().getDataProvider().refreshAll();
+		               getFilterVele().clear();
+			              getKomGridVele().setItems(kms.findAllByTip("VP"));
 	      	   }
 	        });
 	        

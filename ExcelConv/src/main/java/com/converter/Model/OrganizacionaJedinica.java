@@ -20,10 +20,10 @@ public class OrganizacionaJedinica implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	@Column(name="naziv")
 	private String naziv;
@@ -38,9 +38,9 @@ public class OrganizacionaJedinica implements Serializable{
 	private Mesto mesto;
 
 	public OrganizacionaJedinica() {}
+
 	
-	
-	public OrganizacionaJedinica(int id, int sifra, String naziv, String pib, String adresa, Mesto mesto) {
+	public OrganizacionaJedinica(Integer id, Integer sifra, String naziv, String pib, String adresa, Mesto mesto) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -50,19 +50,20 @@ public class OrganizacionaJedinica implements Serializable{
 		this.mesto = mesto;
 	}
 
-	public int getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getSifra() {
+	public Integer getSifra() {
 		return sifra;
 	}
 
-	public void setSifra(int sifra) {
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
 
@@ -97,6 +98,8 @@ public class OrganizacionaJedinica implements Serializable{
 	public void setMesto(Mesto mesto) {
 		this.mesto = mesto;
 	}
+	
+	
 	
 	
 }

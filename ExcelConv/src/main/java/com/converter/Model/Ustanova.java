@@ -19,11 +19,11 @@ public class Ustanova implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	
 	@Column(name="sifra")
-	private int sifra;
+	private Integer sifra;
 	
 	
 	@Column(name="naziv")
@@ -31,8 +31,9 @@ public class Ustanova implements Serializable{
 
 
 	public Ustanova() {}
-	
-	public Ustanova(int id, int sifra, String naziv) {
+
+
+	public Ustanova(Integer id, Integer sifra, String naziv) {
 		super();
 		this.id = id;
 		this.sifra = sifra;
@@ -40,22 +41,22 @@ public class Ustanova implements Serializable{
 	}
 
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 
-	public int getSifra() {
+	public Integer getSifra() {
 		return sifra;
 	}
 
 
-	public void setSifra(int sifra) {
+	public void setSifra(Integer sifra) {
 		this.sifra = sifra;
 	}
 
@@ -69,6 +70,6 @@ public class Ustanova implements Serializable{
 		this.naziv = naziv;
 	}
 	
-	
+
 	
 }

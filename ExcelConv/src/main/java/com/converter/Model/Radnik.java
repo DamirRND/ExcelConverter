@@ -20,13 +20,13 @@ public class Radnik implements Serializable{
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(name="korime")
-	private String korime;
+	private String korIme;
 	
 	@Column(name="korlozinka")
-	private String korlozinka;
+	private String korLozinka;
 	
 	@Column(name="naziv")
 	private String naziv;
@@ -37,44 +37,47 @@ public class Radnik implements Serializable{
 
 
 	public Radnik() {}
+
+
 	
-	public Radnik(int id, String korime, String korlozinka, String naziv, KorGrupa korgrupa) {
+	public Radnik(Integer id, String korIme, String korLozinka, String naziv, KorGrupa korgrupa) {
 		super();
 		this.id = id;
-		this.korime = korime;
-		this.korlozinka = korlozinka;
+		this.korIme = korIme;
+		this.korLozinka = korLozinka;
 		this.naziv = naziv;
 		this.korgrupa = korgrupa;
 	}
 
 
-	public int getId() {
+
+	public Integer getId() {
 		return id;
 	}
 
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 
-	public String getKorime() {
-		return korime;
+	public String getKorIme() {
+		return korIme;
 	}
 
 
-	public void setKorime(String korime) {
-		this.korime = korime;
+	public void setKorIme(String korIme) {
+		this.korIme = korIme;
 	}
 
 
-	public String getKorlozinka() {
-		return korlozinka;
+	public String getKorLozinka() {
+		return korLozinka;
 	}
 
 
-	public void setKorlozinka(String korlozinka) {
-		this.korlozinka = korlozinka;
+	public void setKorLozinka(String korLozinka) {
+		this.korLozinka = korLozinka;
 	}
 
 
@@ -97,11 +100,6 @@ public class Radnik implements Serializable{
 		this.korgrupa = korgrupa;
 	}
 
-	public boolean isEmpty() {
-		return false;
-	}
-	
-	
 	
 	
 

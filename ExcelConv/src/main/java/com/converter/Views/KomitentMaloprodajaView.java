@@ -20,7 +20,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 @UIScope
 @Theme("mytheme")
-public class KomitentView extends CssLayout implements View{
+public class KomitentMaloprodajaView extends CssLayout implements View{
 	public static final String VIEW_NAME = "komitentView";
 	
 	public Grid<Komitent> grid = new Grid<>(Komitent.class);
@@ -28,7 +28,7 @@ public class KomitentView extends CssLayout implements View{
     public Button newProduct;
     
     @Autowired
-    public KomitentView() {
+    public KomitentMaloprodajaView() {
         setSizeFull();
         addStyleName("crud-pregled");
         HorizontalLayout topLayout = createTopBar();
@@ -71,7 +71,7 @@ public class KomitentView extends CssLayout implements View{
         return topLayout;
     }
     
-    public KomitentView getForm() {
+    public KomitentMaloprodajaView getForm() {
     	return this;
     }
 

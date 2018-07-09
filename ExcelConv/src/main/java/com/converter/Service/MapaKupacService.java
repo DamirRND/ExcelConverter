@@ -22,6 +22,6 @@ public class MapaKupacService {
 	
 	public MapaKupca findOne(int sifra,String naziv, int vp)
 	{
-		return mpKupac.findOneByKupacsifraextAndKupacnazivextAndVpid(sifra, naziv, vp);
+		return mpKupac.findOneByKupacSifraExtAndKupacNazivExtAndVpid(sifra, naziv, vp);
 	}
 }
