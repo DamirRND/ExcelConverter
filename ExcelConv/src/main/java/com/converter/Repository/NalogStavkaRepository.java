@@ -47,8 +47,8 @@ public interface NalogStavkaRepository extends JpaRepository<NalogStavka, Intege
 			"from nalog n\r\n" + 
 			"join mapa_kupca x on x.vp_id = n.komitent_id \r\n" + 
 			"where s.kupac_id is null and n.id = s.nalog_id\r\n" + 
-			"and (coalesce(s.kupacsifraext, -1) = x.kupacsifraext OR s.kupacnazivext = x.kupacnazivext )", nativeQuery = true)
-    public int mapirajKupce();
+			"and (coalesce(s.kupacsifraext, -1) = x.kupacsifraext OR s.kupacnazivext = x.kupacnazivext ) and s.nalog_id=:id", nativeQuery = true)
+    public int mapirajKupce(@Param("id") int id);
 	
 	
 	
@@ -58,6 +58,6 @@ public interface NalogStavkaRepository extends JpaRepository<NalogStavka, Intege
 			"from nalog n\r\n" + 
 			"join mapa_robe x on x.vp_id = n.komitent_id \r\n" + 
 			"where s.roba_id is null and n.id = s.nalog_id\r\n" + 
-			"and (coalesce(s.robasifraext, -1) = x.robasifraext OR s.robanazivext = x.robanazivext )", nativeQuery=true)
-	public int mapirajRobu();
+			"and (coalesce(s.robasifraext, -1) = x.robasifraext OR s.robanazivext = x.robanazivext ) and s.nalog_id=:id", nativeQuery=true)
+	public int mapirajRobu(@Param("id") int id);
 }

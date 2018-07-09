@@ -384,8 +384,8 @@ public class ExcelViewController extends ExcelView {
 		
 		autObrada.addClickListener(auo->{
 			try {
-				nss.mapirajKupca();
-				nss.mapirajRobu();
+				nss.mapirajKupca(Integer.valueOf(idNaloga.getValue()));
+				nss.mapirajRobu(Integer.valueOf(idNaloga.getValue()));
 				
 				Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 				if(tabovi.getTabPosition(tabovi.getTab(tabovi.getSelectedTab()))==0) {
