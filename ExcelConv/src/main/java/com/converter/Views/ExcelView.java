@@ -57,7 +57,7 @@ public class ExcelView extends HorizontalLayout{
 	public ComboBox<Komitent> veleprodaja = new ComboBox<>("Veleprodaja");
 	public ComboBox<OrganizacionaJedinica> orgjed = new ComboBox<>("Org. jedinica");
 	public TextField nazivFajla = new TextField();
-	public Button otvoriNalog = new Button("Sačuvaj nalog", VaadinIcons.FILE);
+	public Button otvoriNalog = new Button("Sačuvaj nalog", VaadinIcons.UPLOAD);
 	public Button importFajl = new Button("Import Excel", VaadinIcons.CREDIT_CARD);
 	public Button autObrada = new Button("Automatska obrada", VaadinIcons.HANDLE_CORNER);
 	public Button zatvoriNalog = new Button("Zaključaj nalog", VaadinIcons.LOCK);
@@ -119,13 +119,24 @@ public class ExcelView extends HorizontalLayout{
 		tabGridDrugi.setMargin(true);
 		gridStavkeGotove.setSizeFull();
 		
-		gridStavke.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("mojNalog");
-		gridStavke.setColumns("id","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena", "mojNalog");
+		gridStavke.setColumns("id","kupac","roba","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena");
 		gridStavke.getColumn("id").setHidden(true);
+		gridStavke.getColumn("robaSifraExt").setHidden(true);
+		gridStavke.getColumn("kupacSifraExt").setHidden(true);
+		gridStavke.getColumn("robaNazivExt").setWidth(150);
+		gridStavke.getColumn("kupacNazivExt").setWidth(150);
+		gridStavke.getColumn("kupac").setWidth(150);
+		gridStavke.getColumn("roba").setWidth(150);
 		
-		gridStavkeGotove.addColumn(NalogStavka -> NalogStavka.getNalog().getDatum()).setCaption("Datum naloga").setId("mojNalogDva");
-		gridStavkeGotove.setColumns("id","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena", "mojNalogDva");
+		gridStavkeGotove.setColumns("id","kupac","roba","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena");
 		gridStavkeGotove.getColumn("id").setHidden(true);
+		gridStavkeGotove.getColumn("robaSifraExt").setHidden(true);
+		gridStavkeGotove.getColumn("kupacSifraExt").setHidden(true);
+		gridStavkeGotove.getColumn("robaNazivExt").setWidth(150);
+		gridStavkeGotove.getColumn("kupacNazivExt").setWidth(150);
+		gridStavkeGotove.getColumn("kupac").setWidth(150);
+		gridStavkeGotove.getColumn("roba").setWidth(150);
+		
         tabovi.addTab(tabGridPrvi, "Neobrađene stavke");
         tabovi.addTab(tabGridDrugi, "Pregled");
         tabovi.getTab(tabGridPrvi).setId("neobradjeni");

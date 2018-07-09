@@ -70,8 +70,6 @@ public class KomitentMaloprodajaController extends KomitentMaloprodajaView{
 	 			                    if (
 	 			                    	String.valueOf(r.getSifra()).toLowerCase().contains(event.getValue().toLowerCase()) || 
 	 			                    	r.getNaziv().toLowerCase().contains(event.getValue().toLowerCase()) ||
-	 			                    	r.getPib().toLowerCase().contains(event.getValue().toLowerCase()) ||
-	 			                    	r.getAdresa().toLowerCase().contains(event.getValue().toLowerCase()) ||
 	 			                    	String.valueOf(r.getTip().toLowerCase()).contains(event.getValue().toLowerCase()) ||
 	 			                    	r.getMesto().getNaziv().toLowerCase().contains(event.getValue().toLowerCase()) ||
 	 			                    	r.getUstanova().getNaziv().toLowerCase().contains(event.getValue().toLowerCase())

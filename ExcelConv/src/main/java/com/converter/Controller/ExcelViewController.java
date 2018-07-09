@@ -25,6 +25,7 @@ import com.converter.Service.RobaService;
 import com.converter.Views.ExcelView;
 import com.converter.Views.ImportFajl;
 import com.converter.Views.LookUpFilter;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.ValueChangeMode;
@@ -120,6 +121,8 @@ public class ExcelViewController extends ExcelView {
 					}
 		       });
 			UI.getCurrent().addWindow(lfilter);
+			lfilter.setClosable(true);
+			lfilter.addCloseShortcut(KeyCode.ESCAPE, null);
 			lfilter.gridNaloga.setSelectionMode(SelectionMode.SINGLE);
 			lfilter.gridNaloga.addItemClickListener(izaberi->{
 				if(izaberi.getMouseEventDetails().isDoubleClick()) {
@@ -140,6 +143,7 @@ public class ExcelViewController extends ExcelView {
 					if(izaberi.getItem().getStatus()==0) {
 						autObrada.setEnabled(false);
 						importFajl.setEnabled(true);
+						insert(null, nss);
 						panelDrugi.setEnabled(false);
 						gridStavke.setItems(new ArrayList<NalogStavka>());
 						gridStavkeGotove.setItems(new ArrayList<NalogStavka>());
@@ -148,6 +152,7 @@ public class ExcelViewController extends ExcelView {
 						importFajl.setEnabled(false);
 						Nalog trenutniNalog = getTrenutniNalog(datum.getValue().toString(), idNaloga.getValue(), datum.getValue().getMonthValue(), veleprodaja.getValue());
 						gridStavke.setItems(nss.findSveNeobradjene(trenutniNalog));
+						insert(null, nss);
 						panelDrugi.setEnabled(true);
 					}
 					UI.getCurrent().removeWindow(lfilter);
@@ -422,7 +427,7 @@ public class ExcelViewController extends ExcelView {
 			gridStavkeGotove.setItems(new ArrayList<NalogStavka>());
 			autObrada.setEnabled(false);
 		});
-		
+
 	}
 	public Nalog getTrenutniNalog(String datum, String idnalog, int mesec, Komitent vele) {
 		LocalDate convertedDate = LocalDate.parse(datum,
