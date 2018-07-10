@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.converter.Autentikacija.KontrolaPristupa;
 import com.converter.Controller.EntitetController;
 import com.converter.Controller.EntitetEditController;
-import com.converter.Controller.ExcelViewController;
+import com.converter.Controller.NalogProdajaController;
 import com.converter.Controller.KomitentVeleProdajaController;
 import com.converter.Controller.KomitentEditMaloprodajaController;
 import com.converter.Controller.KomitentMaloprodajaController;
@@ -69,7 +69,7 @@ public class MainScreenView extends SideMenu implements View{
 	@SuppressWarnings("unused")
 	private RobaGrupeEditController rgeditcont;
 	
-	private ExcelViewController excelView;
+	private NalogProdajaController excelView;
 	@SuppressWarnings("unused")
 	private NalogService ns;
 	
@@ -200,7 +200,7 @@ public class MainScreenView extends SideMenu implements View{
 		case 1:
 			 addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 	     			public void click(){
-	     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+	     				excelView = new NalogProdajaController(kser, rser,ns, orgser, nss, ms, mks);
 	     				setContent(excelView.getForm());
 	     			}
 	     	});
@@ -295,7 +295,7 @@ public class MainScreenView extends SideMenu implements View{
 			
 			 addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 	     			public void click(){
-	     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+	     				excelView = new NalogProdajaController(kser, rser,ns, orgser, nss, ms, mks);
 	     				setContent(excelView.getForm());
 	     			}
 	     	});
@@ -367,7 +367,7 @@ public class MainScreenView extends SideMenu implements View{
 		case 3:
 			 addMenuItem("Korespodentska prodaja", VaadinIcons.WORKPLACE, new MenuClickHandler(){
 	     			public void click(){
-	     				excelView = new ExcelViewController(kser, rser,ns, orgser, nss, ms, mks);
+	     				excelView = new NalogProdajaController(kser, rser,ns, orgser, nss, ms, mks);
 	     				setContent(excelView.getForm());
 	     			}
 	     	});

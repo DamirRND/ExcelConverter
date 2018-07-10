@@ -102,7 +102,9 @@ public class NalogStavkaService {
 		return nlgrep.findAllByNalog(n);
 	}
 	
-	
+	public NalogStavka findOne(int id) {
+		return nlgrep.findOne(id);
+	}
 	public int mapirajKupca(int id) {
 		return nlgrep.mapirajKupce(id);
 	}
@@ -115,7 +117,9 @@ public class NalogStavkaService {
 		return listaZaExport;
 	}
 
-
+	public void izbrisiSveStavke(Nalog n) {
+		nlgrep.izbrisiSveStavke(n);
+	}
 	public void setListaZaExport(List<NalogStavka> listaZaExport) {
 		this.listaZaExport = listaZaExport;
 	}

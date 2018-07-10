@@ -32,7 +32,7 @@ import com.vaadin.ui.themes.ValoTheme;
 @SuppressWarnings("serial")
 @UIScope
 @Theme("mytheme")
-public class ExcelView extends HorizontalLayout{
+public class NalogProdajaView extends HorizontalLayout{
 
 	public static final String VIEW_NAME = "excelView";
 	
@@ -62,7 +62,7 @@ public class ExcelView extends HorizontalLayout{
 	public Button autObrada = new Button("Automatska obrada", VaadinIcons.HANDLE_CORNER);
 	public Button zatvoriNalog = new Button("Zaključaj nalog", VaadinIcons.LOCK);
 	public Button noviNalog = new Button("Novi", VaadinIcons.PLUS);
-	
+	public Button izbrisiNalog = new Button("Izbriši nalog", VaadinIcons.MINUS_CIRCLE);
 	
 	public TextField robasifraext = new TextField();
 	public TextField robanazivext = new TextField();
@@ -92,12 +92,12 @@ public class ExcelView extends HorizontalLayout{
     
     
 	@Autowired
-	public ExcelView() {
+	public NalogProdajaView() {
 		
 		Responsive.makeResponsive(this);
 		setSizeFull();
 		
-		komitent.setPlaceholder("Komitent");
+		komitent.setPlaceholder("Apoteka");
 		roba.setPlaceholder("Roba");
 		komitent.setWidth(512,Unit.PIXELS);
 		roba.setWidth(512, Unit.PIXELS);
@@ -128,17 +128,19 @@ public class ExcelView extends HorizontalLayout{
 		gridStavke.getColumn("kupac").setWidth(150);
 		gridStavke.getColumn("roba").setWidth(150);
 		
-		gridStavkeGotove.setColumns("id","kupac","roba","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena");
+		gridStavkeGotove.addColumn(NalogStavka -> NalogStavka.getKupac().getNaziv()).setCaption("Apoteka").setId("mojaApoteka");
+		gridStavkeGotove.addColumn(NalogStavka -> NalogStavka.getRoba().getNaziv()).setCaption("Roba").setId("mojaRoba");
+		gridStavkeGotove.setColumns("id","mojaApoteka","mojaRoba","robaSifraExt", "robaNazivExt", "kupacSifraExt", "kupacNazivExt", "kolicina", "iznos", "cena");
 		gridStavkeGotove.getColumn("id").setHidden(true);
 		gridStavkeGotove.getColumn("robaSifraExt").setHidden(true);
 		gridStavkeGotove.getColumn("kupacSifraExt").setHidden(true);
 		gridStavkeGotove.getColumn("robaNazivExt").setWidth(150);
 		gridStavkeGotove.getColumn("kupacNazivExt").setWidth(150);
-		gridStavkeGotove.getColumn("kupac").setWidth(150);
-		gridStavkeGotove.getColumn("roba").setWidth(150);
+		gridStavkeGotove.getColumn("mojaApoteka").setWidth(150);
+		gridStavkeGotove.getColumn("mojaRoba").setWidth(150);
 		
         tabovi.addTab(tabGridPrvi, "Neobrađene stavke");
-        tabovi.addTab(tabGridDrugi, "Pregled");
+        tabovi.addTab(tabGridDrugi, "Obrađene stavke");
         tabovi.getTab(tabGridPrvi).setId("neobradjeni");
         tabovi.getTab(tabGridDrugi).setId("obradjeni");
         tabovi.setSizeFull();
@@ -152,12 +154,15 @@ public class ExcelView extends HorizontalLayout{
 		otvoriNalog.setWidth(250, Unit.PIXELS);
 		importFajl.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		importFajl.setWidth(250, Unit.PIXELS);
+		
 		updateZapis.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		autObrada.setWidth(250, Unit.PIXELS);
 		autObrada.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		zatvoriNalog.addStyleName(ValoTheme.BUTTON_DANGER);
 		zatvoriNalog.setWidth(250, Unit.PIXELS);
 		nazivFajla.setWidth(250, Unit.PIXELS);
+		izbrisiNalog.setStyleName(ValoTheme.BUTTON_DANGER);
+		izbrisiNalog.setWidth(250, Unit.PIXELS);
 		komitent.setPlaceholder("Komitent");
 		komitent.setItemCaptionGenerator(Komitent :: getNaziv);
 		
@@ -173,7 +178,7 @@ public class ExcelView extends HorizontalLayout{
 		veleprodaja.setWidth(250, Unit.PIXELS);
 		
 		panelDrugi.setStyleName(ValoTheme.PANEL_WELL);
-		vlLijevo.addComponents(hlPretraga,orgjed, veleprodaja, datum, otvoriNalog, importFajl,nazivFajla, hlZaUpload, autObrada, zatvoriNalog);
+		vlLijevo.addComponents(hlPretraga,orgjed, veleprodaja, datum, otvoriNalog, importFajl,nazivFajla, hlZaUpload, autObrada, zatvoriNalog, izbrisiNalog);
 		vlLijevo.setSizeFull();
 		daObuhvati.addComponents(hlPretraga, vlLijevo);
 		daObuhvati.setMargin(false);
@@ -182,15 +187,26 @@ public class ExcelView extends HorizontalLayout{
 		daObuhvati.setSizeUndefined();
 		robasifraext.setWidth(150, Unit.PIXELS);
 		robanazivext.setWidth(350, Unit.PIXELS);
-		desnoPrvi.addComponents(robasifraext, robanazivext);
+		desnoPrvi.addComponents(kupacsifraext, kupacnazivext);
 		desnoPrvi.setSizeUndefined();
 		kupacsifraext.setWidth(150, Unit.PIXELS);
 		kupacnazivext.setWidth(350, Unit.PIXELS);
-		desnoDrugi.addComponents(kupacsifraext, kupacnazivext);
+		desnoDrugi.addComponents(robasifraext, robanazivext);
 		desnoTreci.addComponents(cena, kolicina, iznos,updateZapis, dodajNoviZapis);
 		desnoTreci.setDefaultComponentAlignment(Alignment.BOTTOM_RIGHT);
 		desnoDrugi.setSizeUndefined();
 		desnoTreci.setSizeUndefined();
+		
+		robasifraext.setTabIndex(-1);
+		robanazivext.setTabIndex(-1);
+		kupacnazivext.setTabIndex(-1);
+		kupacsifraext.setTabIndex(-1);
+		komitent.setTabIndex(0);
+		roba.setTabIndex(1);
+		kolicina.setTabIndex(2);
+		iznos.setTabIndex(3);
+		updateZapis.setTabIndex(4);
+		dodajNoviZapis.setTabIndex(5);
 		
 		dodajNoviZapis.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 		desno.addComponents(komitent,desnoPrvi, roba, desnoDrugi, desnoTreci);
@@ -226,7 +242,12 @@ public class ExcelView extends HorizontalLayout{
     }
 	
 	public final void insert(NalogStavka ns , NalogStavkaService nss) {
-		nsProvjera = ns;
+		final boolean persisted = ns != null;
+		if (persisted) {
+			nsProvjera = nss.findOne(ns.getId());
+		}else {
+			nsProvjera = new NalogStavka();
+		}
 		nalogstBinder.setBean(nsProvjera);
 	}
 
@@ -256,21 +277,22 @@ public class ExcelView extends HorizontalLayout{
 			.withNullRepresentation("")
 			.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
 			.bind(NalogStavka :: getCena, NalogStavka :: setCena);
-		nalogstBinder.forField(kolicina)
-			.withNullRepresentation("")
-			.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
-			.bind(NalogStavka :: getKolicina, NalogStavka :: setKolicina);
 		nalogstBinder.forField(iznos)
 			.withNullRepresentation("")
 			.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
 			.bind(NalogStavka :: getIznos, NalogStavka :: setIznos);
+		nalogstBinder.forField(kolicina)
+			.withNullRepresentation("")
+			.withConverter(new StringToDoubleConverter(Double.valueOf(0), "Samo brojevi"))
+			.bind(NalogStavka :: getKolicina, NalogStavka :: setKolicina);
+		
 		nalogstBinder.forField(komitent)
 			.bind(NalogStavka :: getKupac, NalogStavka :: setKupac);
 		nalogstBinder.forField(roba)
 			.bind(NalogStavka :: getRoba, NalogStavka :: setRoba);
 	}
 	
-	public ExcelView getForm() {
+	public NalogProdajaView getForm() {
 		return this;
 	}
 	

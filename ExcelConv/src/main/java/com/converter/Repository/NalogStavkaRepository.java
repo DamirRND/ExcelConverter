@@ -50,6 +50,10 @@ public interface NalogStavkaRepository extends JpaRepository<NalogStavka, Intege
 			"and (coalesce(s.kupacsifraext, -1) = x.kupacsifraext OR s.kupacnazivext = x.kupacnazivext ) and s.nalog_id=:id", nativeQuery = true)
     public int mapirajKupce(@Param("id") int id);
 	
+	@Transactional
+	@Modifying
+	@Query("DELETE from NalogStavka s WHERE s.nalog=:nalog")
+    public void izbrisiSveStavke(@Param("nalog") Nalog n);
 	
 	
 	@Transactional

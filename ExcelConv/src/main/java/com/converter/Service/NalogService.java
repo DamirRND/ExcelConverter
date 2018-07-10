@@ -80,4 +80,6 @@ public class NalogService {
 	public int pronadjiMax(LocalDate datum,int mesec,Komitent id, int status ) {
 		return nrep.getMaxId(datum, mesec, id, status);
 	}
+	
+	
 }

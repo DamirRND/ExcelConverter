@@ -7,7 +7,6 @@ import com.vaadin.ui.Upload.Receiver;
 
 @SuppressWarnings("serial")
 public class RecieverUploadFajl implements Receiver {
-    public StringBuilder string = new StringBuilder();
     public ByteArrayOutputStream baos = new ByteArrayOutputStream();
     @Override
     public OutputStream receiveUpload(final String filename, final String MIMEType) {
@@ -22,9 +21,5 @@ public class RecieverUploadFajl implements Receiver {
 
     public ByteArrayOutputStream getBaos() {
 		return baos;
-	}
-
-	public String getString() {
-		return string.toString();
 	}
 }

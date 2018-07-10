@@ -14,85 +14,65 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import com.converter.Model.ExcelFajlModel;
+import com.converter.Model.NalogStavka;
 
 public class ReadExcelMapping {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public List getElementFromExcel(ByteArrayInputStream bis) {
+	public static  List<NalogStavka> kreirajStavkeProdaje(ByteArrayInputStream bis) {
 
-		List ExcelFajlLista = new ArrayList();
-		try {
+		List<NalogStavka> stavkeProdaje = new ArrayList();
+		try {	 
+			Workbook workbook = WorkbookFactory.create(bis); 
+			Sheet sheet = workbook.getSheetAt(0);            	 
+			Iterator rowIterator = sheet.iterator();  
+			rowIterator.next();
+			while (rowIterator.hasNext()) { 
+				NalogStavka nalogSt = new NalogStavka(); 
+				Row row = (Row) rowIterator.next();
 
-			Workbook workbook = WorkbookFactory.create(bis);
+				Iterator cellIterator = row.cellIterator(); 
+				while (cellIterator.hasNext()) { 
+					Cell cell = (Cell) cellIterator.next(); 
 
-			int numberOfSheets = workbook.getNumberOfSheets();
-
-			for (int i = 0; i < numberOfSheets; i++) {
-
-				Sheet sheet = workbook.getSheetAt(i);
-
-				Iterator rowIterator = sheet.iterator();
-
-				rowIterator.next();
-
-				while (rowIterator.hasNext()) {
-
-					ExcelFajlModel excel = new ExcelFajlModel();
-
-					Row row = (Row) rowIterator.next();
-					Iterator cellIterator = row.cellIterator();
-
-
-					while (cellIterator.hasNext()) {
-
-						Cell cell = (Cell) cellIterator.next();
-
-						if (cell.getColumnIndex() == 0) {
-							 excel.setSifraApoteke(cell.getStringCellValue());
-							
-						}
-
-						else if (cell.getColumnIndex() == 1) {
-							excel.setNazivApoteke(cell.getStringCellValue());
-
-						}
-
-						else if (cell.getColumnIndex() == 2) {
-							excel.setSifraRobe(cell.getStringCellValue());
-						} else if (cell.getColumnIndex() == 3) {
-
-							excel.setNazivRobe(cell.getStringCellValue());
-
-						} else if (cell.getColumnIndex() == 4) {
-
-							excel.setKolicina((int) cell.getNumericCellValue());
-
-						} else if (cell.getColumnIndex() == 5) {
-							excel.setVrijednost(cell.getNumericCellValue());
-
-						}
+					if (cell.getColumnIndex() == 0) {
+						nalogSt.setKupacSifraExt( (int) cell.getNumericCellValue());
 
 					}
-					ExcelFajlLista.add(excel);
+					else if (cell.getColumnIndex() == 1) {
+						nalogSt.setKupacNazivExt(cell.getStringCellValue());
 
+					}
+					else if (cell.getColumnIndex() == 2) {
+						nalogSt.setRobaSifraExt((int)(cell.getNumericCellValue()));
+
+					}
+					else if (cell.getColumnIndex() == 3) {
+						nalogSt.setRobaNazivExt(cell.getStringCellValue());
+
+					}
+					else if (cell.getColumnIndex() == 4) {
+						nalogSt.setKolicina(cell.getNumericCellValue());
+
+					}
+					else if (cell.getColumnIndex() == 5) {
+						nalogSt.setIznos(cell.getNumericCellValue());
+
+					}                      
 				}
-
+				stavkeProdaje.add(nalogSt);
 			}
-
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
+			
+		} catch (FileNotFoundException e) {	 
+		e.printStackTrace(); 
+		} catch (IOException e) {	 
+		e.printStackTrace();        
 		} catch (InvalidFormatException e) {
-			e.printStackTrace();
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 		}
-
-		return ExcelFajlLista;
+		
+		return stavkeProdaje;
 
 	}
 
